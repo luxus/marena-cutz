@@ -1,0 +1,15 @@
+---
+import { frontmatter as c } from '../content/home.md';
+
+type SocialItem = {
+  platform: 'Instagram' | 'TikTok' | string;
+  imageUrl: string;
+  permalink: string;
+  alt: string;
+  objectPosition?: string;
+  featured?: boolean;
+};
+
+const items = (c.socialItems ?? []) as SocialItem[];
+---
+<section id="social" class="bg-black px-5 py-20 pb-32 md:pb-20"><div class="mx-auto grid max-w-7xl gap-12 md:grid-cols-[.8fr_1.2fr]"><div><div class="mb-8 flex items-center gap-4"><span class="h-px w-8 bg-neon"></span><h2 class="text-4xl font-black uppercase tracking-[-.04em]">Best of Marena</h2></div><p class="max-w-sm text-lg leading-8 text-white/65">Ausgewählte Cuts, Transformationen und Barber-Momente aus Instagram und TikTok.</p><div class="mt-8 flex flex-wrap gap-3"><a href={c.instagramUrl} target="_blank" rel="noreferrer" class="inline-flex items-center justify-between border border-white/25 px-6 py-4 text-sm font-bold uppercase tracking-[.16em] hover:border-neon hover:text-neon">Instagram <span class="ml-4">→</span></a><a href={c.tiktokUrl} target="_blank" rel="noreferrer" class="inline-flex items-center justify-between border border-white/25 px-6 py-4 text-sm font-bold uppercase tracking-[.16em] hover:border-neon hover:text-neon">TikTok <span class="ml-4">→</span></a></div></div><div class="grid max-w-2xl grid-cols-2 gap-4 md:justify-self-end lg:grid-cols-3">{items.map((item) => <a href={item.permalink} target="_blank" rel="noreferrer" class:list={["group relative overflow-hidden border bg-white/[.025]", item.featured ? "border-neon/70 shadow-[0_0_28px_rgba(50,230,255,.16)]" : "border-white/10"]}><img src={item.imageUrl} alt={item.alt} class="aspect-square w-full object-cover transition duration-500 group-hover:scale-105" style={`object-position: ${item.objectPosition ?? 'center'};`} loading="lazy"/><span class="absolute left-3 top-3 bg-black/70 px-3 py-1 text-[10px] font-bold uppercase tracking-[.16em] text-white/85 backdrop-blur">{item.platform}</span></a>)}</div></div></section>

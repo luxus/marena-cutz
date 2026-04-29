@@ -1,0 +1,187 @@
+media:
+  input: public/images
+  output: /images
+  rename: safe
+  categories: [image]
+
+settings:
+  content:
+    merge: true
+
+content:
+  - name: homepage
+    label: Startseite
+    type: file
+    path: src/content/home.md
+    format: yaml-frontmatter
+    fields:
+      - name: eyebrow
+        label: Kleine Überschrift
+        type: string
+      - name: headline
+        label: Hauptüberschrift
+        type: string
+      - name: text
+        label: Intro Text
+        type: text
+      - name: bookingUrl
+        label: Buchungslink
+        type: string
+      - name: instagramUrl
+        label: Instagram Link
+        type: string
+      - name: tiktokUrl
+        label: TikTok Link
+        type: string
+      - name: address
+        label: Adresse
+        type: string
+      - name: zipCity
+        label: PLZ / Ort
+        type: string
+      - name: mapsUrl
+        label: Google Maps Link
+        type: string
+      - name: socialItems
+        label: Best-of Social Posts
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{platform}: {alt}"
+        fields:
+          - name: platform
+            label: Plattform
+            type: select
+            options:
+              values:
+                - Instagram
+                - TikTok
+          - name: imageUrl
+            label: Bild
+            type: image
+          - name: permalink
+            label: Link
+            type: string
+          - name: alt
+            label: Alt Text
+            type: string
+          - name: objectPosition
+            label: Bildposition
+            type: string
+          - name: featured
+            label: Hervorheben
+            type: boolean
+
+  - name: prices
+    label: Preise
+    type: file
+    path: src/content/prices.md
+    format: yaml-frontmatter
+    fields:
+      - name: title
+        label: Titel
+        type: string
+      - name: barbers
+        label: Barber
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{name}"
+        fields:
+          - name: name
+            label: Name
+            type: string
+          - name: label
+            label: Anzeige / Rolle
+            type: string
+          - name: services
+            label: Leistungen
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{name} — {price}"
+            fields:
+              - name: name
+                label: Leistung
+                type: string
+              - name: duration
+                label: Dauer
+                type: string
+              - name: price
+                label: Preis
+                type: string
+              - name: featured
+                label: Hervorheben
+                type: boolean
+
+  - name: about
+    label: Über uns
+    type: file
+    path: src/content/about.md
+    format: yaml-frontmatter
+    fields:
+      - name: title
+        label: Titel
+        type: string
+      - name: text
+        label: Text
+        type: text
+      - name: owner
+        label: Inhaber
+        type: string
+      - name: phone
+        label: Telefon
+        type: string
+      - name: email
+        label: E-Mail
+        type: string
+      - name: openingHours
+        label: Öffnungszeiten
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{day}: {hours}"
+        fields:
+          - name: day
+            label: Tag
+            type: string
+          - name: hours
+            label: Zeiten
+            type: string
+      - name: paymentMethods
+        label: Zahlungsarten
+        type: string
+        list: true
+
+  - name: legal
+    label: Rechtliches
+    type: group
+    items:
+      - name: impressum
+        label: Impressum
+        type: file
+        path: src/content/impressum.md
+        format: yaml-frontmatter
+        fields:
+          - name: title
+            label: Titel
+            type: string
+          - name: body
+            label: Inhalt
+            type: rich-text
+      - name: datenschutz
+        label: Datenschutz
+        type: file
+        path: src/content/datenschutz.md
+        format: yaml-frontmatter
+        fields:
+          - name: title
+            label: Titel
+            type: string
+          - name: body
+            label: Inhalt
+            type: rich-text

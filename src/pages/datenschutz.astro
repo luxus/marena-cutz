@@ -1,0 +1,7 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import DatenschutzContent, { frontmatter as c } from '../content/datenschutz.md';
+---
+<BaseLayout title={`${c.title} | Marena Cutz`}><Header/><main class="min-h-screen border-b border-white/10 bg-bg px-5 py-20"><article class="prose prose-invert mx-auto max-w-3xl prose-headings:uppercase prose-headings:tracking-[-.03em] prose-a:text-neon"><h1 class="text-5xl font-black uppercase tracking-[-.05em]">{c.title}</h1><DatenschutzContent/></article></main><Footer/></BaseLayout>
