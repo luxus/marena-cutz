@@ -1,17 +1,14 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Prices from '../components/Prices.astro';
+import Feature from '../components/Feature.astro';
+import About from '../components/About.astro';
+import Location from '../components/Location.astro';
+import Instagram from '../components/Instagram.astro';
+import TikTok from '../components/TikTok.astro';
+import Footer from '../components/Footer.astro';
+import StickyMobileNav from '../components/StickyMobileNav.astro';
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Marena Cutz | Modern Barber in Bülach"><Header/><main><Hero/><Prices/><Feature/><Location/><About/><Instagram/><TikTok/></main><Footer/><StickyMobileNav/></BaseLayout>

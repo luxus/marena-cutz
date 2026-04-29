@@ -1,0 +1,7 @@
+---
+import { frontmatter as c } from '../content/home.md';
+
+type InstagramImage = { imageUrl: string; permalink: string; alt: string; objectPosition?: string };
+const images = (c.instagramImages ?? []) as InstagramImage[];
+---
+<section id="instagram" class="bg-bg px-5 py-20 pb-32 md:pb-20"><div class="mx-auto grid max-w-7xl gap-12 md:grid-cols-[.8fr_1.2fr]"><div><div class="mb-8 flex items-center gap-4"><span class="h-px w-8 bg-neon"></span><h2 class="text-4xl font-black uppercase tracking-[-.04em]">Instagram</h2></div><p class="max-w-sm text-lg leading-8 text-white/65">Aktuelle Cuts, Styles und Einblicke direkt aus dem Salon.</p><a href={c.instagramUrl} class="mt-8 inline-flex items-center justify-between border border-white/25 px-8 py-4 text-sm font-bold uppercase tracking-[.16em] hover:border-neon hover:text-neon">@marena.cutz <span>→</span></a></div><div class="grid max-w-xl grid-cols-2 gap-4 md:justify-self-end">{images.map((image) => <a href={image.permalink} target="_blank" rel="noreferrer" class="group overflow-hidden border border-white/10 bg-white/[.025]"><img src={image.imageUrl} alt={image.alt} class="aspect-square w-full object-cover transition duration-500 group-hover:scale-105" style={`object-position: ${image.objectPosition ?? 'center'};`} loading="lazy"/></a>)}</div></div></section>

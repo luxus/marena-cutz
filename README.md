@@ -1,43 +1,47 @@
-# Astro Starter Kit: Minimal
+# Marena Cutz Website
 
-```sh
-npm create astro@latest -- --template minimal
+Astro + Tailwind landingpage for Marena Cutz.
+
+## Install
+
+```bash
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Build
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```bash
+npm run build
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Cloudflare Pages:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```txt
+Build command: npm run build
+Output directory: dist
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Content bearbeiten
 
-## 🧞 Commands
+Die wichtigsten Inhalte liegen in Markdown-Frontmatter:
 
-All commands are run from the root of the project, from a terminal:
+```txt
+src/content/home.md
+src/content/prices.md
+src/content/about.md
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Bilder liegen in:
 
-## 👀 Want to learn more?
+```txt
+public/images/
+```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Design-Entscheidung
+
+- Astro only, kein Svelte nötig
+- Tailwind 4 via Vite Plugin
+- Mobile Sticky-Bar: Preise / Buchen / Route
+- Preise direkt nach Hero
+- Stuhl, Clipper, Karte und Social-Previews als lokale Bildassets

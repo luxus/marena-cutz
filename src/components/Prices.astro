@@ -1,0 +1,8 @@
+---
+import { frontmatter as prices } from '../content/prices.md';
+import { frontmatter as c } from '../content/home.md';
+
+type PriceItem = { name: string; price: string; featured?: boolean };
+const items = prices.items as PriceItem[];
+---
+<section id="preise" class="border-b border-white/10 bg-bg px-5 py-20"><div class="mx-auto grid max-w-7xl gap-12 md:grid-cols-[.85fr_1.15fr]"><div><div class="mb-8 flex items-center gap-4"><span class="h-px w-8 bg-neon"></span><h2 class="text-4xl font-black uppercase tracking-[-.04em]">Preise</h2></div><div class="border border-white/10 bg-white/[.025] p-6 md:p-8">{items.map((item) => <div class="flex items-center justify-between border-b border-white/10 py-5 last:border-0"><span class:list={["text-sm uppercase tracking-[.12em]", item.featured ? "text-white" : "text-white/75"]}>{item.name}</span><span class:list={["font-bold", item.featured ? "text-neon" : "text-white/85"]}>{item.price}</span></div>)}<a href={c.bookingUrl} class="mt-8 inline-flex w-full items-center justify-between border border-white/25 px-6 py-4 text-sm font-bold uppercase tracking-[.16em] hover:border-neon hover:text-neon">Termin buchen <span>→</span></a></div></div><div class="relative overflow-hidden border border-white/10 bg-panel p-8"><div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.045)_1px,transparent_1px)] bg-[size:42px_42px]"></div><img src="/images/barber-chair-blueprint.png" alt="Neon Barber Stuhl Blueprint" class="relative mx-auto max-h-[620px] object-contain drop-shadow-[0_0_34px_rgba(50,230,255,.25)]"/></div></div></section>

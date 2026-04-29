@@ -22,3 +22,9 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# agent/local artifacts
+.pi/
+preview/
+screenshots/
+REVIEW.md
