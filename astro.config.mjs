@@ -1,3 +1,7 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
-export default defineConfig({ vite: { plugins: [tailwindcss()] } });
+import cloudflare from '@astrojs/cloudflare';
+export default defineConfig({
+  vite: { plugins: [tailwindcss()] },
+  adapter: cloudflare()
+});
