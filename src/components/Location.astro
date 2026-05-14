@@ -1,5 +1,5 @@
 ---
-import { frontmatter as c } from '../content/home.md';
+import { frontmatter as s } from '../content/settings.md';
 ---
 <section id="standort" class="border-b border-outline-variant bg-background px-5 py-20">
   <div class="mx-auto max-w-7xl">
@@ -7,14 +7,14 @@ import { frontmatter as c } from '../content/home.md';
       <span class="h-px w-8 bg-secondary"></span>
       <h2 class="text-headline-lg uppercase">Standort</h2>
     </div>
-    <a href={c.mapsUrl} target="_blank" rel="noreferrer" aria-label="Route zu Marena Cutz auf Google Maps öffnen" class="group relative block min-h-[360px] overflow-hidden border border-outline-variant bg-surface-container md:min-h-[560px]">
-      <img src="/images/location-map.png" alt="Stilisierte Karte zum Standort von Marena Cutz in Bülach" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
+    <a href={s.mapsUrl} target="_blank" rel="noreferrer" aria-label="Route zu Marena Cutz auf Google Maps öffnen" class="group relative block min-h-[360px] overflow-hidden border border-outline-variant bg-surface-container md:min-h-[560px]">
+      <img src="/images/location-map.png" alt={`Stilisierte Karte zum Standort von ${s.name} in Bülach`} class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
       <div class="absolute inset-0 bg-background/20"></div>
       <div class="absolute bottom-6 left-6 flex items-center gap-4 border border-outline-variant bg-surface px-5 py-4 backdrop-blur transition group-hover:border-secondary group-hover:bg-surface-dim">
         <img src="/images/google-maps-pin.png" alt="Google Maps" class="h-12 w-10 object-contain" loading="lazy" />
         <div>
-          <p class="text-label-caps text-secondary">Marena Cutz</p>
-          <p class="mt-1 text-body-lg text-on-surface-variant">{c.address}, {c.zipCity}</p>
+          <p class="text-label-caps text-secondary">{s.name}</p>
+          <p class="mt-1 text-body-lg text-on-surface-variant">{s.address}, {s.zipCity}</p>
         </div>
       </div>
     </a>

@@ -1,13 +1,13 @@
 ---
-import { frontmatter as c } from '../content/home.md';
+import { frontmatter as s } from '../content/settings.md';
 
 const items = [
-  { platform: 'Instagram', imageUrl: '/images/instagram-dxbxnz7jefd-browser.jpg', alt: 'Clean Fade', permalink: c.instagramUrl },
-  { platform: 'TikTok', imageUrl: '/images/tiktok-7573325880508927254.jpg', alt: 'Styling', permalink: c.tiktokUrl, featured: true },
-  { platform: 'Instagram', imageUrl: '/images/instagram-dw8lhwxjfjo-browser.jpg', alt: 'Transformation', permalink: c.instagramUrl },
-  { platform: 'TikTok', imageUrl: '/images/tiktok-7627810109564931350.jpg', alt: 'Beard Trim', permalink: c.tiktokUrl },
-  { platform: 'Instagram', imageUrl: '/images/instagram-dxsuwndbmf-browser.jpg', alt: 'Precision Work', permalink: c.instagramUrl },
-  { platform: 'TikTok', imageUrl: '/images/tiktok-7559314663998278934.jpg', alt: 'Barber Detail', permalink: c.tiktokUrl }
+  { platform: 'Instagram', imageUrl: '/images/instagram-dxbxnz7jefd-browser.jpg', alt: 'Clean Fade', permalink: s.instagramUrl },
+  { platform: 'TikTok', imageUrl: '/images/tiktok-7573325880508927254.jpg', alt: 'Styling', permalink: s.tiktokUrl, featured: true },
+  { platform: 'Instagram', imageUrl: '/images/instagram-dw8lhwxjfjo-browser.jpg', alt: 'Transformation', permalink: s.instagramUrl },
+  { platform: 'TikTok', imageUrl: '/images/tiktok-7627810109564931350.jpg', alt: 'Beard Trim', permalink: s.tiktokUrl },
+  { platform: 'Instagram', imageUrl: '/images/instagram-dxsuwndbmf-browser.jpg', alt: 'Precision Work', permalink: s.instagramUrl },
+  { platform: 'TikTok', imageUrl: '/images/tiktok-7559314663998278934.jpg', alt: 'Barber Detail', permalink: s.tiktokUrl }
 ];
 ---
 <section id="social" class="bg-background px-5 py-20 pb-32 md:pb-20">
@@ -19,10 +19,10 @@ const items = [
       </div>
       <p class="max-w-sm text-body-lg text-on-surface-variant">Ausgewählte Cuts, Transformationen und Barber-Momente aus Instagram und TikTok.</p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <a href={c.instagramUrl} target="_blank" rel="noreferrer" class="inline-flex items-center gap-4 border border-outline px-6 py-4 text-label-caps text-on-surface hover:border-secondary hover:text-secondary">
+        <a href={s.instagramUrl} target="_blank" rel="noreferrer" class="inline-flex items-center gap-4 border border-outline px-6 py-4 text-label-caps text-on-surface hover:border-secondary hover:text-secondary">
           Instagram <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M9 7h8v8"/><path d="M14 17H7V10"/></svg>
         </a>
-        <a href={c.tiktokUrl} target="_blank" rel="noreferrer" class="inline-flex items-center gap-4 border border-outline px-6 py-4 text-label-caps text-on-surface hover:border-secondary hover:text-secondary">
+        <a href={s.tiktokUrl} target="_blank" rel="noreferrer" class="inline-flex items-center gap-4 border border-outline px-6 py-4 text-label-caps text-on-surface hover:border-secondary hover:text-secondary">
           TikTok <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M9 7h8v8"/><path d="M14 17H7V10"/></svg>
         </a>
       </div>

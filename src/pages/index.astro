@@ -8,5 +8,6 @@ import Location from '../components/Location.astro';
 import SocialBestOf from '../components/SocialBestOf.astro';
 import Footer from '../components/Footer.astro';
 import StickyMobileNav from '../components/StickyMobileNav.astro';
+import { frontmatter as s } from '../content/settings.md';
 ---
-<BaseLayout title="Marena Cutz | Modern Barber in Bülach"><Header/><main><Hero/><Prices/><Location/><About/><SocialBestOf/></main><Footer/><StickyMobileNav/></BaseLayout>
+<BaseLayout title={`${s.name} | ${s.tagline} in Bülach`}><Header/><main><Hero/><Prices/><Location/><About/><SocialBestOf/></main><Footer/><StickyMobileNav/></BaseLayout>

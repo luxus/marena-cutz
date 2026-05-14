@@ -2,9 +2,6 @@
 eyebrow: Modern Barber in Bülach
 headline: Clean Cuts. Sharp Fades.
 text: Präzise Schnitte. Klare Linien. Dein Style. Unser Fokus.
-bookingUrl: "https://one.localsearch.ch/site/marenacutz/online-scheduling?utm_source=ig&utm_medium=social&utm_content=link_in_bio"
-instagramUrl: "https://www.instagram.com/marenacutz/"
-tiktokUrl: "https://www.tiktok.com/@marenacutz"
 socialItems:
   - platform: Instagram
     imageUrl: /images/instagram-dxjdicbjld0-browser.jpg
@@ -37,7 +34,4 @@ socialItems:
     permalink: "https://www.tiktok.com/@marenacutz/video/7633944669751348502"
     alt: Marena Cutz TikTok Clip
     objectPosition: center
-address: Kasernenstrasse 4
-zipCity: 8180 Bülach
-mapsUrl: https://www.google.com/maps/search/?api=1&query=Marena+Cutz+Kasernenstrasse+4+8180+Bülach
 ---
