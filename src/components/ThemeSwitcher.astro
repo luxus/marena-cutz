@@ -1,0 +1,119 @@
+---
+import { themes, type ThemeName, type ThemeMode, defaultTheme, defaultMode } from '../lib/themes';
+---
+
+<div class="flex items-center gap-2 text-sm">
+  <!-- Theme Dropdown -->
+  <div class="relative group">
+    <button 
+      id="theme-dropdown-button"
+      class="flex items-center gap-2 rounded border border-outline-variant bg-surface px-3 py-1.5 text-on-surface hover:bg-surface-container transition"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <span id="current-theme-name" class="text-label-caps">Architectural Neon</span>
+      <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+
+    <div 
+      id="theme-dropdown-menu"
+      class="absolute bottom-full right-0 mb-1 hidden w-48 rounded border border-outline-variant bg-surface py-1 shadow-lg z-50 group-focus-within:block"
+    >
+      {Object.entries(themes).map(([key, theme]) => (
+        <button
+          type="button"
+          data-theme={key}
+          class="theme-option w-full px-4 py-2 text-left text-sm hover:bg-surface-container text-on-surface flex items-center justify-between"
+        >
+          <span>{theme.name}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Light / Dark Toggle -->
+  <button
+    id="mode-toggle"
+    class="flex h-8 w-8 items-center justify-center rounded border border-outline-variant bg-surface text-on-surface hover:bg-surface-container transition"
+    aria-label="Toggle light/dark mode"
+  >
+    <span id="mode-icon" class="text-lg">☾</span>
+  </button>
+</div>
+
+<script>
+  // @ts-nocheck
+  const html = document.documentElement;
+
+  const themeNames = {
+    architectural: 'Architectural Neon',
+    brutalist: 'Brutalist',
+    warm: 'Warm Minimal',
+    cool: 'Cool Industrial'
+  };
+
+  function applyTheme(theme, mode) {
+    html.dataset.theme = theme;
+    html.dataset.mode = mode;
+    localStorage.setItem('theme', theme);
+    localStorage.setItem('mode', mode);
+
+    const nameEl = document.getElementById('current-theme-name');
+    if (nameEl) nameEl.textContent = themeNames[theme] || theme;
+
+    const iconEl = document.getElementById('mode-icon');
+    if (iconEl) iconEl.textContent = mode === 'dark' ? '☾' : '☀︎';
+  }
+
+  function initTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'architectural';
+    let savedMode = localStorage.getItem('mode');
+
+    if (!savedMode) {
+      savedMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    applyTheme(savedTheme, savedMode);
+  }
+
+  const dropdownBtn = document.getElementById('theme-dropdown-button');
+  const dropdownMenu = document.getElementById('theme-dropdown-menu');
+
+  if (dropdownBtn && dropdownMenu) {
+    dropdownBtn.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('hidden');
+      dropdownMenu.classList.toggle('block');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        dropdownMenu.classList.add('hidden');
+        dropdownMenu.classList.remove('block');
+      }
+    });
+
+    dropdownMenu.querySelectorAll('.theme-option').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const theme = btn.getAttribute('data-theme');
+        const currentMode = html.dataset.mode || 'dark';
+        applyTheme(theme, currentMode);
+        dropdownMenu.classList.add('hidden');
+        dropdownMenu.classList.remove('block');
+      });
+    });
+  }
+
+  const modeToggle = document.getElementById('mode-toggle');
+  if (modeToggle) {
+    modeToggle.addEventListener('click', () => {
+      const currentTheme = html.dataset.theme || 'architectural';
+      const currentMode = html.dataset.mode || 'dark';
+      const newMode = currentMode === 'dark' ? 'light' : 'dark';
+      applyTheme(currentTheme, newMode);
+    });
+  }
+
+  initTheme();
+</script>

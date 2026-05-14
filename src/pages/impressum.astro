@@ -2,6 +2,31 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import ImpressumContent, { frontmatter as c } from '../content/impressum.md';
+import { frontmatter as s } from '../content/settings.md';
+import { frontmatter as c, compiledContent } from '../content/impressum.md';
+const ImpressumContent = await compiledContent();
 ---
-<BaseLayout title={`${c.title} | Marena Cutz`}><Header/><main class="min-h-screen border-b border-white/10 bg-bg px-5 py-20"><article class="prose prose-invert mx-auto max-w-3xl prose-headings:uppercase prose-headings:tracking-[-.03em] prose-a:text-neon"><h1 class="text-5xl font-black uppercase tracking-[-.05em]">{c.title}</h1><ImpressumContent/></article></main><Footer/></BaseLayout>
+<BaseLayout title={`${c.title} | ${s.name}`}>
+  <Header />
+  <main class="min-h-screen border-b border-outline-variant bg-surface px-5 py-20">
+    <article class="prose prose-invert mx-auto max-w-3xl prose-headings:uppercase prose-headings:font-display prose-a:text-primary">
+      <h1 class="text-headline-lg uppercase">{c.title}</h1>
+      
+      <h2>{s.name}</h2>
+      <p>
+        {s.owner}<br />
+        {s.address}<br />
+        {s.zipCity}<br />
+        Schweiz
+      </p>
+      <p>
+        Telefon: <a href={`tel:${s.phone}`}>{s.phone}</a><br />
+        E-Mail: <a href={`mailto:${s.email}`}>{s.email}</a>
+      </p>
+
+      <div set:html={ImpressumContent} />
+      <p>{s.owner}</p>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>

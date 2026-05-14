@@ -1,5 +1,35 @@
 ---
 import '../styles/global.css';
-const { title = 'Marena Cutz' } = Astro.props;
+import { frontmatter as s } from '../content/settings.md';
+const { title = s.name } = Astro.props;
 ---
-<!doctype html><html lang="de"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>{title}</title><meta name="description" content="Marena Cutz Modern Barber in Bülach. Clean cuts, sharp fades und präzise Schnitte."/><meta name="theme-color" content="#050505"/><link rel="icon" href="/favicon.ico" sizes="any"/><link rel="icon" type="image/png" href="/favicon.png"/><link rel="apple-touch-icon" href="/apple-touch-icon.png"/></head><body><slot/></body></html>
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={`${s.name} ${s.tagline} in Bülach. Clean cuts, sharp fades und präzise Schnitte.`} />
+    <meta name="theme-color" content="#131313" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Theme initialization (prevents flash) -->
+    <script is:inline>
+      (function() {
+        try {
+          const savedTheme = localStorage.getItem('theme') || 'architectural';
+          const savedMode = localStorage.getItem('mode') || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+          document.documentElement.dataset.theme = savedTheme;
+          document.documentElement.dataset.mode = savedMode;
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
