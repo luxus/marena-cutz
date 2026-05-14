@@ -6,32 +6,32 @@ socialItems:
   - platform: Instagram
     imageUrl: /images/instagram-dxjdicbjld0-browser.jpg
     permalink: "https://www.instagram.com/p/DXjDIcbjLd0/"
-    alt: Marena Cutz Instagram Post
+    alt: Instagram Post
     objectPosition: center
     featured: true
   - platform: TikTok
     imageUrl: /images/tiktok-7559314663998278934.jpg
     permalink: "https://www.tiktok.com/@marenacutz/video/7559314663998278934"
-    alt: Marena Cutz Burstfade TikTok Clip
+    alt: TikTok Clip
     objectPosition: center
   - platform: Instagram
     imageUrl: /images/instagram-dxsuwndbmf-browser.jpg
     permalink: "https://www.instagram.com/reel/DXsU-WNDBmf/"
-    alt: Marena Cutz Instagram Reel
+    alt: Instagram Reel
     objectPosition: center
   - platform: TikTok
     imageUrl: /images/tiktok-7573325880508927254.jpg
     permalink: "https://www.tiktok.com/@marenacutz/video/7573325880508927254"
-    alt: Marena Cutz Meches Transformation TikTok Clip
+    alt: TikTok Clip
     objectPosition: center
   - platform: Instagram
     imageUrl: /images/instagram-dxbxnz7jefd-browser.jpg
     permalink: "https://www.instagram.com/reel/DXBxNZ7jEFD/"
-    alt: Marena Cutz Dauerwelle Reel
+    alt: Instagram Reel
     objectPosition: center
   - platform: TikTok
     imageUrl: /images/tiktok-7633944669751348502.jpg
     permalink: "https://www.tiktok.com/@marenacutz/video/7633944669751348502"
-    alt: Marena Cutz TikTok Clip
+    alt: TikTok Clip
     objectPosition: center
 ---

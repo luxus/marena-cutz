@@ -1,5 +1,5 @@
 ---
-title: Über Marena Cutz
+title: Über uns
 text: "Details machen den Unterschied. Jeder Cut sitzt: saubere Übergänge, klare Konturen und ein Look, der zu dir passt. Kein Zufall. Nur Qualität."
 openingHours:
   - day: Dienstag
