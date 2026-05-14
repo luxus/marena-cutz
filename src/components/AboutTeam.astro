@@ -1,0 +1,137 @@
+---
+import { frontmatter as about } from '../content/about.md';
+import { frontmatter as s } from '../content/settings.md';
+
+type OpeningHour = { day: string; hours: string };
+const openingHours = (about.openingHours ?? []) as OpeningHour[];
+const paymentMethods = (about.paymentMethods ?? []) as string[];
+
+type Barber = {
+  name: string;
+  position?: string;
+  image?: string;
+  about?: string;
+  order?: number;
+  services: any[];
+};
+
+const barbersFiles = Object.values(
+  import.meta.glob<{ frontmatter: Barber }>('../content/barbers/*.md', { eager: true })
+);
+
+const barbers = barbersFiles
+  .map((file) => file.frontmatter)
+  .sort((a: Barber, b: Barber) => (a.order || 0) - (b.order || 0));
+
+const getBarberImage = (name: string) =>
+  name === 'Angelo' ? '/images/cut-1.jpg' : '/images/cut-2.jpg';
+---
+
+<section class="relative border-b border-outline-variant px-5 py-16 md:py-20 scroll-mt-20">
+  <!-- Shared mirrored salon background for Über uns + Team -->
+  <div class="absolute inset-0 bg-cover bg-center scale-x-[-1] opacity-38" style="background-image: url('/images/about-salon-hero.png')"></div>
+  <div class="absolute inset-0 bg-background/48"></div>
+
+  <div class="relative mx-auto max-w-7xl">
+    <div class="grid gap-8 lg:gap-12 md:grid-cols-[1.1fr_0.9fr]">
+      
+      <!-- Left: Über uns -->
+      <div id="ueber" class="pr-4 lg:pr-8 scroll-mt-20">
+        <div class="mb-7 flex items-center gap-4">
+          <span class="h-px w-8 bg-secondary"></span>
+          <h2 class="text-headline-lg uppercase">{about.title}</h2>
+        </div>
+
+        <p class="text-body-lg text-on-surface-variant">{about.text}</p>
+
+        <div class="mt-8 space-y-8 text-label-caps text-on-surface-variant">
+          <div class="space-y-3">
+            <p><span class="text-secondary">Inhaber:</span> {s.owner}</p>
+            <p><span class="text-secondary">Telefon:</span> <a href={`tel:${s.phone}`} class="hover:text-primary">{s.phone}</a></p>
+            <p><span class="text-secondary">E-Mail:</span> <a href={`mailto:${s.email}`} class="break-all hover:text-primary">{s.email}</a></p>
+          </div>
+
+          <div class="h-px bg-outline-variant"></div>
+
+          <div>
+            <h3 class="mb-4 text-label-caps text-secondary">Öffnungszeiten</h3>
+            <div class="space-y-3">
+              {openingHours.map((item) => (
+                <div class="flex items-center justify-between gap-6 border-b border-outline-variant pb-3 last:border-0 last:pb-0">
+                  <span>{item.day}</span>
+                  <span class:list={["font-bold", item.hours.toLowerCase().includes('geschlossen') ? "text-on-surface-variant" : "text-on-surface"]}>
+                    {item.hours}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="h-px bg-outline-variant"></div>
+
+          <div>
+            <h3 class="mb-4 text-label-caps text-secondary">Zahlung</h3>
+            <div class="flex flex-wrap gap-3">
+              {paymentMethods.map((method) => (
+                <span class="border border-secondary px-4 py-3 text-label-caps text-secondary">{method}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Barbers (card aligned like Standort) -->
+      <div id="barbers" class="flex flex-col scroll-mt-20">
+        <div class="mb-7 flex items-center gap-4">
+          <span class="h-px w-8 bg-secondary"></span>
+          <h2 class="text-headline-lg uppercase">Barbers</h2>
+        </div>
+
+        <div class="border border-[var(--team-card-border)] bg-[var(--team-card-bg)] backdrop-blur-[var(--team-card-blur)] p-6 md:p-8">
+          <div class="space-y-8">
+            {barbers.map((barber: Barber) => (
+              <div class="group">
+                <div class="flex gap-4">
+                  <!-- Image using 2/3 of the block width -->
+                  <div class="flex-shrink-0 overflow-hidden border border-outline-variant w-2/3 aspect-[4/3]">
+                    <img
+                      src={getBarberImage(barber.name)}
+                      alt={barber.name}
+                      class="w-full h-full object-cover transition duration-700 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <!-- Name + Titel (right column, beside the photo) -->
+                  <div class="flex-1 min-w-0 pt-0.5">
+                    <h4 class="text-title-md uppercase">{barber.name}</h4>
+                    {barber.position && (
+                      <p class="mt-0.5 text-label-caps text-secondary">{barber.position}</p>
+                    )}
+                  </div>
+                </div>
+
+                <!-- About und Link unter dem Bild -->
+                {barber.about && (
+                  <p class="mt-3 text-sm leading-snug text-on-surface-variant">{barber.about}</p>
+                )}
+
+                <a
+                  href="#preise"
+                  class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-on-surface hover:text-primary transition"
+                >
+                  Zu den Preisen
+                  <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"/>
+                    <path d="m12 5 7 7-7 7"/>
+                  </svg>
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

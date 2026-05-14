@@ -1,6 +1,6 @@
 ---
 import { frontmatter as prices } from '../content/prices.md';
-import { frontmatter as c } from '../content/home.md';
+import { frontmatter as s } from '../content/settings.md';
 
 type Service = { name: string; duration?: string; price: string; featured?: boolean };
 type Barber = { name: string; position?: string; image?: string; about?: string; order?: number; services: Service[] };
@@ -11,8 +11,8 @@ const barbers = barbersFiles
   .map((file) => file.frontmatter)
   .sort((a: Barber, b: Barber) => (a.order || 0) - (b.order || 0));
 ---
-<section id="preise" class="border-b border-outline-variant bg-surface px-5 py-16">
-  <div class="mx-auto grid max-w-7xl items-start gap-10 md:grid-cols-[.75fr_1.25fr]">
+<section id="preise" class="border-b border-outline-variant bg-surface px-5 py-16 scroll-mt-20">
+  <div class="mx-auto grid max-w-7xl items-start gap-10 md:grid-cols-[1fr_2fr]">
     <div>
       <div class="mb-7 flex items-center gap-4">
         <span class="h-px w-8 bg-secondary"></span>
@@ -68,16 +68,40 @@ const barbers = barbersFiles
             </details>
           );
         })}
-        <a href={c.bookingUrl} target="_blank" rel="noreferrer" class="inline-flex w-full items-center justify-between bg-primary px-6 py-4 text-label-caps text-on-primary hover:bg-primary-container">
+        <a href={s.bookingUrl} target="_blank" rel="noreferrer" class="inline-flex w-full items-center justify-between bg-primary px-6 py-4 text-label-caps text-on-primary hover:bg-primary-container">
           Termin buchen 
-          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M7 17 17 7"/><path d="M9 7h8v8"/><path d="M14 17H7V10"/>
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+            <path d="M15 3h6v6"/>
+            <path d="M10 14L21 3"/>
           </svg>
         </a>
       </div>
     </div>
-    <div class="relative overflow-hidden">
-      <img src="/images/barber-blueprint-combined.png" alt="Neon Barber Blueprint" class="relative mx-auto max-h-[540px] w-full object-cover" />
+    <div id="standort" class="flex flex-col scroll-mt-20">
+      <div class="mb-7 flex items-center gap-4">
+        <span class="h-px w-8 bg-secondary"></span>
+        <h2 class="text-headline-lg uppercase">Standort</h2>
+      </div>
+      <div class="group relative overflow-hidden border border-outline-variant">
+        <a href={s.mapsUrl} target="_blank" rel="noreferrer" aria-label={`Route zu ${s.name} auf Google Maps öffnen`} class="block">
+          <img 
+            src="/images/location-map.jpg" 
+            alt={`Satellitenkarte zum Standort von ${s.name} in Bülach`} 
+            class="w-full max-h-[540px] object-cover object-[68%_58%] transition duration-700 group-hover:scale-[1.02] [filter:brightness(0.94)_contrast(1.10)_saturate(0.90)]" 
+            loading="lazy" 
+          />
+          <!-- Dynamic map tint based on theme primary color -->
+          <div 
+            class="absolute inset-0 mix-blend-[var(--map-tint-blend)] pointer-events-none"
+            style="background-color: var(--map-tint-color); opacity: var(--map-tint-opacity);"
+          ></div>
+          <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
+          <div class="absolute bottom-3 left-3 flex items-center gap-2 border border-outline-variant bg-surface/95 px-3 py-1 text-label-caps text-secondary backdrop-blur pointer-events-none transition group-hover:border-secondary">
+            <span>📍 {s.address}, {s.zipCity}</span>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </section>

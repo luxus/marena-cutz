@@ -10,7 +10,7 @@ const items = [
   { platform: 'TikTok', imageUrl: '/images/tiktok-7559314663998278934.jpg', alt: 'Barber Detail', permalink: s.tiktokUrl }
 ];
 ---
-<section id="social" class="bg-background px-5 py-20 pb-32 md:pb-20">
+<section id="social" class="bg-background px-5 py-20 pb-32 md:pb-20 scroll-mt-20">
   <div class="mx-auto grid max-w-7xl gap-12 md:grid-cols-[.8fr_1.2fr]">
     <div>
       <div class="mb-8 flex items-center gap-4">
@@ -19,11 +19,11 @@ const items = [
       </div>
       <p class="max-w-sm text-body-lg text-on-surface-variant">Ausgewählte Cuts, Transformationen und Barber-Momente aus Instagram und TikTok.</p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <a href={s.instagramUrl} target="_blank" rel="noreferrer" class="inline-flex items-center gap-4 border border-outline px-6 py-4 text-label-caps text-on-surface hover:border-secondary hover:text-secondary">
-          Instagram <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M9 7h8v8"/><path d="M14 17H7V10"/></svg>
+        <a href={s.instagramUrl} target="_blank" rel="noreferrer" class="inline-flex items-center gap-4 bg-surface px-6 py-4 text-label-caps text-on-surface hover:bg-surface-container hover:text-secondary">
+          Instagram <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>
         </a>
-        <a href={s.tiktokUrl} target="_blank" rel="noreferrer" class="inline-flex items-center gap-4 border border-outline px-6 py-4 text-label-caps text-on-surface hover:border-secondary hover:text-secondary">
-          TikTok <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M9 7h8v8"/><path d="M14 17H7V10"/></svg>
+        <a href={s.tiktokUrl} target="_blank" rel="noreferrer" class="inline-flex items-center gap-4 bg-surface px-6 py-4 text-label-caps text-on-surface hover:bg-surface-container hover:text-secondary">
+          TikTok <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>
         </a>
       </div>
     </div>

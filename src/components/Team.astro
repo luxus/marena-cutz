@@ -1,0 +1,76 @@
+---
+type Barber = {
+  name: string;
+  position?: string;
+  image?: string;
+  about?: string;
+  order?: number;
+  services: any[];
+};
+
+const barbersFiles = Object.values(
+  import.meta.glob<{ frontmatter: Barber }>('../content/barbers/*.md', { eager: true })
+);
+
+const barbers = barbersFiles
+  .map((file) => file.frontmatter)
+  .sort((a: Barber, b: Barber) => (a.order || 0) - (b.order || 0));
+
+// Placeholder images until real barber portraits are added
+const getBarberImage = (name: string) =>
+  name === 'Angelo' ? '/images/cut-1.jpg' : '/images/cut-2.jpg';
+---
+
+<section id="team" class="relative border-b border-outline-variant px-5 py-20">
+  <!-- Mirrored salon interior as background for Über uns + Team -->
+  <div class="absolute inset-0 bg-cover bg-center scale-x-[-1] opacity-40" style="background-image: url('/images/about-salon-hero.png')"></div>
+  <div class="absolute inset-0 bg-surface/85"></div>
+
+  <div class="relative mx-auto max-w-7xl">
+    <div class="mb-10 flex items-center gap-4">
+      <span class="h-px w-8 bg-secondary"></span>
+      <h2 class="text-headline-lg uppercase">Team</h2>
+    </div>
+
+    <!-- Beide Barber in einem Block -->
+    <div class="border border-outline-variant bg-surface/95 p-8 md:p-10">
+      <div class="grid gap-12 md:grid-cols-2">
+        {barbers.map((barber: Barber) => (
+          <div class="group">
+            <div class="overflow-hidden border border-outline-variant">
+              <img
+                src={getBarberImage(barber.name)}
+                alt={barber.name}
+                class="w-full aspect-[4/3] object-cover transition duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="mt-6">
+              <h3 class="text-title-md uppercase">{barber.name}</h3>
+              {barber.position && (
+                <p class="mt-1 text-label-caps text-secondary">{barber.position}</p>
+              )}
+
+              {barber.about && (
+                <p class="mt-4 text-body-lg text-on-surface-variant">{barber.about}</p>
+              )}
+
+              <a
+                href="#preise"
+                class="mt-5 inline-flex items-center gap-2 text-label-caps text-secondary hover:text-primary transition"
+              >
+                Preise ansehen
+                <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+                  <path d="M15 3h6v6"/>
+                  <path d="M10 14L21 3"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
