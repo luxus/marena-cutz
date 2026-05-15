@@ -23,14 +23,14 @@ const barbers = barbersFiles
   .map((file) => file.frontmatter)
   .sort((a: Barber, b: Barber) => (a.order || 0) - (b.order || 0));
 
-const getBarberImage = (name: string) =>
-  name === 'Angelo' ? '/images/cut-1.jpg' : '/images/cut-2.jpg';
+const getBarberImage = (barber: Barber) =>
+  barber.image || (barber.name === 'Angelo' ? '/images/cut-1.jpg' : '/images/cut-2.jpg');
 ---
 
 <section class="relative border-b border-outline-variant px-5 py-16 md:py-20 scroll-mt-20">
   <!-- Shared mirrored salon background for Über uns + Team -->
   <div class="absolute inset-0 bg-cover bg-center scale-x-[-1] opacity-38" style="background-image: url('/images/about-salon-hero.png')"></div>
-  <div class="absolute inset-0 bg-background/48"></div>
+  <div class="absolute inset-0 bg-background/38"></div>
 
   <div class="relative mx-auto max-w-7xl">
     <div class="grid gap-8 lg:gap-12 md:grid-cols-[1.1fr_0.9fr]">
@@ -95,7 +95,7 @@ const getBarberImage = (name: string) =>
                   <!-- Image using 2/3 of the block width -->
                   <div class="flex-shrink-0 overflow-hidden border border-outline-variant w-2/3 aspect-[4/3]">
                     <img
-                      src={getBarberImage(barber.name)}
+                      src={getBarberImage(barber)}
                       alt={barber.name}
                       class="w-full h-full object-cover transition duration-700 group-hover:scale-105"
                       loading="lazy"

@@ -19,12 +19,32 @@ const { title = s.name } = Astro.props;
     <script is:inline>
       (function() {
         try {
-          const savedTheme = localStorage.getItem('theme') || 'architectural';
-          const savedMode = localStorage.getItem('mode') || 
-            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          const params = new URLSearchParams(window.location.search);
+          let theme = params.get('theme');
+          let mode = params.get('mode');
 
-          document.documentElement.dataset.theme = savedTheme;
-          document.documentElement.dataset.mode = savedMode;
+          const validThemes = ['architectural', 'brutalist', 'warm', 'cool'];
+          const validModes = ['light', 'dark'];
+
+          // URL params have highest priority (for testing + sharing)
+          if (!theme || !validThemes.includes(theme)) {
+            theme = localStorage.getItem('theme');
+          }
+          if (!mode || !validModes.includes(mode)) {
+            mode = localStorage.getItem('mode');
+          }
+
+          if (!theme) theme = 'architectural';
+          if (!mode) {
+            mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+
+          // Persist chosen values so they survive when URL params are removed
+          localStorage.setItem('theme', theme);
+          localStorage.setItem('mode', mode);
+
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.dataset.mode = mode;
         } catch (e) {}
       })();
     </script>

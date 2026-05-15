@@ -60,6 +60,12 @@ import { themes, type ThemeName, type ThemeMode, defaultTheme, defaultMode } fro
     localStorage.setItem('theme', theme);
     localStorage.setItem('mode', mode);
 
+    // Keep URL in sync so you can copy the link with current theme+mode
+    const url = new URL(window.location.href);
+    url.searchParams.set('theme', theme);
+    url.searchParams.set('mode', mode);
+    history.replaceState(null, '', url.toString());
+
     const nameEl = document.getElementById('current-theme-name');
     if (nameEl) nameEl.textContent = themeNames[theme] || theme;
 
@@ -68,14 +74,16 @@ import { themes, type ThemeName, type ThemeMode, defaultTheme, defaultMode } fro
   }
 
   function initTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'architectural';
-    let savedMode = localStorage.getItem('mode');
+    // The early script in BaseLayout already decided the correct theme/mode
+    // (URL params > localStorage > system). We just sync the UI labels.
+    const currentTheme = html.dataset.theme || 'architectural';
+    const currentMode = html.dataset.mode || 'dark';
 
-    if (!savedMode) {
-      savedMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
+    const nameEl = document.getElementById('current-theme-name');
+    if (nameEl) nameEl.textContent = themeNames[currentTheme] || currentTheme;
 
-    applyTheme(savedTheme, savedMode);
+    const iconEl = document.getElementById('mode-icon');
+    if (iconEl) iconEl.textContent = currentMode === 'dark' ? '☾' : '☀︎';
   }
 
   const dropdownBtn = document.getElementById('theme-dropdown-button');

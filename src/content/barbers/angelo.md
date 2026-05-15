@@ -1,7 +1,7 @@
 ---
 name: Angelo
 position: Master Barber
-image: /images/angelo.jpg
+image: /images/angelo.png
 order: 1
 about: "Mit jahrelanger Erfahrung und dem Auge fürs Detail sorgt Angelo für präzise Schnitte und perfekte Fades. Ein Master Barber, der sein Handwerk versteht."
 services:

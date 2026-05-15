@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Bebas+Neue&family=Anton:wght@400&display=swap');
 @import "tailwindcss";
 
 /* ============================================
@@ -161,22 +161,22 @@
   --button-primary-fg: var(--color-on-primary);
   --button-radius: 0px;
   --card-radius: 0px;
-  --map-tint-color: #c2410f;
-  --map-tint-opacity: 0.18;
+  --map-tint-color: #9f2e0a;
+  --map-tint-opacity: 0.38;
 
-  /* Team Card Glassmorphism Tokens */
-  --team-card-bg: color-mix(in srgb, var(--color-surface) 20%, transparent);
-  --team-card-border: color-mix(in srgb, var(--color-outline-variant) 35%, transparent);
-  --team-card-blur: 8px;
+  /* Team Card - Brutalist (MAXIMAL BRUTAL - raw concrete, no glass) */
+  --team-card-bg: var(--color-surface);
+  --team-card-border: var(--color-outline-variant);
+  --team-card-blur: 0px;
 
-  /* Typography Tokens - Brutalist */
-  --font-display: 'Helvetica Neue', 'Arial Black', sans-serif;
-  --font-display-weight: 900;
-  --font-display-letter-spacing: -0.08em;
+  /* Typography Tokens - Brutalist (MAXIMAL BRUTAL / DIRTY) */
+  --font-display: 'Anton', 'Bebas Neue', 'Arial Black', sans-serif;
+  --font-display-weight: 400;
+  --font-display-letter-spacing: -0.055em;   /* tight + aggressive, but readable */
 
   --font-sans: 'Helvetica Neue', Arial, sans-serif;
-  --font-sans-weight: 800;
-  --font-sans-letter-spacing: -0.04em;
+  --font-sans-weight: 900;                  /* maximum weight */
+  --font-sans-letter-spacing: -0.05em;      /* very tight, industrial */
 
   --font-mono: 'Space Mono', ui-monospace, monospace;
 }
@@ -221,18 +221,18 @@
   --map-tint-color: #c2410f;
   --map-tint-opacity: 0.20;
 
-  /* Team Card Glassmorphism Tokens */
-  --team-card-bg: color-mix(in srgb, var(--color-surface) 15%, transparent);
-  --team-card-border: color-mix(in srgb, var(--color-outline-variant) 30%, transparent);
-  --team-card-blur: 10px;
+  /* Team Card - Brutalist (MAXIMAL BRUTAL - raw concrete, no glass) */
+  --team-card-bg: var(--color-surface);
+  --team-card-border: var(--color-outline-variant);
+  --team-card-blur: 0px;
 
-  /* Typography Tokens - Brutalist */
-  --font-display: 'Helvetica Neue', 'Arial Black', sans-serif;
-  --font-display-weight: 900;
-  --font-display-letter-spacing: -0.07em;
+  /* Typography Tokens - Brutalist (MAXIMAL BRUTAL / DIRTY) */
+  --font-display: 'Anton', 'Bebas Neue', 'Arial Black', sans-serif;
+  --font-display-weight: 400;
+  --font-display-letter-spacing: -0.055em;
 
   --font-sans: 'Helvetica Neue', Arial, sans-serif;
-  --font-sans-weight: 800;
+  --font-sans-weight: 700;
   --font-sans-letter-spacing: -0.035em;
 
   --font-mono: 'Space Mono', ui-monospace, monospace;
@@ -398,8 +398,8 @@
   --button-primary-fg: var(--color-on-primary);
   --button-radius: 4px;
   --card-radius: 6px;
-  --map-tint-color: #14b8a6;
-  --map-tint-opacity: 0.15;
+  --map-tint-color: #0f766e;
+  --map-tint-opacity: 0.12;
 
   /* Team Card Glassmorphism Tokens */
   --team-card-bg: color-mix(in srgb, var(--color-surface) 22%, transparent);

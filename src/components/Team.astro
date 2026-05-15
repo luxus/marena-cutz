@@ -16,9 +16,8 @@ const barbers = barbersFiles
   .map((file) => file.frontmatter)
   .sort((a: Barber, b: Barber) => (a.order || 0) - (b.order || 0));
 
-// Placeholder images until real barber portraits are added
-const getBarberImage = (name: string) =>
-  name === 'Angelo' ? '/images/cut-1.jpg' : '/images/cut-2.jpg';
+const getBarberImage = (barber: Barber) =>
+  barber.image || (barber.name === 'Angelo' ? '/images/cut-1.jpg' : '/images/cut-2.jpg');
 ---
 
 <section id="team" class="relative border-b border-outline-variant px-5 py-20">
@@ -39,7 +38,7 @@ const getBarberImage = (name: string) =>
           <div class="group">
             <div class="overflow-hidden border border-outline-variant">
               <img
-                src={getBarberImage(barber.name)}
+                src={getBarberImage(barber)}
                 alt={barber.name}
                 class="w-full aspect-[4/3] object-cover transition duration-700 group-hover:scale-105"
                 loading="lazy"
