@@ -1,31 +1,34 @@
 ---
-import { themes, type ThemeName, type ThemeMode, defaultTheme, defaultMode } from '../lib/themes';
+import { themes } from '../lib/themes';
 ---
 
 <div class="flex items-center gap-2 text-sm">
   <!-- Theme Dropdown -->
-  <div class="relative group">
+  <div class="relative">
     <button 
       id="theme-dropdown-button"
-      class="flex items-center gap-2 rounded border border-outline-variant bg-surface px-3 py-1.5 text-on-surface hover:bg-surface-container transition"
-      aria-haspopup="true"
+      class="flex items-center gap-2 rounded border border-outline-variant bg-surface px-3 py-1.5 text-on-surface hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary transition"
+      aria-haspopup="listbox"
       aria-expanded="false"
+      aria-controls="theme-dropdown-menu"
     >
       <span id="current-theme-name" class="text-label-caps">Architectural Neon</span>
-      <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
       </svg>
     </button>
 
     <div 
       id="theme-dropdown-menu"
-      class="absolute bottom-full right-0 mb-1 hidden w-48 rounded border border-outline-variant bg-surface py-1 shadow-lg z-50 group-focus-within:block"
+      class="theme-menu absolute bottom-full right-0 mb-1.5 w-48 rounded border border-outline-variant bg-surface py-1 shadow-lg z-50 hidden"
+      role="listbox"
     >
       {Object.entries(themes).map(([key, theme]) => (
         <button
           type="button"
           data-theme={key}
-          class="theme-option w-full px-4 py-2 text-left text-sm hover:bg-surface-container text-on-surface flex items-center justify-between"
+          class="theme-option w-full px-4 py-2 text-left text-sm hover:bg-surface-container text-on-surface focus:bg-surface-container focus:outline-none flex items-center justify-between"
+          role="option"
         >
           <span>{theme.name}</span>
         </button>
@@ -36,10 +39,10 @@ import { themes, type ThemeName, type ThemeMode, defaultTheme, defaultMode } fro
   <!-- Light / Dark Toggle -->
   <button
     id="mode-toggle"
-    class="flex h-8 w-8 items-center justify-center rounded border border-outline-variant bg-surface text-on-surface hover:bg-surface-container transition"
+    class="flex h-8 w-8 items-center justify-center rounded border border-outline-variant bg-surface text-on-surface hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary transition"
     aria-label="Toggle light/dark mode"
   >
-    <span id="mode-icon" class="text-lg">☾</span>
+    <span id="mode-icon" class="text-lg" aria-hidden="true">☾</span>
   </button>
 </div>
 
@@ -60,7 +63,6 @@ import { themes, type ThemeName, type ThemeMode, defaultTheme, defaultMode } fro
     localStorage.setItem('theme', theme);
     localStorage.setItem('mode', mode);
 
-    // Keep URL in sync so you can copy the link with current theme+mode
     const url = new URL(window.location.href);
     url.searchParams.set('theme', theme);
     url.searchParams.set('mode', mode);
@@ -74,8 +76,6 @@ import { themes, type ThemeName, type ThemeMode, defaultTheme, defaultMode } fro
   }
 
   function initTheme() {
-    // The early script in BaseLayout already decided the correct theme/mode
-    // (URL params > localStorage > system). We just sync the UI labels.
     const currentTheme = html.dataset.theme || 'architectural';
     const currentMode = html.dataset.mode || 'dark';
 
@@ -89,17 +89,43 @@ import { themes, type ThemeName, type ThemeMode, defaultTheme, defaultMode } fro
   const dropdownBtn = document.getElementById('theme-dropdown-button');
   const dropdownMenu = document.getElementById('theme-dropdown-menu');
 
+  function closeMenu() {
+    if (!dropdownMenu) return;
+    dropdownMenu.classList.add('hidden');
+    dropdownMenu.classList.remove('open');
+    dropdownBtn?.setAttribute('aria-expanded', 'false');
+  }
+
+  function openMenu() {
+    if (!dropdownMenu) return;
+    dropdownMenu.classList.remove('hidden');
+    // trigger next frame for transition
+    requestAnimationFrame(() => {
+      dropdownMenu.classList.add('open');
+    });
+    dropdownBtn?.setAttribute('aria-expanded', 'true');
+  }
+
   if (dropdownBtn && dropdownMenu) {
-    dropdownBtn.addEventListener('click', () => {
-      dropdownMenu.classList.toggle('hidden');
-      dropdownMenu.classList.toggle('block');
+    dropdownBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (dropdownMenu.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
 
+    // Close on outside click
     document.addEventListener('click', (e) => {
       if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-        dropdownMenu.classList.add('hidden');
-        dropdownMenu.classList.remove('block');
+        closeMenu();
       }
+    });
+
+    // Keyboard support
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
     });
 
     dropdownMenu.querySelectorAll('.theme-option').forEach((btn) => {
@@ -107,8 +133,7 @@ import { themes, type ThemeName, type ThemeMode, defaultTheme, defaultMode } fro
         const theme = btn.getAttribute('data-theme');
         const currentMode = html.dataset.mode || 'dark';
         applyTheme(theme, currentMode);
-        dropdownMenu.classList.add('hidden');
-        dropdownMenu.classList.remove('block');
+        closeMenu();
       });
     });
   }
