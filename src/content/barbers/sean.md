@@ -7,9 +7,9 @@ about: "Sean ist ein leidenschaftlicher Barber, der sich auf saubere Übergänge
 services:
   - name: Haarschnitt
     duration: 45 Min
-    price: CHF 25.–
+    price: 25 CHF
     featured: true
   - name: Haarschnitt + Bart
     duration: 1 Std
-    price: CHF 30.–
+    price: 30 CHF 
 ---

@@ -1,6 +1,6 @@
 ---
 import { frontmatter as s } from '../content/settings.md';
-import ThemeSwitcher from './ThemeSwitcher.astro';
+import ThemeSwitcher from './ThemeSwitcher.svelte';
 import InstagramIcon from './InstagramIcon.astro';
 import TikTokIcon from './TikTokIcon.astro';
 ---
@@ -12,21 +12,21 @@ import TikTokIcon from './TikTokIcon.astro';
     </div>
     <p class="text-body-lg text-on-surface-variant">© 2026 {s.name}. Alle Rechte vorbehalten.</p>
     <div class="flex items-center gap-4 text-body-lg text-on-surface-variant">
-      <a href="/impressum/" class="hover:text-primary">Impressum</a>
-      <a href="/datenschutz/" class="hover:text-primary">Datenschutz</a>
+      <a href="/impressum/" class="link-underline hover:text-primary">Impressum</a>
+      <a href="/datenschutz/" class="link-underline hover:text-primary">Datenschutz</a>
 
       <div class="flex gap-3 pl-3 border-l border-outline-variant text-on-surface-variant">
-        <a href={s.instagramUrl} target="_blank" rel="noreferrer" aria-label="Instagram" class="hover:text-primary">
+        <a href={s.instagramUrl} target="_blank" rel="noreferrer" aria-label="Instagram" class="social-icon-link hover:text-primary">
           <InstagramIcon />
         </a>
-        <a href={s.tiktokUrl} target="_blank" rel="noreferrer" aria-label="TikTok" class="hover:text-primary">
+        <a href={s.tiktokUrl} target="_blank" rel="noreferrer" aria-label="TikTok" class="social-icon-link hover:text-primary">
           <TikTokIcon />
         </a>
       </div>
 
-      <!-- Theme Switcher -->
+      <!-- Theme Switcher (now full Svelte 5 island with KV session sync) -->
       <div class="pl-3 border-l border-outline-variant">
-        <ThemeSwitcher />
+        <ThemeSwitcher client:load />
       </div>
     </div>
   </div>

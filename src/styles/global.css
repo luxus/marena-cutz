@@ -1,36 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Bebas+Neue&family=Anton:wght@400&display=swap');
+/* ==========================================================================
+   Marena Cutz — Premium Global Styles
+   Tailwind 4 + 8-theme runtime system (Architectural Neon / Brutalist / Warm Minimal / Cool Industrial × light/dark)
+   Premium restrained motion, first-paint polished, editorial barber feel.
+   ========================================================================== */
+
 @import "tailwindcss";
 
-/* Respect reduced motion globally - disable all animations/transitions.
-   Broad * selector is intentional for strict compliance with the requirement (covers Tailwind + custom).
-   Per-feature JS matchMedia guards (Svelte, observers, ViewTransition) provide the real safety net.
-   If decorative animations are added later that should survive reduced-motion, an opt-out class can be introduced. */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    transition-timing-function: linear !important;
-    scroll-behavior: auto !important;
-  }
-  /* Ensure scroll-reveal elements (which now have the hiding class in source for no-flash on non-reduced)
-     remain fully visible for reduced-motion users from first paint, without relying on late JS. */
-  .scroll-reveal {
-    opacity: 1 !important;
-    transform: none !important;
-  }
+/* Map Tailwind semantic colors to our runtime CSS variables (set via data-theme + data-mode attributes + the blocks below).
+   This enables instant live theme switching with full View Transitions support. */
+@theme inline {
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+  --color-surface-dim: var(--color-surface-dim);
+  --color-surface-bright: var(--color-surface-bright);
+  --color-surface-container-lowest: var(--color-surface-container-lowest);
+  --color-surface-container-low: var(--color-surface-container-low);
+  --color-surface-container: var(--color-surface-container);
+  --color-surface-container-high: var(--color-surface-container-high);
+  --color-surface-container-highest: var(--color-surface-container-highest);
+  --color-on-surface: var(--color-on-surface);
+  --color-on-surface-variant: var(--color-on-surface-variant);
+  --color-primary: var(--color-primary);
+  --color-on-primary: var(--color-on-primary);
+  --color-primary-container: var(--color-primary-container);
+  --color-on-primary-container: var(--color-on-primary-container);
+  --color-secondary: var(--color-secondary);
+  --color-on-secondary: var(--color-on-secondary);
+  --color-secondary-container: var(--color-secondary-container);
+  --color-on-secondary-container: var(--color-on-secondary-container);
+  --color-outline: var(--color-outline);
+  --color-outline-variant: var(--color-outline-variant);
+  --color-error: var(--color-error);
+  --color-on-error: var(--color-on-error);
 }
 
-/* ============================================
-   TOKEN-BASED THEME SYSTEM
-   ============================================ */
-
-/* Default tokens (Architectural Neon - Dark) */
+/* --------------------------------------------------------------------------
+   DEFAULT / FALLBACK PALETTE (progressive enhancement contract)
+   Architectural Neon (dark) — the canonical brand theme from DESIGN.md.
+   Applied to :root / html when no data-theme/data-mode attributes are present
+   (no-JS users, bootstrap script failure in the try/catch, or very early paint).
+   The 8 specific [data-...] blocks below override when the inline bootstrap succeeds.
+   This guarantees the site is *always* fully themed and beautiful, even with JS disabled.
+--------------------------------------------------------------------------- */
 :root,
-[data-theme="architectural"][data-mode="dark"] {
-  /* Semantic Colors */
+html {
+  /* Architectural Neon — dark (matches the first [data-...] block and original DESIGN) */
   --color-background: #131313;
   --color-surface: #131313;
   --color-surface-dim: #131313;
@@ -40,59 +54,29 @@
   --color-surface-container: #201f1f;
   --color-surface-container-high: #2a2a2a;
   --color-surface-container-highest: #353534;
-
   --color-on-surface: #e5e2e1;
   --color-on-surface-variant: #e0c0af;
-
   --color-primary: #ffb68b;
   --color-on-primary: #522300;
   --color-primary-container: #ff7a00;
   --color-on-primary-container: #5c2800;
-
   --color-secondary: #d3fbff;
   --color-on-secondary: #00363a;
   --color-secondary-container: #00eefc;
   --color-on-secondary-container: #00686f;
-
   --color-outline: #a78b7c;
   --color-outline-variant: #584235;
-
   --color-error: #ffb4ab;
   --color-on-error: #690005;
-
-  /* Heading color (for section titles) */
-  --color-heading: #f5f3f0;
-  --color-on-background: #e5e2e1;
-
-  /* Border Tokens */
-  --border-radius-sm: 0px;
-  --border-radius-md: 0px;
-  --border-radius-lg: 0px;
-  --border-width: 1px;
-  --border-color: var(--color-outline-variant);
-
-  /* Button Tokens */
-  --button-primary-bg: var(--color-primary);
-  --button-primary-fg: var(--color-on-primary);
-  --button-primary-hover: color-mix(in srgb, var(--color-primary) 85%, black);
-  --button-radius: var(--border-radius-sm);
-
-  /* Card Tokens */
-  --card-bg: var(--color-surface-container);
-  --card-border-color: var(--color-outline-variant);
-  --card-radius: var(--border-radius-sm);
-
-  /* Map / Image Tint Tokens */
-  --map-tint-color: var(--color-primary);
-  --map-tint-opacity: 0.12;
+  /* Polish extras (same as architectural dark) */
+  --team-card-bg: rgba(32, 31, 31, 0.92);
+  --team-card-border: #584235;
+  --team-card-blur: 6px;
+  --map-tint-color: #ffb68b;
+  --map-tint-opacity: 0.09;
   --map-tint-blend: multiply;
 
-  /* Team Card Glassmorphism Tokens */
-  --team-card-bg: color-mix(in srgb, var(--color-surface) 30%, transparent);
-  --team-card-border: color-mix(in srgb, var(--color-outline-variant) 25%, transparent);
-  --team-card-blur: 14px;
-
-  /* Typography Tokens */
+  /* Architectural Neon (default) - from original design system */
   --font-display: 'Bodoni Moda', ui-serif, serif;
   --font-display-weight: 700;
   --font-display-letter-spacing: -0.03em;
@@ -104,7 +88,70 @@
   --font-mono: 'Space Mono', ui-monospace, monospace;
 }
 
-/* Architectural Neon - Light */
+/* Base document colors — ensures headings, text, and sections pick up the active theme */
+html {
+  color: var(--color-on-surface);
+  background-color: var(--color-background);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  color: inherit;
+  background-color: inherit;
+  font-family: var(--font-sans);
+  font-weight: var(--font-sans-weight, 400);
+  letter-spacing: var(--font-sans-letter-spacing, 0);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+p, li, a {
+  font-family: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+}
+
+/* --------------------------------------------------------------------------
+   8-Theme Color System (source of truth mirrored from src/lib/themes.ts)
+   Applied via attribute selectors so dataset changes + startViewTransition
+   produce smooth, premium cross-fades between editorial palettes.
+   Extra vars for component polish (team cards, map overlays, etc.).
+   These have higher specificity and override the :root fallback when present.
+--------------------------------------------------------------------------- */
+
+[data-theme="architectural"][data-mode="dark"] {
+  --color-background: #131313;
+  --color-surface: #131313;
+  --color-surface-dim: #131313;
+  --color-surface-bright: #393939;
+  --color-surface-container-lowest: #0e0e0e;
+  --color-surface-container-low: #1c1b1b;
+  --color-surface-container: #201f1f;
+  --color-surface-container-high: #2a2a2a;
+  --color-surface-container-highest: #353534;
+  --color-on-surface: #e5e2e1;
+  --color-on-surface-variant: #e0c0af;
+  --color-primary: #ffb68b;
+  --color-on-primary: #522300;
+  --color-primary-container: #ff7a00;
+  --color-on-primary-container: #5c2800;
+  --color-secondary: #d3fbff;
+  --color-on-secondary: #00363a;
+  --color-secondary-container: #00eefc;
+  --color-on-secondary-container: #00686f;
+  --color-outline: #a78b7c;
+  --color-outline-variant: #584235;
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  /* Polish extras */
+  --team-card-bg: rgba(32, 31, 31, 0.92);
+  --team-card-border: #584235;
+  --team-card-blur: 6px;
+  --map-tint-color: #ffb68b;
+  --map-tint-opacity: 0.09;
+  --map-tint-blend: multiply;
+}
+
 [data-theme="architectural"][data-mode="light"] {
   --color-background: #f5f3f0;
   --color-surface: #f5f3f0;
@@ -115,37 +162,28 @@
   --color-surface-container: #e8e4df;
   --color-surface-container-high: #d9d3ca;
   --color-surface-container-highest: #c9c2b8;
-
   --color-on-surface: #2c2520;
   --color-on-surface-variant: #5c5248;
-
   --color-primary: #c45c2e;
   --color-on-primary: #ffffff;
   --color-primary-container: #f5d3c0;
   --color-on-primary-container: #3d1f12;
-
   --color-secondary: #3a6b7a;
   --color-on-secondary: #ffffff;
   --color-secondary-container: #c5e4f0;
   --color-on-secondary-container: #0f2a33;
-
   --color-outline: #8a7d70;
   --color-outline-variant: #c9c2b8;
-
   --color-error: #b3261e;
   --color-on-error: #ffffff;
-
-  --color-heading: #2c2520;
-  --color-on-background: #2c2520;
-
-  --button-primary-bg: var(--color-primary);
-  --button-primary-fg: var(--color-on-primary);
-  --button-primary-hover: color-mix(in srgb, var(--color-primary) 85%, white);
-  --map-tint-color: var(--color-primary);
-  --map-tint-opacity: 0.25;
+  --team-card-bg: rgba(232, 228, 223, 0.92);
+  --team-card-border: #c9c2b8;
+  --team-card-blur: 4px;
+  --map-tint-color: #c45c2e;
+  --map-tint-opacity: 0.07;
+  --map-tint-blend: multiply;
 }
 
-/* Brutalist - Dark */
 [data-theme="brutalist"][data-mode="dark"] {
   --color-background: #0f0f0f;
   --color-surface: #0f0f0f;
@@ -156,57 +194,39 @@
   --color-surface-container: #1a1a1a;
   --color-surface-container-high: #252525;
   --color-surface-container-highest: #303030;
-
   --color-on-surface: #e5e2e1;
   --color-on-surface-variant: #a3a3a3;
-
   --color-primary: #e05a2b;
   --color-on-primary: #ffffff;
   --color-primary-container: #5c2a1f;
   --color-on-primary-container: #f5d3c0;
-
   --color-secondary: #64748b;
   --color-on-secondary: #0f172a;
   --color-secondary-container: #334155;
   --color-on-secondary-container: #e2e8f0;
-
   --color-outline: #57534e;
   --color-outline-variant: #44403c;
-
   --color-error: #ef4444;
   --color-on-error: #ffffff;
-
-  --color-heading: #e5e2e1;
-  --color-on-background: #e5e2e1;
-
-  --border-radius-sm: 0px;
-  --border-radius-md: 0px;
-  --border-radius-lg: 0px;
-  --button-primary-bg: var(--color-primary);
-  --button-primary-fg: var(--color-on-primary);
-  --button-radius: 0px;
-  --card-radius: 0px;
-  --map-tint-color: #9f2e0a;
-  --map-tint-opacity: 0.38;
-
-  /* Team Card - Brutalist (MAXIMAL BRUTAL - raw concrete, no glass) */
-  --team-card-bg: var(--color-surface);
-  --team-card-border: var(--color-outline-variant);
+  --team-card-bg: rgba(26, 26, 26, 0.95);
+  --team-card-border: #44403c;
   --team-card-blur: 0px;
+  --map-tint-color: #e05a2b;
+  --map-tint-opacity: 0.11;
+  --map-tint-blend: screen;
 
-  /* Typography Tokens - Brutalist (MAXIMAL BRUTAL / DIRTY) */
+  /* Brutalist — raw, industrial, aggressive (from original design) */
   --font-display: 'Anton', 'Bebas Neue', 'Arial Black', sans-serif;
   --font-display-weight: 400;
-  --font-display-letter-spacing: -0.055em;   /* tight + aggressive, but readable */
+  --font-display-letter-spacing: -0.055em;
 
   --font-sans: 'Helvetica Neue', Arial, sans-serif;
-  --font-sans-weight: 900;                  /* maximum weight */
-  --font-sans-letter-spacing: -0.05em;      /* very tight, industrial */
+  --font-sans-weight: 900;
+  --font-sans-letter-spacing: -0.05em;
 
   --font-mono: 'Space Mono', ui-monospace, monospace;
 }
 
-/* Brutalist - Light */
 [data-theme="brutalist"][data-mode="light"] {
   --color-background: #f4f1eb;
   --color-surface: #f4f1eb;
@@ -217,54 +237,28 @@
   --color-surface-container: #e8e3d9;
   --color-surface-container-high: #d9d1c3;
   --color-surface-container-highest: #c9bea9;
-
   --color-on-surface: #1f1c18;
   --color-on-surface-variant: #4a4236;
-
   --color-primary: #c2410f;
   --color-on-primary: #ffffff;
   --color-primary-container: #f5d3c0;
   --color-on-primary-container: #3d1f12;
-
   --color-secondary: #334155;
   --color-on-secondary: #ffffff;
   --color-secondary-container: #cbd5e1;
   --color-on-secondary-container: #0f172a;
-
   --color-outline: #78716c;
   --color-outline-variant: #c9bea9;
-
   --color-error: #b91c1c;
   --color-on-error: #ffffff;
-
-  --color-heading: #1f1c18;
-  --color-on-background: #1f1c18;
-
-  --border-radius-sm: 0px;
-  --border-radius-md: 0px;
-  --button-radius: 0px;
-  --card-radius: 0px;
-  --map-tint-color: #c2410f;
-  --map-tint-opacity: 0.20;
-
-  /* Team Card - Brutalist (MAXIMAL BRUTAL - raw concrete, no glass) */
-  --team-card-bg: var(--color-surface);
-  --team-card-border: var(--color-outline-variant);
+  --team-card-bg: rgba(232, 227, 217, 0.9);
+  --team-card-border: #c9bea9;
   --team-card-blur: 0px;
-
-  /* Typography Tokens - Brutalist (MAXIMAL BRUTAL / DIRTY) */
-  --font-display: 'Anton', 'Bebas Neue', 'Arial Black', sans-serif;
-  --font-display-weight: 400;
-  --font-display-letter-spacing: -0.055em;
-
-  --font-sans: 'Helvetica Neue', Arial, sans-serif;
-  --font-sans-weight: 700;
-  --font-sans-letter-spacing: -0.035em;
-
-  --font-mono: 'Space Mono', ui-monospace, monospace;
+  --map-tint-color: #c2410f;
+  --map-tint-opacity: 0.08;
+  --map-tint-blend: multiply;
 }
 
-/* Warm Minimal - Dark */
 [data-theme="warm"][data-mode="dark"] {
   --color-background: #1c1814;
   --color-surface: #1c1814;
@@ -275,45 +269,28 @@
   --color-surface-container: #252018;
   --color-surface-container-high: #2f2923;
   --color-surface-container-highest: #3a332b;
-
   --color-on-surface: #e8e0d3;
   --color-on-surface-variant: #c5b9a5;
-
   --color-primary: #d4a373;
   --color-on-primary: #3a2f25;
   --color-primary-container: #6b4e31;
   --color-on-primary-container: #f5e1d3;
-
   --color-secondary: #b8a38c;
   --color-on-secondary: #2c2520;
   --color-secondary-container: #4a3f33;
   --color-on-secondary-container: #e8e0d3;
-
   --color-outline: #8a7762;
   --color-outline-variant: #4a3f33;
-
   --color-error: #e07a5f;
   --color-on-error: #3a2f25;
-
-  --color-heading: #e8e0d3;
-  --color-on-background: #e8e0d3;
-
-  --border-radius-sm: 4px;
-  --border-radius-md: 8px;
-  --border-radius-lg: 12px;
-  --button-primary-bg: var(--color-primary);
-  --button-primary-fg: var(--color-on-primary);
-  --button-radius: 6px;
-  --card-radius: 8px;
+  --team-card-bg: rgba(37, 32, 24, 0.92);
+  --team-card-border: #4a3f33;
+  --team-card-blur: 8px;
   --map-tint-color: #d4a373;
-  --map-tint-opacity: 0.18;
+  --map-tint-opacity: 0.1;
+  --map-tint-blend: multiply;
 
-  /* Team Card Glassmorphism Tokens */
-  --team-card-bg: color-mix(in srgb, var(--color-surface) 35%, transparent);
-  --team-card-border: color-mix(in srgb, var(--color-outline-variant) 20%, transparent);
-  --team-card-blur: 18px;
-
-  /* Typography Tokens - Warm Minimal */
+  /* Warm Minimal — elegant serif display (from original design) */
   --font-display: 'Playfair Display', ui-serif, serif;
   --font-display-weight: 400;
   --font-display-letter-spacing: 0.06em;
@@ -325,7 +302,6 @@
   --font-mono: 'Space Mono', ui-monospace, monospace;
 }
 
-/* Warm Minimal - Light */
 [data-theme="warm"][data-mode="light"] {
   --color-background: #f8f5f0;
   --color-surface: #f8f5f0;
@@ -336,57 +312,28 @@
   --color-surface-container: #f0e9df;
   --color-surface-container-high: #e5d9c9;
   --color-surface-container-highest: #d9c9b3;
-
   --color-on-surface: #2c2520;
   --color-on-surface-variant: #6b5f52;
-
   --color-primary: #9c6644;
   --color-on-primary: #ffffff;
   --color-primary-container: #f5e1d3;
   --color-on-primary-container: #4a2f1f;
-
   --color-secondary: #7d6e5d;
   --color-on-secondary: #ffffff;
   --color-secondary-container: #e8dccf;
   --color-on-secondary-container: #3a2f25;
-
   --color-outline: #a38d74;
   --color-outline-variant: #d9c9b3;
-
   --color-error: #b45309;
   --color-on-error: #ffffff;
-
-  --color-heading: #2c2520;
-  --color-on-background: #2c2520;
-
-  --border-radius-sm: 4px;
-  --border-radius-md: 8px;
-  --border-radius-lg: 12px;
-  --button-primary-bg: var(--color-primary);
-  --button-primary-fg: var(--color-on-primary);
-  --button-radius: 6px;
-  --card-radius: 8px;
+  --team-card-bg: rgba(240, 233, 223, 0.95);
+  --team-card-border: #d9c9b3;
+  --team-card-blur: 6px;
   --map-tint-color: #9c6644;
-  --map-tint-opacity: 0.18;
-
-  /* Team Card Glassmorphism Tokens */
-  --team-card-bg: color-mix(in srgb, var(--color-surface) 28%, transparent);
-  --team-card-border: color-mix(in srgb, var(--color-outline-variant) 18%, transparent);
-  --team-card-blur: 20px;
-
-  /* Typography Tokens - Warm Minimal */
-  --font-display: 'Playfair Display', ui-serif, serif;
-  --font-display-weight: 400;
-  --font-display-letter-spacing: 0.07em;
-
-  --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
-  --font-sans-weight: 400;
-  --font-sans-letter-spacing: 0.05em;
-
-  --font-mono: 'Space Mono', ui-monospace, monospace;
+  --map-tint-opacity: 0.06;
+  --map-tint-blend: multiply;
 }
 
-/* Cool Industrial - Dark */
 [data-theme="cool"][data-mode="dark"] {
   --color-background: #0f172a;
   --color-surface: #0f172a;
@@ -397,45 +344,28 @@
   --color-surface-container: #334155;
   --color-surface-container-high: #475569;
   --color-surface-container-highest: #64748b;
-
   --color-on-surface: #e2e8f0;
   --color-on-surface-variant: #94a3b8;
-
   --color-primary: #14b8a6;
   --color-on-primary: #0f172a;
   --color-primary-container: #0f766e;
   --color-on-primary-container: #ccfbf1;
-
   --color-secondary: #64748b;
   --color-on-secondary: #0f172a;
   --color-secondary-container: #475569;
   --color-on-secondary-container: #e2e8f0;
-
   --color-outline: #475569;
   --color-outline-variant: #334155;
-
   --color-error: #f87171;
   --color-on-error: #0f172a;
-
-  --color-heading: #e2e8f0;
-  --color-on-background: #e2e8f0;
-
-  --border-radius-sm: 2px;
-  --border-radius-md: 4px;
-  --border-radius-lg: 6px;
-  --button-primary-bg: var(--color-primary);
-  --button-primary-fg: var(--color-on-primary);
-  --button-radius: 4px;
-  --card-radius: 6px;
-  --map-tint-color: #0f766e;
+  --team-card-bg: rgba(51, 65, 85, 0.88);
+  --team-card-border: #334155;
+  --team-card-blur: 10px;
+  --map-tint-color: #14b8a6;
   --map-tint-opacity: 0.12;
+  --map-tint-blend: screen;
 
-  /* Team Card Glassmorphism Tokens */
-  --team-card-bg: color-mix(in srgb, var(--color-surface) 22%, transparent);
-  --team-card-border: color-mix(in srgb, var(--color-outline-variant) 25%, transparent);
-  --team-card-blur: 12px;
-
-  /* Typography Tokens - Cool Industrial */
+  /* Cool Industrial — modern geometric (from original) */
   --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
   --font-display-weight: 650;
   --font-display-letter-spacing: -0.025em;
@@ -447,7 +377,6 @@
   --font-mono: 'Space Mono', ui-monospace, monospace;
 }
 
-/* Cool Industrial - Light */
 [data-theme="cool"][data-mode="light"] {
   --color-background: #f1f5f9;
   --color-surface: #f1f5f9;
@@ -458,131 +387,430 @@
   --color-surface-container: #e2e8f0;
   --color-surface-container-high: #cbd5e1;
   --color-surface-container-highest: #94a3b8;
-
   --color-on-surface: #1e293b;
   --color-on-surface-variant: #475569;
-
   --color-primary: #0f766e;
   --color-on-primary: #ffffff;
   --color-primary-container: #ccfbf1;
   --color-on-primary-container: #134e4b;
-
   --color-secondary: #475569;
   --color-on-secondary: #ffffff;
   --color-secondary-container: #e0e7ff;
   --color-on-secondary-container: #1e293b;
-
   --color-outline: #64748b;
   --color-outline-variant: #94a3b8;
-
   --color-error: #b91c1c;
   --color-on-error: #ffffff;
-
-  --color-heading: #1e293b;
-  --color-on-background: #1e293b;
-
-  --border-radius-sm: 2px;
-  --border-radius-md: 4px;
-  --border-radius-lg: 6px;
-  --button-primary-bg: var(--color-primary);
-  --button-primary-fg: var(--color-on-primary);
-  --button-radius: 4px;
-  --card-radius: 6px;
+  --team-card-bg: rgba(226, 232, 240, 0.9);
+  --team-card-border: #94a3b8;
+  --team-card-blur: 4px;
   --map-tint-color: #0f766e;
-  --map-tint-opacity: 0.18;
-
-  /* Team Card Glassmorphism Tokens */
-  --team-card-bg: color-mix(in srgb, var(--color-surface) 18%, transparent);
-  --team-card-border: color-mix(in srgb, var(--color-outline-variant) 22%, transparent);
-  --team-card-blur: 14px;
-
-  /* Typography Tokens - Cool Industrial */
-  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
-  --font-display-weight: 550;
-  --font-display-letter-spacing: -0.02em;
-
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-sans-weight: 450;
-  --font-sans-letter-spacing: 0;
-
-  --font-mono: 'Space Mono', ui-monospace, monospace;
+  --map-tint-opacity: 0.07;
+  --map-tint-blend: multiply;
 }
 
-/* ============================================
-   TAILWIND THEME MAPPING
-   ============================================ */
-@theme {
-  --color-surface: var(--color-surface);
-  --color-surface-dim: var(--color-surface-dim);
-  --color-surface-bright: var(--color-surface-bright);
-  --color-surface-container-lowest: var(--color-surface-container-lowest);
-  --color-surface-container-low: var(--color-surface-container-low);
-  --color-surface-container: var(--color-surface-container);
-  --color-surface-container-high: var(--color-surface-container-high);
-  --color-surface-container-highest: var(--color-surface-container-highest);
+/* --------------------------------------------------------------------------
+   Typography Scale — Premium editorial barber aesthetic
+   These are defined as Tailwind components so they have correct layer ordering
+   and are not overridden by utilities or base styles.
+--------------------------------------------------------------------------- */
+@layer components {
+  .text-display-lg {
+    font-family: var(--font-display);
+    font-size: 84px;
+    font-weight: var(--font-display-weight, 900);
+    letter-spacing: var(--font-display-letter-spacing, -0.02em);
+    line-height: 90px;
+    color: inherit;
+  }
 
-  --color-on-surface: var(--color-on-surface);
-  --color-on-surface-variant: var(--color-on-surface-variant);
+  .text-headline-lg {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: var(--font-display-weight, 700);
+    letter-spacing: var(--font-display-letter-spacing, -0.03em);
+    line-height: 42px;
+    color: inherit;
+  }
 
-  --color-primary: var(--color-primary);
-  --color-on-primary: var(--color-on-primary);
-  --color-primary-container: var(--color-primary-container);
-  --color-on-primary-container: var(--color-on-primary-container);
+  @media (min-width: 768px) {
+    .text-headline-lg {
+      font-size: 48px;
+      line-height: 56px;
+    }
+  }
 
-  --color-secondary: var(--color-secondary);
-  --color-on-secondary: var(--color-on-secondary);
-  --color-secondary-container: var(--color-secondary-container);
-  --color-on-secondary-container: var(--color-on-secondary-container);
+  .text-title-md {
+    font-family: var(--font-sans);
+    font-size: 20px;
+    font-weight: var(--font-sans-weight, 600);
+    letter-spacing: var(--font-sans-letter-spacing, 0.05em);
+    line-height: 28px;
+    text-transform: uppercase;
+    color: inherit;
+  }
 
-  --color-outline: var(--color-outline);
-  --color-outline-variant: var(--color-outline-variant);
+  .text-body-lg {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    color: inherit;
+  }
 
-  --color-error: var(--color-error);
-  --color-on-error: var(--color-on-error);
-
-  --color-background: var(--color-background);
-  --color-on-background: var(--color-on-background);
-
-  /* Aliases */
-  --color-bg: var(--color-background);
-  --color-panel: var(--color-surface-container);
-  --color-muted: var(--color-on-surface-variant);
-  --color-neon: var(--color-secondary);
-  --color-orangechair: var(--color-primary);
-
-  --font-sans: var(--font-sans);
-  --font-display: var(--font-display);
-  --font-mono: var(--font-mono);
-
-  /* Container bump (DESIGN.md target: 1440px instead of Tailwind default 1280px) */
-  --container-7xl: 90rem;
+  .text-label-caps {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: inherit;
+  }
 }
 
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  background: var(--color-background);
-  color: var(--color-on-background);
-  font-family: var(--font-sans);
+/* Base heading safety (in case custom classes are omitted) */
+h1, h2, h3, h4 {
+  font-weight: 600;
+  line-height: 1.2;
+  text-wrap: balance;
+  color: inherit;
 }
 
-::selection {
-  background: var(--color-secondary-container);
-  color: var(--color-on-secondary-container);
+/* --------------------------------------------------------------------------
+   Premium Scroll Reveals — Polished first paint + intentional motion
+   - Content is 100% visible & styled on first HTML paint (no white/half-loaded phase).
+   - Single vanilla enhancer (in BaseLayout) preps off-screen elements AFTER initial paint
+     (using reveal-prep + transition:none to avoid any flash).
+   - Elegant 420ms eased fade + lift + micro-scale on scroll, with sibling stagger.
+   - Fully respects reduced-motion + progressive enhancement.
+--------------------------------------------------------------------------- */
+
+.scroll-reveal {
+  transition: opacity 420ms cubic-bezier(0.23, 1, 0.32, 1),
+              transform 420ms cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: opacity, transform;
 }
 
-/* ============================================
-   ACCESSIBILITY & INTERACTION POLISH
-   ============================================ */
-
-/* Visible focus for keyboard users - tinted to theme primary */
-:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-  border-radius: 2px;
+/* Post-paint prep state for offscreen elements (added by enhancer).
+   transition:none prevents a visible "hide" snap on elements that were just painted visible. */
+.scroll-reveal.reveal-prep:not(.in-view) {
+  transition: none;
+  opacity: 0;
+  transform: translateY(18px) scale(0.992);
 }
 
-/* Skip to main content link (hidden until focused) */
+.scroll-reveal.in-view {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .scroll-reveal.reveal-prep,
+  .scroll-reveal.in-view {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    will-change: auto;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Extra editorial polish & micro-interactions (theme-aware, restrained)
+--------------------------------------------------------------------------- */
+
+/* Desktop nav links — subtle animated underline on hover (replaces the removed active-section indicator) */
+.nav-link {
+  position: relative;
+  transition: color 150ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 100%;
+  background: var(--color-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Reusable left-to-right animated underline for text links and secondary actions */
+.link-underline {
+  position: relative;
+  transition: color 150ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 100%;
+  background: var(--color-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.link-underline:hover::after {
+  transform: scaleX(1);
+}
+
+/* Price rows & barber cards — more luxurious hover states */
+button[aria-expanded] .text-on-surface,
+.price-row {
+  transition: background-color 160ms ease, color 160ms ease;
+}
+.price-row:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 6%, transparent);
+}
+
+.opening-hour-row:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 4%, transparent);
+}
+
+/* Social image tiles — refined "editorial cut" treatment */
+.social-tile {
+  transition: border-color 200ms ease, box-shadow 300ms ease;
+}
+.social-tile:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-primary) 20%, transparent);
+}
+
+/* Payment method tags — refined, consistent with the left-to-right micro-interaction language */
+.payment-tag {
+  position: relative;
+  overflow: hidden;
+}
+
+.payment-tag::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--color-primary);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.payment-tag:hover::before {
+  transform: scaleY(1);
+}
+
+/* Social icon links — small centered underline on hover for consistency with text links */
+.social-icon-link {
+  position: relative;
+  display: inline-flex;
+  transition: color 150ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.social-icon-link::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 13px;
+  height: 1px;
+  background: var(--color-primary);
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1);
+  pointer-events: none;
+}
+
+.social-icon-link:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* Unified button styles for visual consistency across the site */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  position: relative;
+  overflow: hidden;
+  transition: transform 150ms cubic-bezier(0.23, 1, 0.32, 1), background-color 150ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.032);
+  box-shadow: 
+    0 22px 50px -10px color-mix(in srgb, var(--color-primary) 38%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--color-primary) 28%, transparent);
+  background-color: color-mix(in srgb, var(--color-primary) 100%, #fff 10%);
+}
+
+/* Dramatic left-to-right wipe with sharper highlight */
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 42%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, #fff 68%, transparent) 35%,
+    transparent 100%
+  );
+  transition: left 680ms cubic-bezier(0.23, 1, 0.32, 1);
+  pointer-events: none;
+}
+
+.btn-primary:hover::after {
+  left: 240%;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-secondary);
+  color: var(--color-secondary);
+  position: relative;
+  overflow: hidden;
+  transition: all 150ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-on-secondary);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 
+    0 16px 40px -8px color-mix(in srgb, var(--color-secondary) 30%, transparent);
+}
+
+/* Hero entrance animations - restrained and premium */
+.hero-bg {
+  opacity: 0;
+  animation: heroFadeIn 1400ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes heroFadeIn {
+  to { opacity: 0.85; }
+}
+
+.hero-text {
+  opacity: 0;
+  animation: heroFlyIn 800ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.hero-text-1 { animation-delay: 250ms; }
+.hero-text-2 { animation-delay: 420ms; }
+.hero-text-3 { animation-delay: 580ms; }
+.hero-text-4 { animation-delay: 720ms; }
+.hero-text-5 { animation-delay: 860ms; }
+
+@keyframes heroFlyIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Share the fancy wipe effect with secondary buttons too */
+.btn-primary::after,
+.btn-secondary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 38%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, #fff 55%, transparent) 40%,
+    transparent 100%
+  );
+  transition: left 620ms cubic-bezier(0.23, 1, 0.32, 1);
+  pointer-events: none;
+}
+
+.btn-primary:hover::after,
+.btn-secondary:hover::after {
+  left: 260%;
+}
+.social-tile img {
+  transition: transform 700ms cubic-bezier(0.23, 1, 0.32, 1), filter 700ms ease;
+}
+.social-tile:hover img {
+  transform: scale(1.04);
+  filter: contrast(1.04) saturate(1.06);
+}
+
+/* Theme switcher dropdown — feels expensive */
+.theme-menu {
+  transform-origin: bottom right;
+  transition: opacity 180ms cubic-bezier(0.23, 1, 0.32, 1),
+              transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
+  opacity: 0;
+  transform: scale(0.96) translateY(4px);
+  pointer-events: none;
+}
+.theme-menu.open {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+.theme-option[aria-selected="true"]::after {
+  content: '✓';
+  margin-left: auto;
+  color: var(--color-primary);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+/* Subtle brand accent line treatment */
+.section-accent {
+  transition: width 400ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.scroll-reveal.in-view .section-accent {
+  width: 2rem; /* the h-px w-8 lines feel more intentional when revealed */
+}
+
+/* Button micro-interactions already excellent — reinforce with primary glow on dark themes */
+a[class*="bg-primary"],
+button[class*="bg-primary"] {
+  transition: background-color 150ms cubic-bezier(0.23, 1, 0.32, 1),
+              transform 120ms cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 200ms ease;
+}
+a[class*="bg-primary"]:hover,
+button[class*="bg-primary"]:hover {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-primary) 40%, transparent);
+}
+
+/* Skip link (a11y) */
 .skip-link {
   position: absolute;
   left: -9999px;
@@ -590,7 +818,6 @@ body {
   width: 1px;
   height: 1px;
   overflow: hidden;
-  z-index: 100;
 }
 .skip-link:focus {
   position: fixed;
@@ -599,160 +826,18 @@ body {
   width: auto;
   height: auto;
   padding: 12px 20px;
-  background: var(--color-primary);
-  color: var(--color-on-primary);
-  text-decoration: none;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border: 1px solid var(--color-outline-variant);
-  border-radius: 0;
-  white-space: nowrap;
-}
-
-/* Legal content (replaces missing prose plugin) */
-.legal-content {
-  font-family: var(--font-sans);
-  font-size: 15px;
-  line-height: 1.75;
-  color: var(--color-on-surface-variant);
-}
-.legal-content h1 {
-  font-family: var(--font-display);
-  font-size: 32px;
-  font-weight: var(--font-display-weight, 700);
-  letter-spacing: var(--font-display-letter-spacing, -0.01em);
-  color: var(--color-heading);
-  text-transform: uppercase;
-  margin: 0 0 1.5rem;
-}
-.legal-content h2 {
-  font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--color-heading);
-  text-transform: uppercase;
-  margin: 2rem 0 0.75rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--color-outline-variant);
-}
-.legal-content p {
-  margin-bottom: 1rem;
-}
-.legal-content a {
-  color: var(--color-primary);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.legal-content a:hover {
+  background: var(--color-surface);
   color: var(--color-on-surface);
-}
-.legal-content ul, .legal-content ol {
-  margin: 1rem 0 1rem 1.25rem;
-}
-.legal-content li {
-  margin-bottom: 0.35rem;
-}
-
-/* Theme switcher dropdown polish - premium feel */
-.theme-menu {
-  opacity: 0;
-  transform: translateY(6px) scale(0.985);
-  transition: opacity 180ms cubic-bezier(0.23, 1, 0.32, 1), transform 180ms cubic-bezier(0.23, 1, 0.32, 1);
-  pointer-events: none;
-}
-.theme-menu.open {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  pointer-events: auto;
+  border: 1px solid var(--color-outline-variant);
+  z-index: 100;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 12px;
 }
 
-/* Scroll-triggered reveals - subtle, precise, premium */
-.scroll-reveal {
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 400ms cubic-bezier(0.23, 1, 0.32, 1), transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
-  will-change: opacity, transform;
-}
-.scroll-reveal.in-view {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Sequential highlight for expanded price rows */
-.highlight {
-  color: var(--color-primary);
-  transition: color 180ms ease;
-}
-
-/* Desktop nav active section indicator (subtle moving underline) */
-.nav-link {
-  position: relative;
-}
-.nav-link::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  height: 1px;
-  width: 0;
-  background-color: var(--color-primary);
-  transition: width 220ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-.nav-link.active::after {
-  width: 100%;
-}
-
-@layer utilities {
-  .text-display-lg {
-    font-family: var(--font-display);
-    font-size: 84px;
-    font-weight: var(--font-display-weight, 900);
-    line-height: 90px;
-    letter-spacing: var(--font-display-letter-spacing, -0.02em);
-    color: var(--color-heading);
-    text-wrap: balance;
-  }
-  .text-headline-lg {
-    font-family: var(--font-display);
-    font-size: 48px;
-    font-weight: var(--font-display-weight, 700);
-    line-height: 56px;
-    letter-spacing: var(--font-display-letter-spacing, -0.01em);
-    color: var(--color-heading);
-    text-wrap: balance;
-  }
-  .text-headline-lg-mobile {
-    font-family: var(--font-display);
-    font-size: 32px;
-    font-weight: var(--font-display-weight, 700);
-    line-height: 38px;
-    letter-spacing: var(--font-display-letter-spacing, -0.01em);
-    color: var(--color-heading);
-    text-wrap: balance;
-  }
-  .text-title-md {
-    font-family: var(--font-sans);
-    font-size: 20px;
-    font-weight: var(--font-sans-weight, 600);
-    line-height: 28px;
-    letter-spacing: var(--font-sans-letter-spacing, 0.05em);
-    color: var(--color-heading);
-  }
-  .text-body-lg {
-    font-family: var(--font-sans);
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 28px;
-  }
-  .text-label-caps {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 16px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
+/* Ensure images never cause layout surprises on first paint */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }

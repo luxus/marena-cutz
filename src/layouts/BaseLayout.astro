@@ -31,7 +31,15 @@ const { title = s.name } = Astro.props;
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- Theme initialization (prevents flash) -->
+    <!-- Theme initialization (prevents flash). 
+         Priority: URL params (for testing/sharing) > readable cookies (set by /api/preferences for server session + survive localStorage clear) > localStorage > system pref.
+         The Cloudflare KV SESSION (via adapter + our API) is the durable cross-device source of truth for future SSR pages.
+         This script is the only remaining is:inline; everything else is now proper Svelte 5 runes + actions.
+
+         Cookie parsing is now robust (Issue 2): splits on first '=', per-value decode with try/catch fallback to raw value,
+         never throws on malformed % sequences from other cookies. Called once.
+         The allowlist arrays below MUST be kept manually in sync with src/lib/themes.ts:VALID_THEMES / VALID_MODES
+         (the is:inline script cannot import ES modules). -->
     <script is:inline>
       (function() {
         try {
@@ -39,10 +47,42 @@ const { title = s.name } = Astro.props;
           let theme = params.get('theme');
           let mode = params.get('mode');
 
+          // Keep in sync with src/lib/themes.ts (see export comment there). Duplication is unavoidable for is:inline.
           const validThemes = ['architectural', 'brutalist', 'warm', 'cool'];
           const validModes = ['light', 'dark'];
 
+          // Robust cookie parser (never throws on bad % or unusual cookies)
+          function parseCookies() {
+            const out = Object.create(null);
+            const raw = document.cookie || '';
+            if (!raw) return out;
+            raw.split(';').forEach((pair) => {
+              const eq = pair.indexOf('=');
+              if (eq === -1) return;
+              const k = pair.slice(0, eq).trim();
+              let v = pair.slice(eq + 1).trim();
+              if (!k) return;
+              try {
+                v = decodeURIComponent(v);
+              } catch {
+                // leave raw value for cookies with literal % not part of a valid sequence
+              }
+              out[k] = v;
+            });
+            return out;
+          }
+
           // URL params have highest priority (for testing + sharing)
+          if (!theme || !validThemes.includes(theme)) {
+            const cookies = parseCookies();
+            theme = cookies.theme || theme;
+            mode = cookies.mode || mode;
+          }
+          if (!mode || !validModes.includes(mode)) {
+            const cookies = parseCookies();
+            mode = cookies.mode || mode;
+          }
+
           if (!theme || !validThemes.includes(theme)) {
             theme = localStorage.getItem('theme');
           }
@@ -61,6 +101,10 @@ const { title = s.name } = Astro.props;
 
           document.documentElement.dataset.theme = theme;
           document.documentElement.dataset.mode = mode;
+
+          // Mark that JS is active early — used by any progressive enhancement (reveals, etc.)
+          // This runs before body paint so first paint is always fully styled.
+          document.documentElement.classList.add('js');
         } catch (e) {}
       })();
     </script>
@@ -69,46 +113,95 @@ const { title = s.name } = Astro.props;
     <a href="#main" class="skip-link">Zum Inhalt springen</a>
     <slot />
 
-    <!-- Scroll reveal + active nav handler (vanilla, respects reduced motion, no framework).
-         .scroll-reveal class is now static in source templates (with reduced-motion CSS override)
-         so first paint starts in the correct hidden state for non-reduced users; script only adds .in-view. -->
-    <script is:inline>
-      (function() {
-        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (reducedMotion) return;
+    <!-- ========================================================================
+         Single lightweight vanilla scroll-reveal enhancer (replaces 12+ Svelte islands)
+         - Zero Svelte hydration cost for motion.
+         - First paint is 100% complete, styled, and visible (no opacity-0 white phase).
+         - Post-paint (rAF), off-screen .scroll-reveal elements are silently prepped.
+         - IntersectionObserver + sibling stagger (65ms, cap 180ms) for premium editorial cadence.
+         - Identical visual contract to previous (restrained, expensive feeling).
+         - Fully gated by prefers-reduced-motion.
+         - Plain JS only (no TS generics in <script> at runtime; @ts-nocheck for astro check).
+         ======================================================================== -->
+    <script>
+      // @ts-nocheck
+      (function () {
+        'use strict';
 
-        // Elements marked with data-scroll-reveal (and static .scroll-reveal class in source)
-        const revealEls = document.querySelectorAll('[data-scroll-reveal]');
-        if (!revealEls.length) return;
+        function initScrollReveals() {
+          const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (reducedMotion) return;
 
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            const el = entry.target;
-            // Stagger siblings in same parent for cards/grids/columns
-            const parent = el.parentElement;
-            const siblings = Array.from(parent ? parent.children : []).filter((c) =>
-              c.classList.contains('scroll-reveal') && !c.classList.contains('in-view')
-            );
-            const idx = siblings.indexOf(el);
-            const delay = idx >= 0 ? Math.min(idx * 65, 180) : 0;
-            setTimeout(() => {
+          const revealEls = Array.from(document.querySelectorAll('.scroll-reveal'));
+          if (!revealEls.length) return;
+
+          // 1. Post-paint prep for offscreen elements (prevents any flash on initial visible paint)
+          revealEls.forEach((el) => {
+            const rect = el.getBoundingClientRect();
+            const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+            if (isInViewport) {
               el.classList.add('in-view');
-              observer.unobserve(el);
-            }, delay);
+            } else {
+              el.classList.add('reveal-prep');
+            }
           });
-        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-        revealEls.forEach((el) => {
-          // If already in view on init, reveal immediately (no stagger needed)
-          const rect = el.getBoundingClientRect();
-          if (rect.top < window.innerHeight && rect.bottom > 0) {
-            el.classList.add('in-view');
-            observer.unobserve(el);
-          } else {
-            observer.observe(el);
-          }
-        });
+          // 2. IntersectionObserver with sibling-aware stagger (mirrors prior premium feel exactly)
+          const pendingTimeouts = new Set();
+
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+
+              const el = /** @type {HTMLElement} */ (entry.target);
+
+              const parent = el.parentElement;
+              const siblings = Array.from(parent ? parent.children : []).filter((c) =>
+                c.classList.contains('scroll-reveal') &&
+                c.classList.contains('reveal-prep') &&
+                !c.classList.contains('in-view')
+              );
+              const idx = siblings.indexOf(el);
+              const delay = idx >= 0 ? Math.min(idx * 65, 180) : 0;
+
+              const tid = window.setTimeout(() => {
+                pendingTimeouts.delete(tid);
+                el.classList.remove('reveal-prep');
+                el.classList.add('in-view');
+                observer.unobserve(el);
+              }, delay);
+              pendingTimeouts.add(tid);
+            });
+          }, {
+            threshold: 0.12,
+            rootMargin: '0px 0px -40px 0px'
+          });
+
+          // Observe only the ones we prepped for reveal
+          revealEls.forEach((el) => {
+            if (el.classList.contains('reveal-prep')) {
+              observer.observe(el);
+            }
+          });
+
+          // Cleanup on unload (good hygiene)
+          window.addEventListener('beforeunload', () => {
+            observer.disconnect();
+            pendingTimeouts.forEach((tid) => {
+              if (typeof tid === 'number') clearTimeout(tid);
+            });
+            pendingTimeouts.clear();
+          }, { once: true });
+        }
+
+        // Run after first paint for perfect initial render
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', () => {
+            requestAnimationFrame(() => requestAnimationFrame(initScrollReveals));
+          });
+        } else {
+          requestAnimationFrame(() => requestAnimationFrame(initScrollReveals));
+        }
       })();
     </script>
   </body>

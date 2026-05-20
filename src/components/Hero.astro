@@ -2,11 +2,54 @@
 import { frontmatter as c } from '../content/home.md';
 import { frontmatter as s } from '../content/settings.md';
 import ExternalLinkIcon from './ExternalLinkIcon.astro';
+import CalendarIcon from './CalendarIcon.astro';
+import ReceiptIcon from './ReceiptIcon.astro';
 ---
-<section class="relative min-h-[100dvh] overflow-hidden border-b border-outline-variant pt-24"><div class="absolute inset-0"><img src="/images/salon-hero-new.png" alt="Modern interior of Marena Cutz barber shop in Bülach with clean styling stations and premium finishes" class="h-full w-full object-cover opacity-85"/><div class="absolute inset-0 bg-background/80"></div></div>
-<div class="relative mx-auto grid min-h-[calc(100dvh-6rem)] max-w-7xl items-center gap-8 px-5 pb-16 md:grid-cols-[2.2fr_0.3fr]">
-  <div><p class="mb-5 text-label-caps text-secondary">{c.eyebrow}</p><h1 class="text-display-lg md:text-[102px] md:line-height-[94px] uppercase leading-none tracking-[-0.015em]">
-  <span class="block">Clean Cuts.</span>
-  <span class="block md:text-[86px] md:line-height-[80px]">Sharp Fades.</span>
-</h1><div class="my-7 h-px w-72 bg-secondary"></div><p class="max-w-2xl text-body-lg text-on-surface-variant">{c.text}</p><div class="mt-8 flex flex-col gap-4 sm:flex-row"><a href={s.bookingUrl} target="_blank" rel="noreferrer" class="group inline-flex items-center justify-between bg-primary px-8 py-4 text-label-caps text-on-primary transition-all duration-150 ease-[cubic-bezier(0.23,1.0,0.32,1)] hover:bg-primary-container hover:scale-[1.015] active:scale-[0.982] sm:w-72">Termin buchen <ExternalLinkIcon class="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></a><a href="#preise" class="inline-flex items-center gap-3 py-4 text-label-caps text-secondary hover:text-secondary-container">Preise ansehen →</a></div></div>
-</div></section>
+<section class="relative min-h-[700px] lg:min-h-[100vh] overflow-hidden border-b border-outline-variant">
+  <!-- Full-bleed background using the same pattern as About/Barber sections -->
+  <div 
+    class="absolute inset-0 bg-cover bg-center" 
+    style="background-image: url('/images/salon-hero-new.png')"
+  ></div>
+  <div class="absolute inset-0 bg-background/80"></div>
+  <!-- Content layer: anchored to the bottom with padding -->
+     <div class="relative z-10 min-h-[700px] lg:min-h-[85vh] flex flex-col">
+    <!-- Spacer that pushes content to the bottom -->
+    <div class="flex-1"></div>
+ 
+    <div class="mx-auto max-w-7xl px-5 pb-16 md:pb-20">
+      <div class="w-full">
+        <div class="grid gap-8 md:grid-cols-[2.2fr_0.3fr]">
+          <div>
+            <p class="hero-text hero-text-1 mb-5 text-label-caps text-secondary">{c.eyebrow}</p>
+            
+            <h1 class="text-display-lg text-[48px] md:text-[102px] md:line-height-[94px] uppercase">
+              <span class="hero-text hero-text-2 block">Clean Cuts.</span>
+              <span class="hero-text hero-text-3 block text-[40px] md:text-[86px] md:line-height-[80px]">Sharp Fades.</span>
+            </h1>
+            
+            <div class="hero-text hero-text-4 my-7 h-px w-72 bg-secondary"></div>
+            
+            <p class="hero-text hero-text-5 max-w-2xl text-body-lg text-on-surface-variant">{c.text}</p>
+            
+            <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+              <!-- Booking button (primary fancy) -->
+              <a href={s.bookingUrl} target="_blank" rel="noreferrer" 
+                 class="group btn-primary justify-between bg-primary px-8 py-4 sm:w-72 active:scale-[0.982]">
+                <CalendarIcon class="h-4 w-4" />Termin buchen 
+                <ExternalLinkIcon class="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-3.5" />
+              </a>
+              
+              <!-- Preise button - same structure and effects, secondary colors -->
+              <a href="#preise" 
+                 class="group btn-secondary justify-between px-8 py-4 sm:w-72 active:scale-[0.982]">
+                <ReceiptIcon class="h-4 w-4" />Preise ansehen 
+                <span class="transition-transform group-hover:translate-x-1">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

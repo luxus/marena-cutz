@@ -1,11 +1,12 @@
 ---
 import { frontmatter as s } from '../content/settings.md';
 import ExternalLinkIcon from './ExternalLinkIcon.astro';
+import MapPinIcon from './MapPinIcon.astro';
 ---
 <nav class="fixed bottom-0 left-0 z-50 grid w-full grid-cols-3 border-t border-outline-variant bg-surface/85 text-label-caps text-on-surface-variant backdrop-blur-xl md:hidden">
   <a href="#preise" class="flex flex-col items-center gap-1 py-3 hover:text-primary"><span>⌘</span>Preise</a>
   <a href={s.bookingUrl} target="_blank" rel="noreferrer" class="flex flex-col items-center gap-1 py-3 text-primary transition-all duration-150 ease-[cubic-bezier(0.23,1.0,0.32,1)] hover:scale-[1.015] active:scale-[0.982]">
     <ExternalLinkIcon class="h-4 w-4" />Buchen
   </a>
-  <a href="#standort" class="flex flex-col items-center gap-1 py-3 hover:text-primary"><span>⌖</span>Route</a>
+  <a href="#standort" class="flex flex-col items-center gap-1 py-3 hover:text-primary"><MapPinIcon class="h-4 w-4" />Route</a>
 </nav>

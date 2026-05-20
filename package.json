@@ -7,20 +7,17 @@
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
-    "@astrojs/check": "latest",
-    "@astrojs/cloudflare": "^13.2.2",
-    "@astrojs/svelte": "8.1.1",
-    "@tailwindcss/vite": "latest",
-    "astro": "latest",
+    "@astrojs/check": "^0.9.9",
+    "@astrojs/cloudflare": "^13.5.3",
+    "@astrojs/svelte": "^8.1.1",
+    "@tailwindcss/vite": "^4.3.0",
+    "astro": "^6.3.6",
     "svelte": "5.55.9",
-    "tailwindcss": "latest",
+    "tailwindcss": "^4.3.0",
     "typescript": "latest"
   },
   "devDependencies": {
     "playwright": "^1.60.0",
-    "wrangler": "^4.86.0"
-  },
-  "overrides": {
-    "vite": "^7"
+    "wrangler": "^4.93.0"
   }
 }

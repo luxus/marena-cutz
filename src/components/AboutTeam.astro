@@ -27,7 +27,6 @@ const barbers = barbersFiles
 const getBarberImage = (barber: Barber) =>
   barber.image || (barber.name === 'Angelo' ? '/images/cut-1.jpg' : '/images/cut-2.jpg');
 ---
-
 <section class="relative border-b border-outline-variant px-5 py-16 md:py-20 scroll-mt-20">
   <!-- Shared mirrored salon background for Über uns + Team -->
   <div class="absolute inset-0 bg-cover bg-center scale-x-[-1] opacity-38" style="background-image: url('/images/about-salon-hero.png')"></div>
@@ -36,10 +35,10 @@ const getBarberImage = (barber: Barber) =>
   <div class="relative mx-auto max-w-7xl">
     <div class="grid gap-8 lg:gap-12 md:grid-cols-[1.1fr_0.9fr]">
       
-      <!-- Left: Über uns -->
-      <div id="ueber" class="scroll-reveal pr-4 lg:pr-8 scroll-mt-20" data-scroll-reveal>
+      <!-- Left: Über uns (plain reveal container) -->
+      <div id="ueber" class="scroll-reveal pr-4 lg:pr-8 scroll-mt-20">
         <div class="mb-7 flex items-center gap-4">
-          <span class="h-px w-8 bg-secondary"></span>
+          <span class="h-px w-8 bg-secondary section-accent"></span>
           <h2 class="text-headline-lg uppercase">{about.title}</h2>
         </div>
 
@@ -58,7 +57,7 @@ const getBarberImage = (barber: Barber) =>
             <h3 class="mb-4 text-label-caps text-secondary">Öffnungszeiten</h3>
             <div class="space-y-3">
               {openingHours.map((item) => (
-                <div class="flex items-center justify-between gap-6 border-b border-outline-variant pb-3 last:border-0 last:pb-0">
+                <div class="opening-hour-row flex items-center justify-between gap-6 border-b border-outline-variant py-3 last:border-0 transition-colors hover:bg-surface-container">
                   <span>{item.day}</span>
                   <span class:list={["font-bold", item.hours.toLowerCase().includes('geschlossen') ? "text-on-surface-variant" : "text-on-surface"]}>
                     {item.hours}
@@ -74,26 +73,27 @@ const getBarberImage = (barber: Barber) =>
             <h3 class="mb-4 text-label-caps text-secondary">Zahlung</h3>
             <div class="flex flex-wrap gap-3">
               {paymentMethods.map((method) => (
-                <span class="border border-secondary px-4 py-3 text-label-caps text-secondary">{method}</span>
+                <span class="payment-tag border border-secondary px-4 py-2 text-label-caps text-secondary transition-all duration-150 ease-[cubic-bezier(0.23,1.0,0.32,1)] hover:border-primary hover:text-primary">{method}</span>
               ))}
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Right: Barbers (card aligned like Standort) -->
-      <div id="barbers" class="scroll-reveal flex flex-col scroll-mt-20" data-scroll-reveal>
+      <!-- Right: Barbers (editorial cards) -->
+      <div id="barbers" class="scroll-reveal flex flex-col scroll-mt-20">
         <div class="mb-7 flex items-center gap-4">
-          <span class="h-px w-8 bg-secondary"></span>
+          <span class="h-px w-8 bg-secondary section-accent"></span>
           <h2 class="text-headline-lg uppercase">Barbers</h2>
         </div>
 
         <div class="border border-[var(--team-card-border)] bg-[var(--team-card-bg)] backdrop-blur-[var(--team-card-blur)] p-6 md:p-8">
           <div class="space-y-8">
             {barbers.map((barber: Barber) => (
-              <div class="scroll-reveal group transition-transform duration-300 group-hover:-translate-y-px" data-scroll-reveal>
+              <!-- Individual barber reveal + premium group hover lift (now on plain div) -->
+              <div class="scroll-reveal group transition-transform duration-300 group-hover:-translate-y-px">
                 <div class="flex gap-4">
-                  <!-- Image using 2/3 of the block width -->
+                  <!-- Image using 2/3 of the block width — refined hover treatment -->
                   <div class="flex-shrink-0 overflow-hidden border border-outline-variant w-2/3 aspect-[4/3] transition-colors duration-500 group-hover:border-primary">
                     <img
                       src={getBarberImage(barber)}

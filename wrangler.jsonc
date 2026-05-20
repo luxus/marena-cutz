@@ -9,5 +9,13 @@
 	},
 	"observability": {
 		"enabled": true
-	}
+	},
+	// SESSION KV binding required by @astrojs/cloudflare adapter for Astro sessions (Astro.session / session.set/get).
+	// The adapter will automatically use this for durable session storage across requests.
+	// TTL is also declared in astro.config.mjs (session.ttl) and matches the 1-year cookie lifetime for prefs.
+	// Replace the placeholder id with your real KV namespace ID from the Cloudflare dashboard for production.
+	// Local dev is emulated by the adapter (no real KV needed for `astro dev`).
+	"kv_namespaces": [
+		{ "binding": "SESSION", "id": "your-kv-id-here" }
+	]
 }

@@ -3,49 +3,40 @@ import { frontmatter as prices } from '../content/prices.md';
 import { frontmatter as s } from '../content/settings.md';
 import ExternalLinkIcon from './ExternalLinkIcon.astro';
 import BarberPrice from './BarberPrice.svelte';
+import CalendarIcon from './CalendarIcon.astro';
 
 type Service = { name: string; duration?: string; price: string; featured?: boolean };
 type Barber = { name: string; position?: string; image?: string; about?: string; order?: number; services: Service[] };
-// Type duplication with JSDoc in BarberPrice.svelte is accepted for current minimal scope (no shared lib/types.ts yet).
 
 const barbersFiles = Object.values(import.meta.glob<{ frontmatter: Barber }>('../content/barbers/*.md', { eager: true }));
 
 const barbers = barbersFiles
   .map((file) => file.frontmatter)
   .sort((a: Barber, b: Barber) => (a.order || 0) - (b.order || 0));
-
-// Accordion state - only one barber open at a time
-let openBarber: string | null = null;
-
-function toggleBarber(name: string) {
-  openBarber = openBarber === name ? null : name;
-}
 ---
 <section id="preise" class="border-b border-outline-variant bg-surface px-5 py-16 scroll-mt-20">
   <div class="mx-auto grid max-w-7xl items-start gap-10 md:grid-cols-[1fr_2fr]">
-    <div class="scroll-reveal" data-scroll-reveal>
+    <!-- Prices column: now a plain element with reveal class for the single lightweight enhancer -->
+    <div class="scroll-reveal">
       <div class="mb-7 flex items-center gap-4">
-        <span class="h-px w-8 bg-secondary"></span>
+        <span class="h-px w-8 bg-secondary section-accent"></span>
         <h2 class="text-headline-lg uppercase">{prices.title}</h2>
       </div>
       <div class="space-y-5">
         {barbers.map((barber: Barber) => (
-          <BarberPrice 
-            client:load 
-            {barber} 
-            isOpen={openBarber === barber.name}
-            onToggle={() => toggleBarber(barber.name)} 
-          />
+          <BarberPrice client:load {barber} />
         ))}
-        <a href={s.bookingUrl} target="_blank" rel="noreferrer" class="inline-flex w-full items-center justify-between bg-primary px-6 py-4 text-label-caps text-on-primary transition-all duration-150 ease-[cubic-bezier(0.23,1.0,0.32,1)] hover:bg-primary-container hover:scale-[1.015] active:scale-[0.982]">
-          Termin buchen 
-          <ExternalLinkIcon />
+        <a href={s.bookingUrl} target="_blank" rel="noreferrer" class="group btn-primary w-full justify-between px-6 py-4 active:scale-[0.982]">
+          <CalendarIcon class="h-4 w-4" />Termin buchen 
+          <ExternalLinkIcon class="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-3.5" />
         </a>
       </div>
     </div>
-    <div id="standort" class="scroll-reveal flex flex-col scroll-mt-20" data-scroll-reveal>
+
+    <!-- Location / map column -->
+    <div id="standort" class="scroll-reveal flex flex-col scroll-mt-20">
       <div class="mb-7 flex items-center gap-4">
-        <span class="h-px w-8 bg-secondary"></span>
+        <span class="h-px w-8 bg-secondary section-accent"></span>
         <h2 class="text-headline-lg uppercase">Standort</h2>
       </div>
       <div class="group relative overflow-hidden border border-outline-variant">

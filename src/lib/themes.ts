@@ -253,3 +253,9 @@ export type ThemeMode = 'light' | 'dark';
 
 export const defaultTheme: ThemeName = 'architectural';
 export const defaultMode: ThemeMode = 'dark';
+
+// Canonical allowlists used by API validation and (via comment reference) the early bootstrap script.
+// IMPORTANT: The is:inline script in BaseLayout.astro cannot import modules, so the string literals
+// are duplicated there with an explicit "keep in sync" comment. Adding a theme requires updating both.
+export const VALID_THEMES = Object.keys(themes) as readonly ThemeName[];
+export const VALID_MODES = ['light', 'dark'] as const;

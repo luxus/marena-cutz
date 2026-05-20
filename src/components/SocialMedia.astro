@@ -13,28 +13,39 @@ const items = [
 ---
 <section id="social" class="bg-background px-5 py-20 pb-32 md:pb-20 scroll-mt-20">
   <div class="mx-auto grid max-w-7xl gap-12 md:grid-cols-[.8fr_1.2fr]">
-    <div class="scroll-reveal" data-scroll-reveal>
+    <!-- Left column: intro + links -->
+    <div class="scroll-reveal">
       <div class="mb-8 flex items-center gap-4">
-        <span class="h-px w-8 bg-secondary"></span>
+        <span class="h-px w-8 bg-secondary section-accent"></span>
         <h2 class="text-headline-lg uppercase">Social Media</h2>
       </div>
       <p class="max-w-sm text-body-lg text-on-surface-variant">Ausgewählte Cuts, Transformationen und Barber-Momente aus Instagram und TikTok.</p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <a href={s.instagramUrl} target="_blank" rel="noreferrer" class="inline-flex items-center gap-4 bg-surface px-6 py-4 text-label-caps text-on-surface hover:bg-surface-container hover:text-secondary">
+        <a href={s.instagramUrl} target="_blank" rel="noreferrer" class="link-underline inline-flex items-center gap-4 bg-surface px-6 py-4 text-label-caps text-on-surface hover:bg-surface-container hover:text-primary">
           Instagram <ExternalLinkIcon />
         </a>
-        <a href={s.tiktokUrl} target="_blank" rel="noreferrer" class="inline-flex items-center gap-4 bg-surface px-6 py-4 text-label-caps text-on-surface hover:bg-surface-container hover:text-secondary">
+        <a href={s.tiktokUrl} target="_blank" rel="noreferrer" class="link-underline inline-flex items-center gap-4 bg-surface px-6 py-4 text-label-caps text-on-surface hover:bg-surface-container hover:text-primary">
           TikTok <ExternalLinkIcon />
         </a>
       </div>
     </div>
-    <!-- data-scroll-reveal on this wrapper participates in outer column stagger (text vs images-area);
-         the 6 child <a> have their own for inner 6-item stagger when the area enters view. Two-level is intentional. -->
-    <div class="scroll-reveal grid max-w-2xl grid-cols-2 gap-4 md:justify-self-end lg:grid-cols-3" data-scroll-reveal>
+
+    <!-- Photo grid: the 6 tiles now each carry scroll-reveal so the enhancer's sibling-stagger logic
+         applies within the grid (6-item editorial cadence). The grid container itself participates
+         in the outer column stagger vs the text column. -->
+    <div class="grid max-w-2xl grid-cols-2 gap-4 md:justify-self-end lg:grid-cols-3">
       {items.map((item) => (
-        <a href={item.permalink} target="_blank" rel="noreferrer" class:list={["scroll-reveal", "group relative overflow-hidden border bg-surface", item.featured ? "border-primary" : "border-outline-variant"]} data-scroll-reveal>
+        <a
+          href={item.permalink}
+          target="_blank"
+          rel="noreferrer"
+          class:list={[
+            "scroll-reveal social-tile group relative overflow-hidden border bg-surface",
+            item.featured ? "border-primary" : "border-outline-variant"
+          ]}
+        >
           <img src={item.imageUrl} alt={item.alt} class="aspect-square w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
-          <span class="absolute left-3 top-3 bg-surface/80 px-3 py-1 text-label-caps text-on-surface backdrop-blur">{item.platform}</span>
+          <span class="absolute left-3 top-3 bg-surface/80 px-3 py-1 text-label-caps text-on-surface backdrop-blur transition-colors group-hover:bg-primary/90 group-hover:text-on-primary">{item.platform}</span>
         </a>
       ))}
     </div>
