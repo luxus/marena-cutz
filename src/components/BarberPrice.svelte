@@ -71,10 +71,9 @@
           <div
             class="grid grid-cols-[1fr_auto] gap-4 border-t border-outline-variant py-3"
             transition:fly={{
-              y: 40,
-              duration: reduced ? 0 : 650,
-              delay: reduced ? 0 : i * 130,
-              opacity: 0
+              y: 14,
+              duration: reduced ? 0 : 300,
+              delay: reduced ? 0 : i * 90
             }}
           >
             <div>
