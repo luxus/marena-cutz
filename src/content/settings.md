@@ -10,4 +10,10 @@ bookingUrl: "https://one.localsearch.ch/site/marenacutz/online-scheduling?utm_so
 instagramUrl: "https://www.instagram.com/marenacutz/"
 tiktokUrl: "https://www.tiktok.com/@marenacutz"
 mapsUrl: "https://www.google.com/maps/search/?api=1&query=Marena+Cutz+Kasernenstrasse+4+8180+Bülach"
+
+# Meta / Social sharing (used in BaseLayout)
+metaDescription: "Präzise Schnitte. Klare Linien. Dein Style. Unser Fokus. Modern Barber in Bülach."
+ogDescription: "Clean Cuts. Sharp Fades. Präzise Schnitte und moderne Barberkunst in Bülach."
+ogImageAlt: "Modern interior of Marena Cutz barber shop in Bülach with clean styling stations"
+twitterDescription: "Clean Cuts. Sharp Fades. Präzise Schnitte in Bülach – Marena Cutz."
 ---

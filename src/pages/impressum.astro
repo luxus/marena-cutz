@@ -8,8 +8,8 @@ const ImpressumContent = await compiledContent();
 ---
 <BaseLayout title={`${c.title} | ${s.name}`}>
   <Header />
-  <main class="min-h-screen border-b border-outline-variant bg-surface px-5 py-20">
-    <article class="prose prose-invert mx-auto max-w-3xl prose-headings:uppercase prose-headings:font-display prose-a:text-primary">
+  <main id="main" class="min-h-screen border-b border-outline-variant bg-surface px-5 py-20">
+    <article class="legal-content mx-auto max-w-3xl">
       <h1 class="text-headline-lg uppercase">{c.title}</h1>
       
       <h2>{s.name}</h2>

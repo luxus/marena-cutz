@@ -9,8 +9,24 @@ const { title = s.name } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
-    <meta name="description" content={`${s.name} ${s.tagline} in Bülach. Clean cuts, sharp fades und präzise Schnitte.`} />
+    <meta name="description" content={s.metaDescription || `${s.name} ${s.tagline} in Bülach. Clean cuts, sharp fades und präzise Schnitte.`} />
     <meta name="theme-color" content="#131313" />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content={`${s.name} | ${s.tagline} in Bülach`} />
+    <meta property="og:description" content={s.ogDescription || 'Präzise Schnitte. Klare Linien. Dein Style. Unser Fokus.'} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://marenacutz.ch" />
+    <meta property="og:locale" content="de_CH" />
+    <meta property="og:image" content="/images/salon-hero-new.png" />
+    <meta property="og:image:alt" content={s.ogImageAlt || `${s.name} barber shop in Bülach`} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${s.name} | ${s.tagline}`} />
+    <meta name="twitter:description" content={s.twitterDescription || 'Clean Cuts. Sharp Fades. Präzise Schnitte in Bülach.'} />
+    <meta name="twitter:image" content="/images/salon-hero-new.png" />
+
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -50,6 +66,7 @@ const { title = s.name } = Astro.props;
     </script>
   </head>
   <body>
+    <a href="#main" class="skip-link">Zum Inhalt springen</a>
     <slot />
   </body>
 </html>
