@@ -68,5 +68,48 @@ const { title = s.name } = Astro.props;
   <body>
     <a href="#main" class="skip-link">Zum Inhalt springen</a>
     <slot />
+
+    <!-- Scroll reveal + active nav handler (vanilla, respects reduced motion, no framework).
+         .scroll-reveal class is now static in source templates (with reduced-motion CSS override)
+         so first paint starts in the correct hidden state for non-reduced users; script only adds .in-view. -->
+    <script is:inline>
+      (function() {
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reducedMotion) return;
+
+        // Elements marked with data-scroll-reveal (and static .scroll-reveal class in source)
+        const revealEls = document.querySelectorAll('[data-scroll-reveal]');
+        if (!revealEls.length) return;
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            // Stagger siblings in same parent for cards/grids/columns
+            const parent = el.parentElement;
+            const siblings = Array.from(parent ? parent.children : []).filter((c) =>
+              c.classList.contains('scroll-reveal') && !c.classList.contains('in-view')
+            );
+            const idx = siblings.indexOf(el);
+            const delay = idx >= 0 ? Math.min(idx * 65, 180) : 0;
+            setTimeout(() => {
+              el.classList.add('in-view');
+              observer.unobserve(el);
+            }, delay);
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+        revealEls.forEach((el) => {
+          // If already in view on init, reveal immediately (no stagger needed)
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            el.classList.add('in-view');
+            observer.unobserve(el);
+          } else {
+            observer.observe(el);
+          }
+        });
+      })();
+    </script>
   </body>
 </html>

@@ -58,21 +58,31 @@ import { themes } from '../lib/themes';
   };
 
   function applyTheme(theme, mode) {
-    html.dataset.theme = theme;
-    html.dataset.mode = mode;
-    localStorage.setItem('theme', theme);
-    localStorage.setItem('mode', mode);
+    const doChange = () => {
+      html.dataset.theme = theme;
+      html.dataset.mode = mode;
+      localStorage.setItem('theme', theme);
+      localStorage.setItem('mode', mode);
 
-    const url = new URL(window.location.href);
-    url.searchParams.set('theme', theme);
-    url.searchParams.set('mode', mode);
-    history.replaceState(null, '', url.toString());
+      const url = new URL(window.location.href);
+      url.searchParams.set('theme', theme);
+      url.searchParams.set('mode', mode);
+      history.replaceState(null, '', url.toString());
 
-    const nameEl = document.getElementById('current-theme-name');
-    if (nameEl) nameEl.textContent = themeNames[theme] || theme;
+      const nameEl = document.getElementById('current-theme-name');
+      if (nameEl) nameEl.textContent = themeNames[theme] || theme;
 
-    const iconEl = document.getElementById('mode-icon');
-    if (iconEl) iconEl.textContent = mode === 'dark' ? '☾' : '☀︎';
+      const iconEl = document.getElementById('mode-icon');
+      if (iconEl) iconEl.textContent = mode === 'dark' ? '☾' : '☀︎';
+    };
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReduced && document.startViewTransition) {
+      // Default UA cross-fade used (smallest implementation). Scoped @view-transition styles can be added later if real-world testing finds it heavy for certain theme swaps.
+      document.startViewTransition(doChange);
+    } else {
+      doChange();
+    }
   }
 
   function initTheme() {

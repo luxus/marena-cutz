@@ -13,7 +13,7 @@ const items = [
 ---
 <section id="social" class="bg-background px-5 py-20 pb-32 md:pb-20 scroll-mt-20">
   <div class="mx-auto grid max-w-7xl gap-12 md:grid-cols-[.8fr_1.2fr]">
-    <div>
+    <div class="scroll-reveal" data-scroll-reveal>
       <div class="mb-8 flex items-center gap-4">
         <span class="h-px w-8 bg-secondary"></span>
         <h2 class="text-headline-lg uppercase">Social Media</h2>
@@ -28,9 +28,11 @@ const items = [
         </a>
       </div>
     </div>
-    <div class="grid max-w-2xl grid-cols-2 gap-4 md:justify-self-end lg:grid-cols-3">
+    <!-- data-scroll-reveal on this wrapper participates in outer column stagger (text vs images-area);
+         the 6 child <a> have their own for inner 6-item stagger when the area enters view. Two-level is intentional. -->
+    <div class="scroll-reveal grid max-w-2xl grid-cols-2 gap-4 md:justify-self-end lg:grid-cols-3" data-scroll-reveal>
       {items.map((item) => (
-        <a href={item.permalink} target="_blank" rel="noreferrer" class:list={["group relative overflow-hidden border bg-surface", item.featured ? "border-primary" : "border-outline-variant"]}>
+        <a href={item.permalink} target="_blank" rel="noreferrer" class:list={["scroll-reveal", "group relative overflow-hidden border bg-surface", item.featured ? "border-primary" : "border-outline-variant"]} data-scroll-reveal>
           <img src={item.imageUrl} alt={item.alt} class="aspect-square w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
           <span class="absolute left-3 top-3 bg-surface/80 px-3 py-1 text-label-caps text-on-surface backdrop-blur">{item.platform}</span>
         </a>
