@@ -1,10 +1,14 @@
 <script>
-  import { fly } from 'svelte/transition';
-
-  /** @type {{ name: string; position?: string; services: Array<{ name: string; duration?: string; price: string; featured?: boolean }> }} */
-  let { barber } = $props();
-
-  let open = $state(false);
+  /** @type {{ 
+    name: string; 
+    position?: string; 
+    services: Array<{ name: string; duration?: string; price: string; featured?: boolean }> 
+  }} */
+  let { 
+    barber, 
+    isOpen = false, 
+    onToggle 
+  } = $props();
 
   const services = $derived(barber.services || []);
   const primary = $derived(services[0]);
@@ -12,17 +16,31 @@
   const hasMore = $derived(more.length > 0);
   const slug = $derived(hasMore ? barber.name.replace(/\s+/g, '-').toLowerCase() : '');
 
-  const reduced =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let highlightedIndex = $state(-1);
+
+  $effect(() => {
+    if (isOpen) {
+      highlightedIndex = -1;
+      more.forEach((_, index) => {
+        setTimeout(() => {
+          highlightedIndex = index;
+          setTimeout(() => {
+            if (highlightedIndex === index) highlightedIndex = -1;
+          }, 650);
+        }, index * 95);
+      });
+    } else {
+      highlightedIndex = -1;
+    }
+  });
 </script>
 
   <button
     type="button"
     class="w-full cursor-pointer text-left"
-    aria-expanded={hasMore ? open : undefined}
+    aria-expanded={hasMore ? isOpen : undefined}
     aria-controls={hasMore ? `barber-services-${slug}` : undefined}
-    onclick={() => (open = !open)}
+    onclick={onToggle}
   >
     <div class="flex items-start justify-between gap-5">
       <div>
@@ -50,7 +68,7 @@
       </div>
     {/if}
 
-    {#if !open && hasMore}
+    {#if !isOpen && hasMore}
       <div
         class="mt-3 max-h-11 overflow-hidden text-sm text-on-surface-variant [mask-image:linear-gradient(to_bottom,black,transparent)]"
       >
@@ -66,10 +84,11 @@
 
   {#if hasMore}
     <div id={`barber-services-${slug}`} class="pt-2">
-      {#if open}
+      {#if isOpen}
         {#each more as service, i (service.name)}
           <div
             class="grid grid-cols-[1fr_auto] gap-4 border-t border-outline-variant py-3"
+            class:highlight={i === highlightedIndex}
             transition:fly={{
               y: 14,
               duration: reduced ? 0 : 300,

@@ -13,6 +13,13 @@ const barbersFiles = Object.values(import.meta.glob<{ frontmatter: Barber }>('..
 const barbers = barbersFiles
   .map((file) => file.frontmatter)
   .sort((a: Barber, b: Barber) => (a.order || 0) - (b.order || 0));
+
+// Accordion state - only one barber open at a time
+let openBarber: string | null = null;
+
+function toggleBarber(name: string) {
+  openBarber = openBarber === name ? null : name;
+}
 ---
 <section id="preise" class="border-b border-outline-variant bg-surface px-5 py-16 scroll-mt-20">
   <div class="mx-auto grid max-w-7xl items-start gap-10 md:grid-cols-[1fr_2fr]">
@@ -23,7 +30,12 @@ const barbers = barbersFiles
       </div>
       <div class="space-y-5">
         {barbers.map((barber: Barber) => (
-          <BarberPrice client:load {barber} />
+          <BarberPrice 
+            client:load 
+            {barber} 
+            isOpen={openBarber === barber.name}
+            onToggle={() => toggleBarber(barber.name)} 
+          />
         ))}
         <a href={s.bookingUrl} target="_blank" rel="noreferrer" class="inline-flex w-full items-center justify-between bg-primary px-6 py-4 text-label-caps text-on-primary transition-all duration-150 ease-[cubic-bezier(0.23,1.0,0.32,1)] hover:bg-primary-container hover:scale-[1.015] active:scale-[0.982]">
           Termin buchen 

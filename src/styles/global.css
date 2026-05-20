@@ -681,6 +681,12 @@ body {
   transform: translateY(0);
 }
 
+/* Sequential highlight for expanded price rows */
+.highlight {
+  color: var(--color-primary);
+  transition: color 180ms ease;
+}
+
 /* Desktop nav active section indicator (subtle moving underline) */
 .nav-link {
   position: relative;
