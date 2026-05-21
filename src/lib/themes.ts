@@ -249,7 +249,7 @@ export const themes = {
 } as const;
 
 export type ThemeName = keyof typeof themes;
-export type ThemeMode = 'light' | 'dark';
+export type ThemeMode = 'light' | 'dark' | 'system';
 
 export const defaultTheme: ThemeName = 'architectural';
 export const defaultMode: ThemeMode = 'dark';
@@ -258,4 +258,4 @@ export const defaultMode: ThemeMode = 'dark';
 // IMPORTANT: The is:inline script in BaseLayout.astro cannot import modules, so the string literals
 // are duplicated there with an explicit "keep in sync" comment. Adding a theme requires updating both.
 export const VALID_THEMES = Object.keys(themes) as readonly ThemeName[];
-export const VALID_MODES = ['light', 'dark'] as const;
+export const VALID_MODES = ['light', 'dark', 'system'] as const;

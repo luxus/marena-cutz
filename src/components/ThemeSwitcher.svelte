@@ -17,7 +17,9 @@
 
   // Display values (reactive)
   const themeName = $derived(themes[userTheme.theme]?.name || userTheme.theme);
-  const modeIcon = $derived(userTheme.mode === 'dark' ? '☾' : '☀︎');
+  const modeIcon = $derived(
+    userTheme.mode === 'dark' ? '☾' : userTheme.mode === 'system' ? '◑' : '☀︎'
+  );
 
   // Seed *synchronously* from DOM dataset (set by early inline script).
   // This runs once when the client:load island hydrates — no $effect, no double-run, no flash of default labels (Issue 8).
@@ -65,7 +67,13 @@
 
       const html = document.documentElement;
       html.dataset.theme = newTheme;
-      html.dataset.mode = newMode;
+      const resolvedMode =
+        newMode === 'system'
+          ? window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light'
+          : newMode;
+      html.dataset.mode = resolvedMode;
 
       localStorage.setItem('theme', newTheme);
       localStorage.setItem('mode', newMode);
@@ -95,8 +103,8 @@
   }
 
   function toggleMode() {
-    const nextMode = userTheme.mode === 'dark' ? 'light' : 'dark';
-    applyTheme(userTheme.theme, nextMode);
+    const cycle = { light: 'dark', dark: 'system', system: 'light' };
+    applyTheme(userTheme.theme, cycle[userTheme.mode] ?? 'dark');
   }
 
   function selectTheme(key) {
@@ -152,7 +160,7 @@
   <!-- Light / Dark Toggle -->
   <button
     class="flex h-8 w-8 items-center justify-center rounded border border-outline-variant bg-surface text-on-surface hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary transition"
-    aria-label="Toggle light/dark mode"
+    aria-label="Toggle light/dark/system mode"
     onclick={toggleMode}
     type="button"
   >
