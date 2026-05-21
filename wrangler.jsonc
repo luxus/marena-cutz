@@ -1,6 +1,9 @@
 {
 	"compatibility_date": "2026-04-29",
-	"compatibility_flags": ["global_fetch_strictly_public", "nodejs_compat"],
+	"compatibility_flags": [
+		"global_fetch_strictly_public",
+		"nodejs_compat"
+	],
 	"name": "example",
 	"main": "@astrojs/cloudflare/entrypoints/server",
 	"assets": {
@@ -16,6 +19,10 @@
 	// Replace the placeholder id with your real KV namespace ID from the Cloudflare dashboard for production.
 	// Local dev is emulated by the adapter (no real KV needed for `astro dev`).
 	"kv_namespaces": [
-		{ "binding": "SESSION", "id": "your-kv-id-here" }
+		{
+			"binding": "SESSION",
+			"id": "81e61bcaf047462090afa052542f4f7a",
+			"remote": true
+		}
 	]
 }

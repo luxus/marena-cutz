@@ -8,9 +8,13 @@ import ReceiptIcon from './ReceiptIcon.astro';
 <section class="relative min-h-[700px] lg:min-h-[100vh] overflow-hidden border-b border-outline-variant">
   <!-- Full-bleed background using the same pattern as About/Barber sections -->
   <div 
-    class="absolute inset-0 bg-cover bg-center" 
+    class="absolute inset-0 bg-cover bg-center hero-bg" 
     style="background-image: url('/images/salon-hero-new.png')"
   ></div>
+
+  <!-- Subtle mouse-following glow -->
+  <div class="mouse-glow absolute inset-0 pointer-events-none"></div>
+
   <div class="absolute inset-0 bg-background/80"></div>
   <!-- Content layer: anchored to the bottom with padding -->
      <div class="relative z-10 min-h-[700px] lg:min-h-[85vh] flex flex-col">
@@ -52,4 +56,24 @@ import ReceiptIcon from './ReceiptIcon.astro';
       </div>
     </div>
   </div>
+
+  <!-- Mouse glow script (works for any .mouse-glow in the page) -->
+  <script>
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll<HTMLElement>('.mouse-glow').forEach(glow => {
+        const container = glow.closest<HTMLElement>('section') || glow.parentElement;
+
+        if (container) {
+          container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            glow.style.setProperty('--mouse-x', `${x}px`);
+            glow.style.setProperty('--mouse-y', `${y}px`);
+          });
+        }
+      });
+    }
+  </script>
 </section>

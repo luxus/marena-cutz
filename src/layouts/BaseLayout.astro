@@ -27,8 +27,9 @@ const { title = s.name } = Astro.props;
     <meta name="twitter:description" content={s.twitterDescription || 'Clean Cuts. Sharp Fades. Präzise Schnitte in Bülach.'} />
     <meta name="twitter:image" content="/images/salon-hero-new.png" />
 
+    <!-- Modern favicon setup (SVG first for best quality) -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <!-- Theme initialization (prevents flash). 

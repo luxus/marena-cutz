@@ -705,37 +705,9 @@ button[aria-expanded] .text-on-surface,
     0 16px 40px -8px color-mix(in srgb, var(--color-secondary) 30%, transparent);
 }
 
-/* Hero entrance animations - restrained and premium */
-.hero-bg {
-  opacity: 0;
-  animation: heroFadeIn 1400ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
-}
 
-@keyframes heroFadeIn {
-  to { opacity: 0.85; }
-}
 
-.hero-text {
-  opacity: 0;
-  animation: heroFlyIn 800ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
-}
 
-.hero-text-1 { animation-delay: 250ms; }
-.hero-text-2 { animation-delay: 420ms; }
-.hero-text-3 { animation-delay: 580ms; }
-.hero-text-4 { animation-delay: 720ms; }
-.hero-text-5 { animation-delay: 860ms; }
-
-@keyframes heroFlyIn {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 /* Share the fancy wipe effect with secondary buttons too */
 .btn-primary::after,
@@ -840,4 +812,48 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+/* Hero entrance animations */
+.hero-text {
+  opacity: 0;
+  animation: heroFlyIn 800ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.hero-text-1 { animation-delay: 200ms; }
+.hero-text-2 { animation-delay: 380ms; }
+.hero-text-3 { animation-delay: 520ms; }
+.hero-text-4 { animation-delay: 680ms; }
+.hero-text-5 { animation-delay: 820ms; }
+
+@keyframes heroFlyIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hero background fade-in */
+.hero-bg {
+  opacity: 0;
+  animation: heroBgFade 1100ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes heroBgFade {
+  to { opacity: 0.85; }
+}
+
+/* Subtle mouse-following light/glow effect */
+.mouse-glow {
+  background: radial-gradient(
+    700px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.07),
+    transparent 40%
+  );
+  pointer-events: none;
+  z-index: 5;
 }

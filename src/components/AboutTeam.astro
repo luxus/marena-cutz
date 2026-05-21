@@ -30,6 +30,10 @@ const getBarberImage = (barber: Barber) =>
 <section class="relative border-b border-outline-variant px-5 py-16 md:py-20 scroll-mt-20">
   <!-- Shared mirrored salon background for Über uns + Team -->
   <div class="absolute inset-0 bg-cover bg-center scale-x-[-1] opacity-38" style="background-image: url('/images/about-salon-hero.png')"></div>
+
+  <!-- Mouse-following glow on the second background -->
+  <div class="mouse-glow absolute inset-0 pointer-events-none"></div>
+
   <div class="absolute inset-0 bg-background/38"></div>
 
   <div class="relative mx-auto max-w-7xl">
