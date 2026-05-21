@@ -1,53 +1,102 @@
 ---
 import { frontmatter as s } from '../content/settings.md';
 import ExternalLinkIcon from './ExternalLinkIcon.astro';
+import SocialCarousel from './SocialCarousel.svelte';
 
 const items = [
-  { platform: 'Instagram', imageUrl: '/images/instagram-dxbxnz7jefd-browser.jpg', alt: 'Clean Fade', permalink: s.instagramUrl },
-  { platform: 'TikTok', imageUrl: '/images/tiktok-7573325880508927254.jpg', alt: 'Styling', permalink: s.tiktokUrl, featured: true },
-  { platform: 'Instagram', imageUrl: '/images/instagram-dw8lhwxjfjo-browser.jpg', alt: 'Transformation', permalink: s.instagramUrl },
-  { platform: 'TikTok', imageUrl: '/images/tiktok-7627810109564931350.jpg', alt: 'Beard Trim', permalink: s.tiktokUrl },
-  { platform: 'Instagram', imageUrl: '/images/instagram-dxsuwndbmf-browser.jpg', alt: 'Precision Work', permalink: s.instagramUrl },
-  { platform: 'TikTok', imageUrl: '/images/tiktok-7559314663998278934.jpg', alt: 'Barber Detail', permalink: s.tiktokUrl }
+  {
+    platform: 'Instagram',
+    imageUrl: '/images/instagram-dxbxnz7jefd-browser.jpg',
+    alt: 'Clean Fade',
+    permalink: s.instagramUrl,
+  },
+  {
+    platform: 'TikTok',
+    imageUrl: '/images/tiktok-7573325880508927254.jpg',
+    alt: 'Styling',
+    permalink: s.tiktokUrl,
+    featured: true,
+  },
+  {
+    platform: 'Instagram',
+    imageUrl: '/images/instagram-dw8lhwxjfjo-browser.jpg',
+    alt: 'Transformation',
+    permalink: s.instagramUrl,
+  },
+  {
+    platform: 'TikTok',
+    imageUrl: '/images/tiktok-7627810109564931350.jpg',
+    alt: 'Beard Trim',
+    permalink: s.tiktokUrl,
+  },
+  {
+    platform: 'Instagram',
+    imageUrl: '/images/instagram-dxsuwndbmf-browser.jpg',
+    alt: 'Precision Work',
+    permalink: s.instagramUrl,
+  },
+  {
+    platform: 'TikTok',
+    imageUrl: '/images/tiktok-7559314663998278934.jpg',
+    alt: 'Barber Detail',
+    permalink: s.tiktokUrl,
+  },
 ];
 ---
-<section id="social" class="bg-background px-5 py-20 pb-32 md:pb-20 scroll-mt-20">
-  <div class="mx-auto grid max-w-7xl gap-12 md:grid-cols-[.8fr_1.2fr]">
+
+<section id="social" class="bg-background py-20 pb-32 md:pb-20 scroll-mt-20">
+  <div class="mx-auto max-w-7xl px-5">
     <!-- Left column: intro + links -->
     <div class="scroll-reveal">
       <div class="mb-8 flex items-center gap-4">
-        <span class="h-px w-8 bg-secondary section-accent"></span>
+        <span class="h-0.5 w-8 bg-secondary section-accent"></span>
         <h2 class="text-headline-lg uppercase">Social Media</h2>
       </div>
-      <p class="max-w-sm text-body-lg text-on-surface-variant">Ausgewählte Cuts, Transformationen und Barber-Momente aus Instagram und TikTok.</p>
+      <p class="max-w-sm text-body-lg text-on-surface-variant">
+        Ausgewählte Cuts, Transformationen und Barber-Momente aus Instagram und TikTok.
+      </p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <a href={s.instagramUrl} target="_blank" rel="noreferrer" class="link-underline inline-flex items-center gap-4 bg-surface px-6 py-4 text-label-caps text-on-surface hover:bg-surface-container hover:text-primary">
-          Instagram <ExternalLinkIcon />
+        <a
+          href={s.instagramUrl}
+          target="_blank"
+          rel="noreferrer"
+          class="nav-link inline-flex items-center gap-2 text-label-caps text-on-surface-variant hover:text-primary"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            ><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"
+            ></circle><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"
+            ></circle></svg
+          >
+          Instagram
         </a>
-        <a href={s.tiktokUrl} target="_blank" rel="noreferrer" class="link-underline inline-flex items-center gap-4 bg-surface px-6 py-4 text-label-caps text-on-surface hover:bg-surface-container hover:text-primary">
-          TikTok <ExternalLinkIcon />
+        <a
+          href={s.tiktokUrl}
+          target="_blank"
+          rel="noreferrer"
+          class="nav-link inline-flex items-center gap-2 text-label-caps text-on-surface-variant hover:text-primary"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+            ><path
+              d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"
+            ></path></svg
+          >
+          TikTok
         </a>
       </div>
     </div>
+  </div>
 
-    <!-- Photo grid: the 6 tiles now each carry scroll-reveal so the enhancer's sibling-stagger logic
-         applies within the grid (6-item editorial cadence). The grid container itself participates
-         in the outer column stagger vs the text column. -->
-    <div class="grid max-w-2xl grid-cols-2 gap-4 md:justify-self-end lg:grid-cols-3">
-      {items.map((item) => (
-        <a
-          href={item.permalink}
-          target="_blank"
-          rel="noreferrer"
-          class:list={[
-            "scroll-reveal social-tile group relative overflow-hidden border bg-surface",
-            item.featured ? "border-primary" : "border-outline-variant"
-          ]}
-        >
-          <img src={item.imageUrl} alt={item.alt} class="aspect-square w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
-          <span class="absolute left-3 top-3 bg-surface/80 px-3 py-1 text-label-caps text-on-surface backdrop-blur transition-colors group-hover:bg-primary/90 group-hover:text-on-primary">{item.platform}</span>
-        </a>
-      ))}
-    </div>
+  <!-- Auto-scroll carousel -->
+  <div class="mt-10 px-5">
+    <SocialCarousel client:visible {items} />
   </div>
 </section>

@@ -25,9 +25,7 @@
     if (!navLinks.length) return;
 
     const sectionIds = ['preise', 'standort', 'ueber', 'barbers'];
-    const sections = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
+    const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
 
     if (!sections.length) return;
 

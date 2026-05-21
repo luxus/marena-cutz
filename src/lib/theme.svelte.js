@@ -5,5 +5,5 @@
 // Server session (Cloudflare KV via SESSION binding) is synced via /api/preferences POST (fire-and-forget).
 export const userTheme = $state({
   theme: 'architectural',
-  mode: 'dark'
+  mode: 'dark',
 });

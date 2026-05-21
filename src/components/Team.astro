@@ -24,7 +24,11 @@ const getBarberImage = (barber: Barber) =>
 
 <section id="team" class="relative border-b border-outline-variant px-5 py-20">
   <!-- Mirrored salon interior as background for Über uns + Team -->
-  <div class="absolute inset-0 bg-cover bg-center scale-x-[-1] opacity-40" style="background-image: url('/images/about-salon-hero.png')"></div>
+  <div
+    class="absolute inset-0 bg-cover bg-center scale-x-[-1] opacity-40"
+    style="background-image: url('/images/about-salon-hero.png')"
+  >
+  </div>
   <div class="absolute inset-0 bg-surface/85"></div>
 
   <div class="relative mx-auto max-w-7xl">
@@ -36,37 +40,39 @@ const getBarberImage = (barber: Barber) =>
     <!-- Beide Barber in einem Block -->
     <div class="border border-outline-variant bg-surface/95 p-8 md:p-10">
       <div class="grid gap-12 md:grid-cols-2">
-        {barbers.map((barber: Barber) => (
-          <div class="group">
-            <div class="overflow-hidden border border-outline-variant">
-              <img
-                src={getBarberImage(barber)}
-                alt={barber.name}
-                class="w-full aspect-[4/3] object-cover transition duration-700 group-hover:scale-105"
-                loading="lazy"
-              />
+        {
+          barbers.map((barber: Barber) => (
+            <div class="group">
+              <div class="overflow-hidden border border-outline-variant">
+                <img
+                  src={getBarberImage(barber)}
+                  alt={barber.name}
+                  class="w-full aspect-[4/3] object-cover transition duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+
+              <div class="mt-6">
+                <h3 class="text-title-md uppercase">{barber.name}</h3>
+                {barber.position && (
+                  <p class="mt-1 text-label-caps text-secondary">{barber.position}</p>
+                )}
+
+                {barber.about && (
+                  <p class="mt-4 text-body-lg text-on-surface-variant">{barber.about}</p>
+                )}
+
+                <a
+                  href="#preise"
+                  class="mt-5 inline-flex items-center gap-2 text-label-caps text-secondary hover:text-primary transition"
+                >
+                  Preise ansehen
+                  <ExternalLinkIcon class="h-3.5 w-3.5" />
+                </a>
+              </div>
             </div>
-
-            <div class="mt-6">
-              <h3 class="text-title-md uppercase">{barber.name}</h3>
-              {barber.position && (
-                <p class="mt-1 text-label-caps text-secondary">{barber.position}</p>
-              )}
-
-              {barber.about && (
-                <p class="mt-4 text-body-lg text-on-surface-variant">{barber.about}</p>
-              )}
-
-              <a
-                href="#preise"
-                class="mt-5 inline-flex items-center gap-2 text-label-caps text-secondary hover:text-primary transition"
-              >
-                Preise ansehen
-                <ExternalLinkIcon class="h-3.5 w-3.5" />
-              </a>
-            </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </div>
   </div>

@@ -80,7 +80,7 @@
       fetch('/api/preferences', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ theme: newTheme, mode: newMode })
+        body: JSON.stringify({ theme: newTheme, mode: newMode }),
       }).catch(() => {});
     };
 
@@ -116,8 +116,14 @@
       onclick={() => (dropdownOpen = !dropdownOpen)}
       type="button"
     >
-      <span class="text-label-caps">{themeName}</span>
-      <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <span class="text-label-caps hidden sm:inline">{themeName}</span>
+      <svg
+        class="h-3.5 w-3.5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
       </svg>
     </button>

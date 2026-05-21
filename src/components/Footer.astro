@@ -1,25 +1,40 @@
 ---
 import { frontmatter as s } from '../content/settings.md';
-import ThemeSwitcher from './ThemeSwitcher.svelte';
 import InstagramIcon from './InstagramIcon.astro';
+import ThemeSwitcher from './ThemeSwitcher.svelte';
 import TikTokIcon from './TikTokIcon.astro';
 ---
+
 <footer class="border-t border-outline-variant bg-background px-5 py-10 pb-28 md:pb-10">
   <div class="mx-auto flex max-w-7xl flex-col gap-8 md:flex-row md:items-center md:justify-between">
     <div class="leading-none">
       <a href="/" class="text-title-md uppercase hover:text-primary">{s.name}</a>
       <div class="mt-1 text-label-caps text-on-surface-variant">{s.tagline}</div>
     </div>
-    <p class="text-body-lg text-on-surface-variant">© 2026 {s.name}. Alle Rechte vorbehalten.</p>
-    <div class="flex items-center gap-4 text-body-lg text-on-surface-variant">
-      <a href="/impressum/" class="link-underline hover:text-primary">Impressum</a>
-      <a href="/datenschutz/" class="link-underline hover:text-primary">Datenschutz</a>
+    <p class="text-xs tracking-widest text-on-surface-variant uppercase">
+      © 2026 {s.name}. Alle Rechte vorbehalten.
+    </p>
+    <div class="flex items-center gap-4 text-xs tracking-widest text-on-surface-variant">
+      <a href="/impressum/" class="nav-link hover:text-primary">Impressum</a>
+      <a href="/datenschutz/" class="nav-link hover:text-primary">Datenschutz</a>
 
       <div class="flex gap-3 pl-3 border-l border-outline-variant text-on-surface-variant">
-        <a href={s.instagramUrl} target="_blank" rel="noreferrer" aria-label="Instagram" class="social-icon-link hover:text-primary">
+        <a
+          href={s.instagramUrl}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Instagram"
+          class="social-icon-link hover:text-primary"
+        >
           <InstagramIcon />
         </a>
-        <a href={s.tiktokUrl} target="_blank" rel="noreferrer" aria-label="TikTok" class="social-icon-link hover:text-primary">
+        <a
+          href={s.tiktokUrl}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="TikTok"
+          class="social-icon-link hover:text-primary"
+        >
           <TikTokIcon />
         </a>
       </div>

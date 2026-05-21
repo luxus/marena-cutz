@@ -4,7 +4,10 @@
     "build": "astro check && astro build",
     "preview": "npm run build && wrangler dev",
     "generate-types": "wrangler types",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && wrangler deploy",
+    "check": "astro check",
+    "lint": "prettier --check .",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",
@@ -17,7 +20,9 @@
     "typescript": "latest"
   },
   "devDependencies": {
-    "playwright": "^1.60.0",
+    "prettier": "^3.8.3",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-svelte": "^4.0.0",
     "wrangler": "^4.93.0"
   }
 }

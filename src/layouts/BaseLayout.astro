@@ -1,20 +1,29 @@
 ---
 import '../styles/global.css';
 import { frontmatter as s } from '../content/settings.md';
+
 const { title = s.name } = Astro.props;
 ---
+
 <!doctype html>
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
-    <meta name="description" content={s.metaDescription || `${s.name} ${s.tagline} in Bülach. Clean cuts, sharp fades und präzise Schnitte.`} />
+    <meta
+      name="description"
+      content={s.metaDescription ||
+        `${s.name} ${s.tagline} in Bülach. Clean cuts, sharp fades und präzise Schnitte.`}
+    />
     <meta name="theme-color" content="#131313" />
 
     <!-- Open Graph / Social -->
     <meta property="og:title" content={`${s.name} | ${s.tagline} in Bülach`} />
-    <meta property="og:description" content={s.ogDescription || 'Präzise Schnitte. Klare Linien. Dein Style. Unser Fokus.'} />
+    <meta
+      property="og:description"
+      content={s.ogDescription || 'Präzise Schnitte. Klare Linien. Dein Style. Unser Fokus.'}
+    />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://marenacutz.ch" />
     <meta property="og:locale" content="de_CH" />
@@ -24,7 +33,10 @@ const { title = s.name } = Astro.props;
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={`${s.name} | ${s.tagline}`} />
-    <meta name="twitter:description" content={s.twitterDescription || 'Clean Cuts. Sharp Fades. Präzise Schnitte in Bülach.'} />
+    <meta
+      name="twitter:description"
+      content={s.twitterDescription || 'Clean Cuts. Sharp Fades. Präzise Schnitte in Bülach.'}
+    />
     <meta name="twitter:image" content="/images/salon-hero-new.png" />
 
     <!-- Favicon -->
@@ -41,7 +53,7 @@ const { title = s.name } = Astro.props;
          The allowlist arrays below MUST be kept manually in sync with src/lib/themes.ts:VALID_THEMES / VALID_MODES
          (the is:inline script cannot import ES modules). -->
     <script is:inline>
-      (function() {
+      (function () {
         try {
           const params = new URLSearchParams(window.location.search);
           let theme = params.get('theme');
@@ -149,33 +161,37 @@ const { title = s.name } = Astro.props;
           // 2. IntersectionObserver with sibling-aware stagger (mirrors prior premium feel exactly)
           const pendingTimeouts = new Set();
 
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-              if (!entry.isIntersecting) return;
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
 
-              const el = /** @type {HTMLElement} */ (entry.target);
+                const el = /** @type {HTMLElement} */ (entry.target);
 
-              const parent = el.parentElement;
-              const siblings = Array.from(parent ? parent.children : []).filter((c) =>
-                c.classList.contains('scroll-reveal') &&
-                c.classList.contains('reveal-prep') &&
-                !c.classList.contains('in-view')
-              );
-              const idx = siblings.indexOf(el);
-              const delay = idx >= 0 ? Math.min(idx * 65, 180) : 0;
+                const parent = el.parentElement;
+                const siblings = Array.from(parent ? parent.children : []).filter(
+                  (c) =>
+                    c.classList.contains('scroll-reveal') &&
+                    c.classList.contains('reveal-prep') &&
+                    !c.classList.contains('in-view')
+                );
+                const idx = siblings.indexOf(el);
+                const delay = idx >= 0 ? Math.min(idx * 65, 180) : 0;
 
-              const tid = window.setTimeout(() => {
-                pendingTimeouts.delete(tid);
-                el.classList.remove('reveal-prep');
-                el.classList.add('in-view');
-                observer.unobserve(el);
-              }, delay);
-              pendingTimeouts.add(tid);
-            });
-          }, {
-            threshold: 0.12,
-            rootMargin: '0px 0px -40px 0px'
-          });
+                const tid = window.setTimeout(() => {
+                  pendingTimeouts.delete(tid);
+                  el.classList.remove('reveal-prep');
+                  el.classList.add('in-view');
+                  observer.unobserve(el);
+                }, delay);
+                pendingTimeouts.add(tid);
+              });
+            },
+            {
+              threshold: 0.12,
+              rootMargin: '0px 0px -40px 0px',
+            }
+          );
 
           // Observe only the ones we prepped for reveal
           revealEls.forEach((el) => {
@@ -185,13 +201,17 @@ const { title = s.name } = Astro.props;
           });
 
           // Cleanup on unload (good hygiene)
-          window.addEventListener('beforeunload', () => {
-            observer.disconnect();
-            pendingTimeouts.forEach((tid) => {
-              if (typeof tid === 'number') clearTimeout(tid);
-            });
-            pendingTimeouts.clear();
-          }, { once: true });
+          window.addEventListener(
+            'beforeunload',
+            () => {
+              observer.disconnect();
+              pendingTimeouts.forEach((tid) => {
+                if (typeof tid === 'number') clearTimeout(tid);
+              });
+              pendingTimeouts.clear();
+            },
+            { once: true }
+          );
         }
 
         // Run after first paint for perfect initial render

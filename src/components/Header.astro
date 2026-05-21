@@ -2,22 +2,71 @@
 import { frontmatter as s } from '../content/settings.md';
 import InstagramIcon from './InstagramIcon.astro';
 import TikTokIcon from './TikTokIcon.astro';
-import ExternalLinkIcon from './ExternalLinkIcon.astro';
-import ReceiptIcon from './ReceiptIcon.astro';
+import BookingTrigger from './BookingTrigger.svelte';
 ---
-<header class="fixed left-0 top-0 z-50 w-full border-b border-outline-variant bg-surface/55 backdrop-blur-xl">
+
+<header
+  class="fixed left-0 top-0 z-50 w-full border-b border-outline-variant bg-surface/55 backdrop-blur-xl"
+>
   <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
-    <a href="/" class="leading-none"><div class="text-title-md uppercase">{s.name}</div><div class="mt-1 text-label-caps text-on-surface-variant">{s.tagline}</div></a>
-    <nav class="hidden items-center gap-8 text-label-caps text-on-surface-variant md:flex"><a href="#preise" class="nav-link hover:text-primary">Preise</a><a href="#standort" class="nav-link hover:text-primary">Standort</a><a href="#ueber" class="nav-link hover:text-primary">Über uns</a><a href="#barbers" class="nav-link hover:text-primary">Barbers</a><div class="flex items-center gap-3"><a href="#social" aria-label="Instagram" class="social-icon-link text-on-surface-variant hover:text-primary"><InstagramIcon /></a><a href="#social" aria-label="TikTok" class="social-icon-link text-on-surface-variant hover:text-primary"><TikTokIcon /></a></div></nav>
+    <a href="/" class="leading-none"
+      ><div class="text-title-md uppercase">{s.name}</div><div
+        class="mt-1 text-label-caps text-on-surface-variant"
+      >
+        {s.tagline}
+      </div></a
+    >
+    <nav class="hidden items-center gap-8 text-label-caps text-on-surface-variant md:flex">
+      <a href="#preise" class="nav-link hover:text-primary">Preise</a><a
+        href="#standort"
+        class="nav-link hover:text-primary">Standort</a
+      ><a href="#ueber" class="nav-link hover:text-primary">Über uns</a><a
+        href="#barbers"
+        class="nav-link hover:text-primary">Barbers</a
+      ><BookingTrigger
+        client:load
+        label="Termin buchen"
+        showIcons={false}
+        class="btn-primary px-4 py-2 text-label-caps"
+      /><div class="flex items-center gap-3">
+        <a
+          href="#social"
+          aria-label="Instagram"
+          class="social-icon-link text-on-surface-variant hover:text-primary"><InstagramIcon /></a
+        ><a
+          href="#social"
+          aria-label="TikTok"
+          class="social-icon-link text-on-surface-variant hover:text-primary"><TikTokIcon /></a
+        >
+      </div>
+    </nav>
     <div class="flex items-center gap-3 md:hidden">
-      <a href="#social" aria-label="Instagram" class="social-icon-link text-on-surface-variant hover:text-primary">
-        <InstagramIcon />
-      </a>
-      <a href="#social" aria-label="TikTok" class="social-icon-link text-on-surface-variant hover:text-primary">
-        <TikTokIcon />
-      </a>
-      <a href="#preise" class="btn-secondary"><ReceiptIcon class="h-3.5 w-3.5" />Preise</a>
-      <a href={s.bookingUrl} target="_blank" rel="noreferrer" class="btn-secondary inline-flex items-center gap-2">Termin <ExternalLinkIcon class="h-3 w-3" /></a>
+      <a
+        href="#ueber"
+        class="nav-link text-label-caps text-on-surface-variant hover:text-primary whitespace-nowrap"
+        >Über uns</a
+      >
+      <a
+        href="#barbers"
+        class="nav-link text-label-caps text-on-surface-variant hover:text-primary whitespace-nowrap"
+        >Barbers</a
+      >
+      <div class="flex items-center gap-3 pl-2 border-l border-outline-variant">
+        <a
+          href="#social"
+          aria-label="Instagram"
+          class="social-icon-link text-on-surface-variant hover:text-primary"
+        >
+          <InstagramIcon />
+        </a>
+        <a
+          href="#social"
+          aria-label="TikTok"
+          class="social-icon-link text-on-surface-variant hover:text-primary"
+        >
+          <TikTokIcon />
+        </a>
+      </div>
     </div>
   </div>
 </header>

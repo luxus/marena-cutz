@@ -1,14 +1,17 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
 import StickyMobileNav from '../components/StickyMobileNav.astro';
 import { frontmatter as s } from '../content/settings.md';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title={`Seite nicht gefunden | ${s.name}`}>
   <Header />
-  <main id="main" class="min-h-[70dvh] border-b border-outline-variant bg-surface px-5 py-20 md:py-28">
+  <main
+    id="main"
+    class="min-h-[70dvh] border-b border-outline-variant bg-surface px-5 py-20 md:py-28"
+  >
     <div class="mx-auto max-w-7xl">
       <div class="flex flex-col items-start gap-6">
         <div class="flex items-center gap-4">
@@ -16,21 +19,20 @@ import { frontmatter as s } from '../content/settings.md';
           <span class="text-label-caps text-secondary">404</span>
         </div>
 
-        <h1 class="text-display-lg md:text-[92px] leading-none tracking-[-0.03em]">Seite<br />nicht gefunden.</h1>
+        <h1 class="text-display-lg md:text-[92px] leading-none tracking-[-0.03em]">
+          Seite<br />nicht gefunden.
+        </h1>
 
         <div class="h-px w-24 bg-secondary"></div>
 
         <p class="max-w-md text-body-lg text-on-surface-variant">
-          Die angeforderte Seite existiert nicht oder wurde verschoben. Kein Problem – wir finden den richtigen Weg zurück.
+          Die angeforderte Seite existiert nicht oder wurde verschoben. Kein Problem – wir finden
+          den richtigen Weg zurück.
         </p>
 
         <div class="mt-4 flex flex-wrap gap-4">
-          <a href="/" class="btn-primary">
-            Zur Startseite
-          </a>
-          <a href="/#preise" class="btn-secondary px-8 py-4">
-            Preise ansehen
-          </a>
+          <a href="/" class="btn-primary"> Zur Startseite </a>
+          <a href="/#preise" class="btn-secondary px-8 py-4"> Preise ansehen </a>
         </div>
       </div>
     </div>

@@ -107,7 +107,7 @@ This design system utilizes a **Dark Mode** foundation to simulate the sleek, in
 
 ## Typography
 
-The typographic hierarchy is the core of the "Editorial" feel. 
+The typographic hierarchy is the core of the "Editorial" feel.
 
 - **Bodoni Moda** is reserved for large, high-impact headlines. It should be used with extreme weight (900) for a "fashion-mag" look or lighter weights for a more delicate, architectural feel.
 - **Hanken Grotesk** handles all functional text, providing a clean, contemporary sans-serif balance that ensures legibility in the dark interface.
@@ -118,30 +118,30 @@ The typographic hierarchy is the core of the "Editorial" feel.
 This design system employs a **Fixed Grid** for desktop to maintain an editorial layout, and a **Fluid Grid** for mobile.
 
 - **Desktop:** 12-column grid with generous 80px margins to allow content to "breathe" like a high-fashion spread.
-- **Rhythm:** An 8px linear scale is used for all internal padding and margins. 
+- **Rhythm:** An 8px linear scale is used for all internal padding and margins.
 - **Architectural Alignment:** Elements should be strictly aligned to the grid. Use "Asymmetric Balance"—for example, a large headline may span 8 columns while the supporting body text is offset to the final 4 columns, creating visual tension and interest.
 
 ## Elevation & Depth
 
-To maintain the architectural aesthetic, the design system avoids traditional shadows. 
+To maintain the architectural aesthetic, the design system avoids traditional shadows.
 
-- **Tonal Layers:** Depth is achieved through "Stacked Fills." The background is at `#0A0A0A`, while cards or containers sit on `#1E1E1E`. 
+- **Tonal Layers:** Depth is achieved through "Stacked Fills." The background is at `#0A0A0A`, while cards or containers sit on `#1E1E1E`.
 - **Neon Glow:** Instead of shadows, use extremely subtle outer glows (using the accent colors) for active states. These should feel like the reflection of neon tubes on a dark floor.
 - **Thin Rules:** Use 1px borders in high-contrast white or accent colors to define sections rather than using drop shadows.
 
 ## Shapes
 
-The shape language is **Sharp (0)**. 
+The shape language is **Sharp (0)**.
 
-To reflect the "Architectural" brief, avoid rounded corners entirely. Buttons, input fields, and image containers should have 90-degree angles. This conveys a sense of precision, sharpness (like a blade), and structural integrity. 
+To reflect the "Architectural" brief, avoid rounded corners entirely. Buttons, input fields, and image containers should have 90-degree angles. This conveys a sense of precision, sharpness (like a blade), and structural integrity.
 
-*Exception:* Only the "Barber Chair" accent elements (like custom chips or specific iconography) may use circular forms to mirror the circular lighting seen in the studio.
+_Exception:_ Only the "Barber Chair" accent elements (like custom chips or specific iconography) may use circular forms to mirror the circular lighting seen in the studio.
 
 ## Components
 
 - **Buttons:** Sharp 0px corners. Primary buttons use the Vibrant Orange fill with black text. Secondary buttons use a 1px Electric Turquoise border with Turquoise text (Ghost style).
 - **Input Fields:** Bottom-border only (Editorial style). The label should use `label-caps` (Space Mono) positioned above the line. The line turns Electric Turquoise on focus.
-- **Cards:** No borders or shadows. Use a slightly lighter neutral fill (`#1E1E1E`) to separate from the background. 
-- **Status Chips:** Use the three accent colors (Orange, Pink, Turquoise) to categorize services (e.g., "Haircut", "Beard", "Treatment"). 
+- **Cards:** No borders or shadows. Use a slightly lighter neutral fill (`#1E1E1E`) to separate from the background.
+- **Status Chips:** Use the three accent colors (Orange, Pink, Turquoise) to categorize services (e.g., "Haircut", "Beard", "Treatment").
 - **Selection Controls:** Checkboxes and Radios are sharp squares/diamonds. On selection, they fill solid with the Primary color.
 - **Navigation:** Top-tier navigation uses high-contrast white typography. Active states are indicated by a 2px horizontal bar in a rotating accent color.

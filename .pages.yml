@@ -48,7 +48,7 @@ content:
         list:
           collapsible:
             collapsed: true
-            summary: "{platform}: {alt}"
+            summary: '{platform}: {alt}'
         fields:
           - name: platform
             label: Plattform
@@ -88,7 +88,7 @@ content:
         list:
           collapsible:
             collapsed: true
-            summary: "{name}"
+            summary: '{name}'
         fields:
           - name: name
             label: Name
@@ -102,7 +102,7 @@ content:
             list:
               collapsible:
                 collapsed: true
-                summary: "{name} — {price}"
+                summary: '{name} — {price}'
             fields:
               - name: name
                 label: Leistung
@@ -144,7 +144,7 @@ content:
         list:
           collapsible:
             collapsed: true
-            summary: "{day}: {hours}"
+            summary: '{day}: {hours}'
         fields:
           - name: day
             label: Tag

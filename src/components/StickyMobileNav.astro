@@ -1,12 +1,40 @@
 ---
 import { frontmatter as s } from '../content/settings.md';
-import ExternalLinkIcon from './ExternalLinkIcon.astro';
 import MapPinIcon from './MapPinIcon.astro';
+import BookingTrigger from './BookingTrigger.svelte';
 ---
-<nav class="fixed bottom-0 left-0 z-50 grid w-full grid-cols-3 border-t border-outline-variant bg-surface/85 text-label-caps text-on-surface-variant backdrop-blur-xl md:hidden">
-  <a href="#preise" class="flex flex-col items-center gap-1 py-3 hover:text-primary"><span>⌘</span>Preise</a>
-  <a href={s.bookingUrl} target="_blank" rel="noreferrer" class="flex flex-col items-center gap-1 py-3 text-primary transition-all duration-150 ease-[cubic-bezier(0.23,1.0,0.32,1)] hover:scale-[1.015] active:scale-[0.982]">
-    <ExternalLinkIcon class="h-4 w-4" />Buchen
+
+<nav
+  class="fixed bottom-0 left-0 z-50 grid w-full grid-cols-3 border-t border-outline-variant bg-surface/85 text-label-caps text-on-surface-variant backdrop-blur-xl md:hidden"
+>
+  <a
+    href="#preise"
+    class="mobile-nav-link flex flex-col items-center gap-1 py-3 hover:text-primary"
+  >
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      ><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path
+        d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"></path></svg
+    >
+    Preise
   </a>
-  <a href="#standort" class="flex flex-col items-center gap-1 py-3 hover:text-primary"><MapPinIcon class="h-4 w-4" />Route</a>
+  <BookingTrigger
+    client:load
+    label="Termin"
+    showIcons={true}
+    class="flex flex-col items-center gap-1 py-3 text-primary transition-all duration-150 ease-[cubic-bezier(0.23,1.0,0.32,1)] hover:scale-[1.015] active:scale-[0.982]"
+  />
+  <a
+    href="#standort"
+    class="mobile-nav-link flex flex-col items-center gap-1 py-3 hover:text-primary"
+    ><MapPinIcon class="h-4 w-4" />Standort</a
+  >
 </nav>

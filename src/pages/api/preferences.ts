@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { VALID_THEMES, VALID_MODES } from '../../lib/themes';
+import { VALID_MODES, VALID_THEMES } from '../../lib/themes';
 
 export const prerender = false; // Must be dynamic: uses Astro.session (backed by Cloudflare SESSION KV)
 
@@ -29,7 +29,11 @@ export const POST: APIRoute = async ({ request, session, cookies }) => {
     // Strict validation against the canonical allowlists
     if (!VALID_THEMES.includes(theme) || !VALID_MODES.includes(mode)) {
       return new Response(
-        JSON.stringify({ error: 'Invalid theme or mode', validThemes: VALID_THEMES, validModes: VALID_MODES }),
+        JSON.stringify({
+          error: 'Invalid theme or mode',
+          validThemes: VALID_THEMES,
+          validModes: VALID_MODES,
+        }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
@@ -39,9 +43,9 @@ export const POST: APIRoute = async ({ request, session, cookies }) => {
     // 1. Write to server session (durable KV via Cloudflare adapter SESSION binding)
     // Use optional chaining + non-null assertion for the session provided by the adapter in dynamic routes
     if (session) {
-      await session.set('preferences', prefs);
-      await session.set('theme', theme);
-      await session.set('mode', mode);
+      session.set('preferences', prefs);
+      session.set('theme', theme);
+      session.set('mode', mode);
     }
 
     // 2. Emit *readable* cookies for the early bootstrap script (document.cookie parser)
@@ -62,10 +66,10 @@ export const POST: APIRoute = async ({ request, session, cookies }) => {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (err) {
-    return new Response(
-      JSON.stringify({ error: 'Bad request', details: String(err) }),
-      { status: 400, headers: { 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: 'Bad request', details: String(err) }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 };
 
@@ -81,7 +85,11 @@ export const GET: APIRoute = async ({ session, cookies }) => {
     if (session) {
       fromSession = (await session.get('preferences')) as Preferences | undefined;
     }
-    if (fromSession && VALID_THEMES.includes(fromSession.theme) && VALID_MODES.includes(fromSession.mode)) {
+    if (
+      fromSession &&
+      VALID_THEMES.includes(fromSession.theme) &&
+      VALID_MODES.includes(fromSession.mode)
+    ) {
       return new Response(JSON.stringify({ success: true, ...fromSession, source: 'session' }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },

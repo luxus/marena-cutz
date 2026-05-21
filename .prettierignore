@@ -1,0 +1,7 @@
+dist
+.astro
+.wrangler
+node_modules
+.agents
+scripts
+src/styles/global.css
