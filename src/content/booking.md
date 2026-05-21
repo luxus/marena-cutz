@@ -1,5 +1,7 @@
 ---
 title: Wichtige Hinweise zur Terminbuchung
+availabilityTitle: Terminverfügbarkeit
+availabilityText: Alle freien Termine sind direkt im Buchungsportal einsehbar und buchbar — eine Anfrage per Instagram oder Telefon ist nicht nötig.
 walkInsTitle: Walk-ins
 walkInsText: Walk-ins sind bei uns leider nur sehr begrenzt möglich. Um Wartezeiten zu vermeiden, empfehlen wir dringend, im Voraus einen Termin zu buchen.
 cancellationTitle: Terminabsagen

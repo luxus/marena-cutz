@@ -5,6 +5,8 @@
   let {
     bookingUrl,
     drawerTitle = 'Wichtige Hinweise zur Terminbuchung',
+    availabilityTitle = 'Terminverfügbarkeit',
+    availabilityText = '',
     walkInsTitle = 'Walk-ins',
     walkInsText = '',
     cancellationTitle = 'Terminabsagen',
@@ -16,6 +18,8 @@
   }: {
     bookingUrl: string;
     drawerTitle?: string;
+    availabilityTitle?: string;
+    availabilityText?: string;
     walkInsTitle?: string;
     walkInsText?: string;
     cancellationTitle?: string;
@@ -48,6 +52,12 @@
 
 <Drawer bind:open={bookingDrawer.open} title={drawerTitle}>
   <div class="space-y-5">
+    {#if availabilityText}
+      <div class="border-l-2 border-primary pl-4 space-y-1">
+        <p class="text-title-sm !text-on-surface">{availabilityTitle}</p>
+        <p class="text-sm text-on-surface-variant leading-relaxed">{availabilityText}</p>
+      </div>
+    {/if}
     {#if walkInsText}
       <div class="border-l-2 border-primary pl-4 space-y-1">
         <p class="text-title-sm !text-on-surface">{walkInsTitle}</p>

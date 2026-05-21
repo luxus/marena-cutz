@@ -217,6 +217,12 @@ content:
           - name: title
             label: Drawer Titel
             type: string
+          - name: availabilityTitle
+            label: Verfügbarkeit Überschrift
+            type: string
+          - name: availabilityText
+            label: Verfügbarkeit Text
+            type: text
           - name: walkInsTitle
             label: Walk-ins Überschrift
             type: string
