@@ -5,7 +5,7 @@ import { frontmatter as c, compiledContent } from '../content/impressum.md';
 import { frontmatter as s } from '../content/settings.md';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const ImpressumContent = await compiledContent();
+const bodyHtml = c.body ?? (await compiledContent());
 ---
 
 <BaseLayout title={`${c.title} | ${s.name}`}>
@@ -26,7 +26,7 @@ const ImpressumContent = await compiledContent();
         E-Mail: <a href={`mailto:${s.email}`}>{s.email}</a>
       </p>
 
-      <div set:html={ImpressumContent} />
+      <div set:html={bodyHtml} />
       <p>{s.owner}</p>
     </article>
   </main>

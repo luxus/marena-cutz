@@ -2,7 +2,29 @@
   import { bookingDrawer } from '../lib/bookingDrawer.svelte.js';
   import Drawer from './Drawer.svelte';
 
-  let { bookingUrl }: { bookingUrl: string } = $props();
+  let {
+    bookingUrl,
+    drawerTitle = 'Wichtige Hinweise zur Terminbuchung',
+    walkInsTitle = 'Walk-ins',
+    walkInsText = '',
+    cancellationTitle = 'Terminabsagen',
+    cancellationText = '',
+    latenessTitle = 'Verspätung',
+    latenessText = '',
+    ctaLabel = 'Ich habe verstanden — Termin buchen',
+    cancelLabel = 'Abbrechen',
+  }: {
+    bookingUrl: string;
+    drawerTitle?: string;
+    walkInsTitle?: string;
+    walkInsText?: string;
+    cancellationTitle?: string;
+    cancellationText?: string;
+    latenessTitle?: string;
+    latenessText?: string;
+    ctaLabel?: string;
+    cancelLabel?: string;
+  } = $props();
 </script>
 
 <button
@@ -24,27 +46,26 @@
   Termin buchen
 </button>
 
-<Drawer bind:open={bookingDrawer.open} title="Wichtige Hinweise zur Terminbuchung">
+<Drawer bind:open={bookingDrawer.open} title={drawerTitle}>
   <div class="space-y-5">
-    <div class="border-l-2 border-primary pl-4 space-y-1">
-      <p class="text-title-sm !text-on-surface">Walk-ins</p>
-      <p class="text-sm text-on-surface-variant leading-relaxed">
-        Walk-ins sind bei uns <strong class="text-on-surface"
-          >leider nur sehr begrenzt möglich</strong
-        >. Um Wartezeiten zu vermeiden, empfehlen wir dringend, im Voraus einen Termin zu buchen.
-      </p>
-    </div>
-
-    <div class="border-l-2 border-primary pl-4 space-y-1">
-      <p class="text-title-sm !text-on-surface">Terminabsagen</p>
-      <p class="text-sm text-on-surface-variant leading-relaxed">
-        Termine, die <strong class="text-on-surface"
-          >nicht mindestens 24 Stunden im Voraus abgesagt</strong
-        >
-        werden, werden <strong class="text-on-surface">in Rechnung gestellt</strong>. Bitte sage
-        deinen Termin rechtzeitig ab, damit andere Kunden nachrücken können.
-      </p>
-    </div>
+    {#if walkInsText}
+      <div class="border-l-2 border-primary pl-4 space-y-1">
+        <p class="text-title-sm !text-on-surface">{walkInsTitle}</p>
+        <p class="text-sm text-on-surface-variant leading-relaxed">{walkInsText}</p>
+      </div>
+    {/if}
+    {#if cancellationText}
+      <div class="border-l-2 border-primary pl-4 space-y-1">
+        <p class="text-title-sm !text-on-surface">{cancellationTitle}</p>
+        <p class="text-sm text-on-surface-variant leading-relaxed">{cancellationText}</p>
+      </div>
+    {/if}
+    {#if latenessText}
+      <div class="border-l-2 border-primary pl-4 space-y-1">
+        <p class="text-title-sm !text-on-surface">{latenessTitle}</p>
+        <p class="text-sm text-on-surface-variant leading-relaxed">{latenessText}</p>
+      </div>
+    {/if}
 
     <div class="pt-2 flex flex-col gap-3">
       <a
@@ -66,7 +87,7 @@
           aria-hidden="true"
           ><rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /></svg
         >
-        Ich habe verstanden — Termin buchen
+        {ctaLabel}
         <svg
           width="16"
           height="16"
@@ -87,7 +108,7 @@
         onclick={() => (bookingDrawer.open = false)}
         class="btn-secondary px-6 py-3 text-label-caps"
       >
-        Abbrechen
+        {cancelLabel}
       </button>
     </div>
   </div>

@@ -9,8 +9,62 @@ settings:
     merge: true
 
 content:
+  # ─── Globale Einstellungen ───────────────────────────────────────────────
+  - name: settings
+    label: Einstellungen
+    type: file
+    path: src/content/settings.md
+    format: yaml-frontmatter
+    fields:
+      - name: name
+        label: Seitenname
+        type: string
+      - name: tagline
+        label: Tagline
+        type: string
+      - name: owner
+        label: Inhaber
+        type: string
+      - name: address
+        label: Strasse & Nr.
+        type: string
+      - name: zipCity
+        label: PLZ / Ort
+        type: string
+      - name: phone
+        label: Telefon
+        type: string
+      - name: email
+        label: E-Mail
+        type: string
+      - name: bookingUrl
+        label: Buchungslink
+        type: string
+      - name: instagramUrl
+        label: Instagram URL
+        type: string
+      - name: tiktokUrl
+        label: TikTok URL
+        type: string
+      - name: mapsUrl
+        label: Google Maps Link
+        type: string
+      - name: metaDescription
+        label: Meta Description
+        type: text
+      - name: ogDescription
+        label: Open Graph Description
+        type: text
+      - name: ogImageAlt
+        label: OG Bild Alt-Text
+        type: string
+      - name: twitterDescription
+        label: Twitter/X Description
+        type: text
+
+  # ─── Hero / Startseite ──────────────────────────────────────────────────
   - name: homepage
-    label: Startseite
+    label: Startseite (Hero)
     type: file
     path: src/content/home.md
     format: yaml-frontmatter
@@ -24,24 +78,6 @@ content:
       - name: text
         label: Intro Text
         type: text
-      - name: bookingUrl
-        label: Buchungslink
-        type: string
-      - name: instagramUrl
-        label: Instagram Link
-        type: string
-      - name: tiktokUrl
-        label: TikTok Link
-        type: string
-      - name: address
-        label: Adresse
-        type: string
-      - name: zipCity
-        label: PLZ / Ort
-        type: string
-      - name: mapsUrl
-        label: Google Maps Link
-        type: string
       - name: socialItems
         label: Best-of Social Posts
         type: object
@@ -61,41 +97,54 @@ content:
             label: Bild
             type: image
           - name: permalink
-            label: Link
+            label: Link zum Post
             type: string
           - name: alt
             label: Alt Text
             type: string
           - name: objectPosition
-            label: Bildposition
+            label: Bildposition (z.B. center top)
             type: string
           - name: featured
             label: Hervorheben
             type: boolean
 
+  # ─── Preise ─────────────────────────────────────────────────────────────
   - name: prices
     label: Preise
-    type: file
-    path: src/content/prices.md
-    format: yaml-frontmatter
-    fields:
-      - name: title
-        label: Titel
-        type: string
-      - name: barbers
-        label: Barber
-        type: object
-        list:
-          collapsible:
-            collapsed: true
-            summary: '{name}'
+    type: group
+    items:
+      - name: prices-page
+        label: Sektion Titel
+        type: file
+        path: src/content/prices.md
+        format: yaml-frontmatter
+        fields:
+          - name: title
+            label: Titel
+            type: string
+
+      - name: barber-angelo
+        label: Barber Angelo
+        type: file
+        path: src/content/barbers/angelo.md
+        format: yaml-frontmatter
         fields:
           - name: name
             label: Name
             type: string
-          - name: label
-            label: Anzeige / Rolle
+          - name: position
+            label: Rolle
             type: string
+          - name: about
+            label: Kurzbeschreibung
+            type: text
+          - name: order
+            label: Reihenfolge
+            type: number
+          - name: image
+            label: Bild
+            type: image
           - name: services
             label: Leistungen
             type: object
@@ -117,6 +166,105 @@ content:
                 label: Hervorheben
                 type: boolean
 
+      - name: barber-sean
+        label: Barber Sean
+        type: file
+        path: src/content/barbers/sean.md
+        format: yaml-frontmatter
+        fields:
+          - name: name
+            label: Name
+            type: string
+          - name: position
+            label: Rolle
+            type: string
+          - name: about
+            label: Kurzbeschreibung
+            type: text
+          - name: order
+            label: Reihenfolge
+            type: number
+          - name: image
+            label: Bild
+            type: image
+          - name: services
+            label: Leistungen
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: '{name} — {price}'
+            fields:
+              - name: name
+                label: Leistung
+                type: string
+              - name: duration
+                label: Dauer
+                type: string
+              - name: price
+                label: Preis
+                type: string
+              - name: featured
+                label: Hervorheben
+                type: boolean
+
+      - name: booking-drawer
+        label: Termin Drawer Texte
+        type: file
+        path: src/content/booking.md
+        format: yaml-frontmatter
+        fields:
+          - name: title
+            label: Drawer Titel
+            type: string
+          - name: walkInsTitle
+            label: Walk-ins Überschrift
+            type: string
+          - name: walkInsText
+            label: Walk-ins Text
+            type: text
+          - name: cancellationTitle
+            label: Absagen Überschrift
+            type: string
+          - name: cancellationText
+            label: Absagen Text
+            type: text
+          - name: latenessTitle
+            label: Verspätung Überschrift
+            type: string
+          - name: latenessText
+            label: Verspätung Text
+            type: text
+          - name: ctaLabel
+            label: Bestätigungs-Button Text
+            type: string
+          - name: cancelLabel
+            label: Abbrechen-Button Text
+            type: string
+
+      - name: parking-drawer
+        label: Parken Drawer Texte
+        type: file
+        path: src/content/parking.md
+        format: yaml-frontmatter
+        fields:
+          - name: title
+            label: Drawer Titel
+            type: string
+          - name: image
+            label: Bild
+            type: image
+          - name: entrance
+            label: Eingang
+            type: text
+          - name: parking
+            label: Parkplätze
+            type: text
+          - name: transit
+            label: ÖV
+            type: text
+
+  # ─── Über uns ────────────────────────────────────────────────────────────
   - name: about
     label: Über uns
     type: file
@@ -129,15 +277,6 @@ content:
       - name: text
         label: Text
         type: text
-      - name: owner
-        label: Inhaber
-        type: string
-      - name: phone
-        label: Telefon
-        type: string
-      - name: email
-        label: E-Mail
-        type: string
       - name: openingHours
         label: Öffnungszeiten
         type: object
@@ -157,6 +296,7 @@ content:
         type: string
         list: true
 
+  # ─── Rechtliches ─────────────────────────────────────────────────────────
   - name: legal
     label: Rechtliches
     type: group
@@ -171,8 +311,10 @@ content:
             label: Titel
             type: string
           - name: body
-            label: Inhalt
+            label: Inhalt (Markdown)
             type: rich-text
+            options:
+              format: markdown
       - name: datenschutz
         label: Datenschutz
         type: file
@@ -183,5 +325,7 @@ content:
             label: Titel
             type: string
           - name: body
-            label: Inhalt
+            label: Inhalt (Markdown)
             type: rich-text
+            options:
+              format: markdown

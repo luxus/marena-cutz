@@ -72,15 +72,19 @@ const getBarberImage = (barber: Barber) =>
               <h3 class="mb-3 text-label-caps !text-on-surface">Kontakt</h3>
               <a
                 href={`tel:${s.phone}`}
-                class="flex items-center gap-2 hover:text-primary transition-colors"
+                class="group/contact flex items-center gap-2 hover:text-primary transition-colors duration-150"
               >
-                <PhoneIcon /><span>Telefon</span>
+                <PhoneIcon /><span class="nav-link group-hover/contact:[&::after]:scale-x-100"
+                  >Telefon</span
+                >
               </a>
               <a
                 href={`mailto:${s.email}`}
-                class="flex items-center gap-2 hover:text-primary transition-colors"
+                class="group/contact flex items-center gap-2 hover:text-primary transition-colors duration-150"
               >
-                <MailIcon /><span>E-Mail</span>
+                <MailIcon /><span class="nav-link group-hover/contact:[&::after]:scale-x-100"
+                  >E-Mail</span
+                >
               </a>
             </div>
           </div>
@@ -138,7 +142,7 @@ const getBarberImage = (barber: Barber) =>
                     </div>
                     <a
                       href="#preise"
-                      class="nav-link mt-6 inline-block text-label-caps text-on-surface-variant hover:text-primary"
+                      class="nav-link mt-6 w-fit text-label-caps text-on-surface-variant hover:text-primary"
                     >
                       Zu den Preisen
                     </a>

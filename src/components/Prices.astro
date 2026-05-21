@@ -1,5 +1,7 @@
 ---
 import { frontmatter as about } from '../content/about.md';
+import { frontmatter as booking } from '../content/booking.md';
+import { frontmatter as parking } from '../content/parking.md';
 import { frontmatter as prices } from '../content/prices.md';
 import { frontmatter as s } from '../content/settings.md';
 import BarberPrice from './BarberPrice.svelte';
@@ -37,7 +39,19 @@ const barbers = barbersFiles
       </div>
       <div class="space-y-5">
         {barbers.map((barber: Barber) => <BarberPrice client:load {barber} />)}
-        <BookingDrawer client:load bookingUrl={s.bookingUrl} />
+        <BookingDrawer
+          client:load
+          bookingUrl={s.bookingUrl}
+          drawerTitle={booking.title}
+          walkInsTitle={booking.walkInsTitle}
+          walkInsText={booking.walkInsText}
+          cancellationTitle={booking.cancellationTitle}
+          cancellationText={booking.cancellationText}
+          latenessTitle={booking.latenessTitle}
+          latenessText={booking.latenessText}
+          ctaLabel={booking.ctaLabel}
+          cancelLabel={booking.cancelLabel}
+        />
         {
           paymentMethods.length > 0 && (
             <div class="pt-2">
@@ -130,7 +144,15 @@ const barbers = barbersFiles
         </a>
       </div>
       <div class="mt-4">
-        <ParkingDrawer client:load />
+        <ParkingDrawer
+          client:load
+          title={parking.title}
+          image={parking.image}
+          entrance={parking.entrance}
+          parking={parking.parking}
+          transit={parking.transit}
+          mapsUrl={s.mapsUrl}
+        />
       </div>
     </div>
   </div>

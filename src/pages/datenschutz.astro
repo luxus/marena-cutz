@@ -5,7 +5,7 @@ import { frontmatter as c, compiledContent } from '../content/datenschutz.md';
 import { frontmatter as s } from '../content/settings.md';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const DatenschutzContent = await compiledContent();
+const bodyHtml = c.body ?? (await compiledContent());
 ---
 
 <BaseLayout title={`${c.title} | ${s.name}`}>
@@ -23,7 +23,7 @@ const DatenschutzContent = await compiledContent();
       </p>
       <p>E-Mail: <a href={`mailto:${s.email}`}>{s.email}</a></p>
 
-      <div set:html={DatenschutzContent} />
+      <div set:html={bodyHtml} />
     </article>
   </main>
   <Footer />
