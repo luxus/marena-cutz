@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import { frontmatter as about } from '../content/about.md';
 import { frontmatter as booking } from '../content/booking.md';
 import { frontmatter as parking } from '../content/parking.md';
@@ -10,23 +11,10 @@ import ParkingDrawer from './ParkingDrawer.svelte';
 
 const paymentMethods = (about.paymentMethods ?? []) as string[];
 
-type Service = { name: string; duration?: string; price: string; featured?: boolean };
-type Barber = {
-  name: string;
-  position?: string;
-  image?: string;
-  about?: string;
-  order?: number;
-  services: Service[];
-};
-
-const barbersFiles = Object.values(
-  import.meta.glob<{ frontmatter: Barber }>('../content/barbers/*.md', { eager: true })
-);
-
-const barbers = barbersFiles
-  .map((file) => file.frontmatter)
-  .sort((a: Barber, b: Barber) => (a.order || 0) - (b.order || 0));
+const barbersEntries = await getCollection('barbers');
+const barbers = barbersEntries
+  .map((e) => e.data)
+  .sort((a, b) => (a.order || 0) - (b.order || 0));
 ---
 
 <section id="preise" class="border-b border-outline-variant bg-surface px-5 py-16 scroll-mt-4">
@@ -38,7 +26,7 @@ const barbers = barbersFiles
         <h2 class="text-headline-lg uppercase">{prices.title}</h2>
       </div>
       <div class="space-y-5">
-        {barbers.map((barber: Barber) => <BarberPrice client:load {barber} />)}
+        {barbers.map((barber) => <BarberPrice client:load {barber} />)}
         <BookingDrawer
           client:load
           bookingUrl={s.bookingUrl}
