@@ -44,7 +44,8 @@
 --------------------------------------------------------------------------- */
 :root,
 html {
-  /* Architectural Neon — dark (matches the first [data-...] block and original DESIGN) */
+  /* :root must mirror [data-theme="architectural"][data-mode="dark"] exactly —
+     this is the no-JS fallback and cannot self-import from that block. */
   --color-background: #131313;
   --color-surface: #131313;
   --color-surface-dim: #131313;
@@ -112,7 +113,8 @@ p, li, a {
 }
 
 /* --------------------------------------------------------------------------
-   8-Theme Color System (source of truth mirrored from src/lib/themes.ts)
+   8-Theme Color System — single source of truth for all colour tokens.
+   src/lib/themes.ts holds only keys, names, and allowlists; no colour values.
    Applied via attribute selectors so dataset changes + startViewTransition
    produce smooth, premium cross-fades between editorial palettes.
    Extra vars for component polish (team cards, map overlays, etc.).
