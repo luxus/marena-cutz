@@ -3,6 +3,7 @@ import { getCollection, getEntry } from 'astro:content';
 import BarberPrice from './BarberPrice.svelte';
 import BookingDrawer from './BookingDrawer.svelte';
 import ParkingDrawer from './ParkingDrawer.svelte';
+import ParkingTrigger from './ParkingTrigger.svelte';
 
 const [aboutEntry, bookingEntry, parkingEntry, pricesEntry, settingsEntry, barbersEntries] =
   await Promise.all([
@@ -144,6 +145,7 @@ const barbers = barbersEntries
         </a>
       </div>
       <div class="mt-4">
+        <ParkingTrigger client:load />
         <ParkingDrawer
           client:load
           title={parking.title}

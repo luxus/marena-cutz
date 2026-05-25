@@ -1,6 +1,7 @@
 <script lang="ts">
+  import { parkingDrawer } from '../lib/parkingDrawer.svelte.js';
   import Drawer from './Drawer.svelte';
-  let open = $state(false);
+
   let {
     title = 'Anfahrt & Parken',
     image = '',
@@ -18,27 +19,7 @@
   } = $props();
 </script>
 
-<button
-  onclick={() => (open = true)}
-  class="group/parking inline-flex items-center gap-2 text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-150"
->
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    aria-hidden="true"
-  >
-    <circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" />
-  </svg>
-  <span class="nav-link group-hover/parking:[&::after]:scale-x-100">Anfahrt & Parken</span>
-</button>
-
-<Drawer bind:open {title}>
+<Drawer bind:open={parkingDrawer.open} {title}>
   <div class="space-y-6 text-on-surface-variant text-sm leading-relaxed">
     {#if entrance}
       <div class="space-y-2">
