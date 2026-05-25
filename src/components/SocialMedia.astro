@@ -1,46 +1,16 @@
 ---
+import { frontmatter as home } from '../content/home.md';
 import { frontmatter as s } from '../content/settings.md';
 import SocialCarousel from './SocialCarousel.svelte';
 
-const items = [
-  {
-    platform: 'Instagram',
-    imageUrl: '/images/instagram-dxbxnz7jefd-browser.jpg',
-    alt: 'Clean Fade',
-    permalink: s.instagramUrl,
-  },
-  {
-    platform: 'TikTok',
-    imageUrl: '/images/tiktok-7573325880508927254.jpg',
-    alt: 'Styling',
-    permalink: s.tiktokUrl,
-    featured: true,
-  },
-  {
-    platform: 'Instagram',
-    imageUrl: '/images/instagram-dw8lhwxjfjo-browser.jpg',
-    alt: 'Transformation',
-    permalink: s.instagramUrl,
-  },
-  {
-    platform: 'TikTok',
-    imageUrl: '/images/tiktok-7627810109564931350.jpg',
-    alt: 'Beard Trim',
-    permalink: s.tiktokUrl,
-  },
-  {
-    platform: 'Instagram',
-    imageUrl: '/images/instagram-dxsuwndbmf-browser.jpg',
-    alt: 'Precision Work',
-    permalink: s.instagramUrl,
-  },
-  {
-    platform: 'TikTok',
-    imageUrl: '/images/tiktok-7559314663998278934.jpg',
-    alt: 'Barber Detail',
-    permalink: s.tiktokUrl,
-  },
-];
+const items = (home.socialItems ?? []) as {
+  platform: string;
+  imageUrl: string;
+  permalink: string;
+  alt: string;
+  objectPosition?: string;
+  featured?: boolean;
+}[];
 ---
 
 <section id="social" class="bg-background py-20 pb-32 md:pb-20 scroll-mt-20">
