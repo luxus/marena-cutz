@@ -130,104 +130,17 @@ const { title = s.name } = Astro.props;
     <a href="#main" class="skip-link">Zum Inhalt springen</a>
     <slot />
 
-    <!-- ========================================================================
-         Single lightweight vanilla scroll-reveal enhancer (replaces 12+ Svelte islands)
-         - Zero Svelte hydration cost for motion.
-         - First paint is 100% complete, styled, and visible (no opacity-0 white phase).
-         - Post-paint (rAF), off-screen .scroll-reveal elements are silently prepped.
-         - IntersectionObserver + sibling stagger (65ms, cap 180ms) for premium editorial cadence.
-         - Identical visual contract to previous (restrained, expensive feeling).
-         - Fully gated by prefers-reduced-motion.
-         - Plain JS only (no TS generics in <script> at runtime; @ts-nocheck for astro check).
-         ======================================================================== -->
+    <!-- Scroll-reveal: extracted to src/lib/scroll-reveal.ts, run after first paint -->
     <script>
-      // @ts-nocheck
-      (function () {
-        'use strict';
+      import { initScrollReveals } from '../lib/scroll-reveal';
 
-        function initScrollReveals() {
-          const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          if (reducedMotion) return;
-
-          const revealEls = Array.from(document.querySelectorAll('.scroll-reveal'));
-          if (!revealEls.length) return;
-
-          // 1. Post-paint prep for offscreen elements (prevents any flash on initial visible paint)
-          revealEls.forEach((el) => {
-            const rect = el.getBoundingClientRect();
-            const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
-            if (isInViewport) {
-              el.classList.add('in-view');
-            } else {
-              el.classList.add('reveal-prep');
-            }
-          });
-
-          // 2. IntersectionObserver with sibling-aware stagger (mirrors prior premium feel exactly)
-          const pendingTimeouts = new Set();
-
-          const observer = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                if (!entry.isIntersecting) return;
-
-                const el = /** @type {HTMLElement} */ (entry.target);
-
-                const parent = el.parentElement;
-                const siblings = Array.from(parent ? parent.children : []).filter(
-                  (c) =>
-                    c.classList.contains('scroll-reveal') &&
-                    c.classList.contains('reveal-prep') &&
-                    !c.classList.contains('in-view')
-                );
-                const idx = siblings.indexOf(el);
-                const delay = idx >= 0 ? Math.min(idx * 65, 180) : 0;
-
-                const tid = window.setTimeout(() => {
-                  pendingTimeouts.delete(tid);
-                  el.classList.remove('reveal-prep');
-                  el.classList.add('in-view');
-                  observer.unobserve(el);
-                }, delay);
-                pendingTimeouts.add(tid);
-              });
-            },
-            {
-              threshold: 0.12,
-              rootMargin: '0px 0px -40px 0px',
-            }
-          );
-
-          // Observe only the ones we prepped for reveal
-          revealEls.forEach((el) => {
-            if (el.classList.contains('reveal-prep')) {
-              observer.observe(el);
-            }
-          });
-
-          // Cleanup on unload (good hygiene)
-          window.addEventListener(
-            'beforeunload',
-            () => {
-              observer.disconnect();
-              pendingTimeouts.forEach((tid) => {
-                if (typeof tid === 'number') clearTimeout(tid);
-              });
-              pendingTimeouts.clear();
-            },
-            { once: true }
-          );
-        }
-
-        // Run after first paint for perfect initial render
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', () => {
-            requestAnimationFrame(() => requestAnimationFrame(initScrollReveals));
-          });
-        } else {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
           requestAnimationFrame(() => requestAnimationFrame(initScrollReveals));
-        }
-      })();
+        });
+      } else {
+        requestAnimationFrame(() => requestAnimationFrame(initScrollReveals));
+      }
     </script>
   </body>
 </html>
