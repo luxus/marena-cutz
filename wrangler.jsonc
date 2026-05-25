@@ -19,7 +19,9 @@
     {
       "binding": "SESSION",
       "id": "81e61bcaf047462090afa052542f4f7a",
-      "remote": true,
+      // Set remote: true only when you want wrangler dev to proxy to the real KV namespace.
+      // Leave it false (or omitted) for local dev and CI — the adapter emulates KV locally.
+      "remote": false,
     },
   ],
 }
