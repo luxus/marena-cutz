@@ -1,6 +1,9 @@
 ---
 import '../styles/global.css';
-import { frontmatter as s } from '../content/settings.md';
+import { getEntry } from 'astro:content';
+
+const settingsEntry = await getEntry('settings', 'settings');
+const s = settingsEntry!.data;
 
 const { title = s.name } = Astro.props;
 ---

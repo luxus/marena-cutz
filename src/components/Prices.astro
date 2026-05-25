@@ -1,17 +1,27 @@
 ---
-import { getCollection } from 'astro:content';
-import { frontmatter as about } from '../content/about.md';
-import { frontmatter as booking } from '../content/booking.md';
-import { frontmatter as parking } from '../content/parking.md';
-import { frontmatter as prices } from '../content/prices.md';
-import { frontmatter as s } from '../content/settings.md';
+import { getCollection, getEntry } from 'astro:content';
 import BarberPrice from './BarberPrice.svelte';
 import BookingDrawer from './BookingDrawer.svelte';
 import ParkingDrawer from './ParkingDrawer.svelte';
 
-const paymentMethods = (about.paymentMethods ?? []) as string[];
+const [aboutEntry, bookingEntry, parkingEntry, pricesEntry, settingsEntry, barbersEntries] =
+  await Promise.all([
+    getEntry('about', 'about'),
+    getEntry('booking', 'booking'),
+    getEntry('parking', 'parking'),
+    getEntry('prices', 'prices'),
+    getEntry('settings', 'settings'),
+    getCollection('barbers'),
+  ]);
 
-const barbersEntries = await getCollection('barbers');
+const about = aboutEntry!.data;
+const booking = bookingEntry!.data;
+const parking = parkingEntry!.data;
+const prices = pricesEntry!.data;
+const s = settingsEntry!.data;
+
+const paymentMethods = about.paymentMethods;
+
 const barbers = barbersEntries
   .map((e) => e.data)
   .sort((a, b) => (a.order || 0) - (b.order || 0));

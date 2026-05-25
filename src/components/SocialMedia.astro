@@ -1,16 +1,15 @@
 ---
-import { frontmatter as home } from '../content/home.md';
-import { frontmatter as s } from '../content/settings.md';
+import { getEntry } from 'astro:content';
 import SocialCarousel from './SocialCarousel.svelte';
 
-const items = (home.socialItems ?? []) as {
-  platform: string;
-  imageUrl: string;
-  permalink: string;
-  alt: string;
-  objectPosition?: string;
-  featured?: boolean;
-}[];
+const [homeEntry, settingsEntry] = await Promise.all([
+  getEntry('home', 'home'),
+  getEntry('settings', 'settings'),
+]);
+const home = homeEntry!.data;
+const s = settingsEntry!.data;
+
+const items = home.socialItems;
 ---
 
 <section id="social" class="bg-background py-20 pb-32 md:pb-20 scroll-mt-20">

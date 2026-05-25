@@ -1,10 +1,15 @@
 ---
-import { frontmatter as c } from '../content/about.md';
-import { frontmatter as s } from '../content/settings.md';
+import { getEntry } from 'astro:content';
 
-type OpeningHour = { day: string; hours: string };
-const openingHours = (c.openingHours ?? []) as OpeningHour[];
-const paymentMethods = (c.paymentMethods ?? []) as string[];
+const [aboutEntry, settingsEntry] = await Promise.all([
+  getEntry('about', 'about'),
+  getEntry('settings', 'settings'),
+]);
+const c = aboutEntry!.data;
+const s = settingsEntry!.data;
+
+const openingHours = c.openingHours;
+const paymentMethods = c.paymentMethods;
 ---
 
 <section id="ueber" class="border-b border-outline-variant bg-surface px-5 py-20 scroll-mt-20">

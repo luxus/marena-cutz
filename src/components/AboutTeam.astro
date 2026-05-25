@@ -1,12 +1,16 @@
 ---
-import { getCollection } from 'astro:content';
-import { frontmatter as about } from '../content/about.md';
-import { frontmatter as s } from '../content/settings.md';
+import { getCollection, getEntry } from 'astro:content';
 import MailIcon from './MailIcon.astro';
 import PhoneIcon from './PhoneIcon.astro';
 
-type OpeningHour = { day: string; hours: string };
-const openingHours = (about.openingHours ?? []) as OpeningHour[];
+const [aboutEntry, settingsEntry] = await Promise.all([
+  getEntry('about', 'about'),
+  getEntry('settings', 'settings'),
+]);
+const about = aboutEntry!.data;
+const s = settingsEntry!.data;
+
+const openingHours = about.openingHours;
 
 const barbersEntries = await getCollection('barbers');
 const barbers = barbersEntries

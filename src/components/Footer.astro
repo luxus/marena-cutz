@@ -1,8 +1,11 @@
 ---
-import { frontmatter as s } from '../content/settings.md';
+import { getEntry } from 'astro:content';
 import InstagramIcon from './InstagramIcon.astro';
 import ThemeSwitcher from './ThemeSwitcher.svelte';
 import TikTokIcon from './TikTokIcon.astro';
+
+const settingsEntry = await getEntry('settings', 'settings');
+const s = settingsEntry!.data;
 ---
 
 <footer class="border-t border-outline-variant bg-background px-5 py-10 pb-28 md:pb-10">

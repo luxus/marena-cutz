@@ -1,8 +1,11 @@
 ---
-import { frontmatter as s } from '../content/settings.md';
+import { getEntry } from 'astro:content';
+import BookingTrigger from './BookingTrigger.svelte';
 import InstagramIcon from './InstagramIcon.astro';
 import TikTokIcon from './TikTokIcon.astro';
-import BookingTrigger from './BookingTrigger.svelte';
+
+const settingsEntry = await getEntry('settings', 'settings');
+const s = settingsEntry!.data;
 ---
 
 <header

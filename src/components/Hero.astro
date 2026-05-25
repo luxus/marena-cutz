@@ -1,7 +1,10 @@
 ---
-import { frontmatter as c } from '../content/home.md';
+import { getEntry } from 'astro:content';
 import BookingTrigger from './BookingTrigger.svelte';
 import ReceiptIcon from './ReceiptIcon.astro';
+
+const homeEntry = await getEntry('home', 'home');
+const c = homeEntry!.data;
 ---
 
 <section

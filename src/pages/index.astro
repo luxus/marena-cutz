@@ -6,8 +6,11 @@ import Hero from '../components/Hero.astro';
 import Prices from '../components/Prices.astro';
 import SocialMedia from '../components/SocialMedia.astro';
 import StickyMobileNav from '../components/StickyMobileNav.astro';
-import { frontmatter as s } from '../content/settings.md';
+import { getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const settingsEntry = await getEntry('settings', 'settings');
+const s = settingsEntry!.data;
 ---
 
 <BaseLayout title={`${s.name} | Barber in Bülach – Haarschnitte & Fades`}
