@@ -127,8 +127,8 @@ content:
       - name: barber-angelo
         label: Barber Angelo
         type: file
-        path: src/content/barbers/angelo.md
-        format: yaml-frontmatter
+        path: src/content/barbers/angelo.json
+        format: json
         fields:
           - name: name
             label: Name
@@ -169,8 +169,8 @@ content:
       - name: barber-sean
         label: Barber Sean
         type: file
-        path: src/content/barbers/sean.md
-        format: yaml-frontmatter
+        path: src/content/barbers/sean.json
+        format: json
         fields:
           - name: name
             label: Name
