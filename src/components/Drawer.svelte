@@ -17,13 +17,10 @@
 
   // Portal action: moves the element into document.body so fixed positioning
   // is never clipped by an ancestor overflow/transform.
+  // Uses $effect teardown per Svelte 5 current practice.
   function portal(node: HTMLElement) {
     document.body.appendChild(node);
-    return {
-      destroy() {
-        node.remove();
-      },
-    };
+    $effect(() => () => node.remove());
   }
 </script>
 
