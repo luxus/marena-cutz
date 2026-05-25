@@ -9,14 +9,14 @@
   // Replaces the entire vanilla script + id-based DOM manipulation in the old .astro version.
 
   import { userTheme } from '../lib/theme.svelte.js';
-  import { themes } from '../lib/themes';
+  import { themeNames } from '../lib/themes';
 
   let dropdownOpen = $state(false);
   let dropdownBtn;
   let dropdownMenuEl;
 
   // Display values (reactive)
-  const themeName = $derived(themes[userTheme.theme]?.name || userTheme.theme);
+  const themeName = $derived(themeNames[userTheme.theme] || userTheme.theme);
   const modeIcon = $derived(
     userTheme.mode === 'dark' ? '☾' : userTheme.mode === 'system' ? '◑' : '☀︎'
   );
@@ -142,7 +142,7 @@
       class={`theme-menu absolute bottom-full right-0 mb-1.5 w-48 rounded border border-outline-variant bg-surface py-1 shadow-lg z-50 ${dropdownOpen ? 'open' : 'hidden'}`}
       role="listbox"
     >
-      {#each Object.entries(themes) as [key, t]}
+      {#each Object.entries(themeNames) as [key, name]}
         <button
           type="button"
           data-theme={key}
@@ -151,7 +151,7 @@
           aria-selected={key === userTheme.theme}
           onclick={() => selectTheme(key)}
         >
-          <span>{t.name}</span>
+          <span>{name}</span>
         </button>
       {/each}
     </div>
