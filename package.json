@@ -6,6 +6,10 @@
     "generate-types": "wrangler types",
     "deploy": "npm run build && wrangler deploy",
     "check": "astro check",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
     "lint": "prettier --check .",
     "format": "prettier --write ."
   },
@@ -20,9 +24,13 @@
     "typescript": "latest"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@vitest/coverage-v8": "^4.1.7",
+    "jsdom": "^29.1.1",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-svelte": "^4.0.0",
+    "vitest": "^4.1.7",
     "wrangler": "^4.93.0"
   }
 }
