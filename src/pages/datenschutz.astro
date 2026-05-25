@@ -1,11 +1,16 @@
 ---
+import { getEntry, render } from 'astro:content';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { frontmatter as c, compiledContent } from '../content/datenschutz.md';
-import { frontmatter as s } from '../content/settings.md';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const bodyHtml = c.body ?? (await compiledContent());
+const [entryDs, settingsEntry] = await Promise.all([
+  getEntry('datenschutz', 'datenschutz'),
+  getEntry('settings', 'settings'),
+]);
+const c = entryDs!.data;
+const s = settingsEntry!.data;
+const { Content } = await render(entryDs!);
 ---
 
 <BaseLayout title={`${c.title} | ${s.name}`}>
@@ -23,7 +28,7 @@ const bodyHtml = c.body ?? (await compiledContent());
       </p>
       <p>E-Mail: <a href={`mailto:${s.email}`}>{s.email}</a></p>
 
-      <div set:html={bodyHtml} />
+      <Content />
     </article>
   </main>
   <Footer />
