@@ -9,7 +9,8 @@ const s = settingsEntry!.data;
 ---
 
 <header
-  class="fixed left-0 top-0 z-50 w-full border-b border-outline-variant bg-surface/55 backdrop-blur-xl"
+  id="site-header"
+  class="fixed left-0 top-0 z-50 w-full border-b border-transparent transition-colors duration-300 header-transparent"
 >
   <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
     <a href="/" class="leading-none"
@@ -73,3 +74,20 @@ const s = settingsEntry!.data;
     </div>
   </div>
 </header>
+
+<script>
+  const header = document.getElementById('site-header');
+  if (header) {
+    const update = () => {
+      if (window.scrollY > 40) {
+        header.classList.remove('header-transparent');
+        header.classList.add('header-solid');
+      } else {
+        header.classList.add('header-transparent');
+        header.classList.remove('header-solid');
+      }
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+</script>

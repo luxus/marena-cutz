@@ -36,3 +36,4 @@ REVIEW.md
 !.env.example
 test-results/
 playwright-report/
+.playwright-mcp/

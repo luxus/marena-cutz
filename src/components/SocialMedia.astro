@@ -63,8 +63,10 @@ const items = home.socialItems;
     </div>
   </div>
 
-  <!-- Auto-scroll carousel -->
-  <div class="mt-10 px-5">
-    <SocialCarousel client:visible {items} />
+  <!-- Auto-scroll carousel — right-edge fade signals more content beyond -->
+  <div class="mt-10 px-5 relative">
+    <div class="social-carousel-fade-mask">
+      <SocialCarousel client:visible {items} />
+    </div>
   </div>
 </section>

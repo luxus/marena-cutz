@@ -67,10 +67,23 @@ export function initScrollReveals(): void {
     }
   });
 
+  // Safety net: after 2.5s reveal anything still hidden so content is never invisible
+  // (handles headless browsers, anchor-link arrivals, and very fast scrolls)
+  const safetyTid = setTimeout(() => {
+    revealEls.forEach((el) => {
+      if (!el.classList.contains('in-view')) {
+        el.classList.remove('reveal-prep');
+        el.classList.add('in-view');
+        observer.unobserve(el);
+      }
+    });
+  }, 2500);
+
   // Cleanup on unload (good hygiene)
   window.addEventListener(
     'beforeunload',
     () => {
+      clearTimeout(safetyTid);
       observer.disconnect();
       pendingTimeouts.forEach((tid) => clearTimeout(tid));
       pendingTimeouts.clear();
