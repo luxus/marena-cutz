@@ -3,7 +3,7 @@
   import Drawer from './Drawer.svelte';
 
   let {
-    title = 'Anfahrt & Parken',
+    title = 'Hinweise zur Anfahrt & Parken',
     image = '',
     entrance = '',
     parking = '',

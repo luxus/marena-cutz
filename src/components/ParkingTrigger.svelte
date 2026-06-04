@@ -3,7 +3,7 @@
 
   let {
     class: className = '',
-    label = 'Anfahrt & Parken',
+    label = 'Hinweise zur Anfahrt & Parken',
   }: { class?: string; label?: string } = $props();
 </script>
 
