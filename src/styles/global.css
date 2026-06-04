@@ -885,30 +885,14 @@ img {
   height: auto;
 }
 
-/* Brand logo (inline SVG) — colors follow active theme via CSS variables */
-.brand-logo__name {
-  fill: var(--color-primary);
-  font-family: var(--font-display);
-  font-size: 300px;
-  font-weight: var(--font-display-weight, 700);
-  letter-spacing: -0.03em;
-}
-
-.brand-logo__tagline {
-  fill: var(--color-on-surface-variant);
-  font-family: var(--font-sans);
-  font-size: 72px;
-  font-weight: var(--font-sans-weight, 500);
-  letter-spacing: 0.22em;
-}
-
-/* Header logo sizing */
+/* Header logo — wide asset; override global img sizing (max-width: 100% blew it up) */
 .site-logo {
   display: block;
   height: 2.85rem;
   width: auto;
   max-height: 2.85rem;
   max-width: 12.5rem;
+  object-fit: contain;
 }
 
 @media (min-width: 768px) {
@@ -925,6 +909,7 @@ img {
   width: auto;
   max-height: 2.35rem;
   max-width: 10.5rem;
+  object-fit: contain;
 }
 
 @media (min-width: 768px) {

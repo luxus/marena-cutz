@@ -2,7 +2,6 @@
 import { getEntry } from 'astro:content';
 import BookingTrigger from './BookingTrigger.svelte';
 import InstagramIcon from './InstagramIcon.astro';
-import Logo from './Logo.astro';
 import TikTokIcon from './TikTokIcon.astro';
 
 const settingsEntry = await getEntry('settings', 'settings');
@@ -20,7 +19,14 @@ const s = settingsEntry!.data;
       href="/"
       class="inline-flex shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
     >
-      <Logo alt={`${s.name} – ${s.tagline}`} class="site-logo" />
+      <img
+        src="/images/logo.webp"
+        alt={`${s.name} – ${s.tagline}`}
+        width="2983"
+        height="700"
+        class="site-logo"
+        fetchpriority="high"
+      />
     </a>
     <nav class="hidden items-center gap-8 text-label-caps text-on-surface-variant md:flex">
       <a href="#preise" class="nav-link hover:text-primary">Preise</a><a

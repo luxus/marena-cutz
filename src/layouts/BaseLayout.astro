@@ -46,14 +46,6 @@ const { title = s.name } = Astro.props;
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- Display / UI fonts (logo + site typography) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,700&family=Hanken+Grotesk:wght@500&display=swap"
-      rel="stylesheet"
-    />
-
     <!-- Theme initialization (prevents flash). 
          Priority: URL params (for testing/sharing) > readable cookies (set by /api/preferences for server session + survive localStorage clear) > localStorage > system pref.
          The Cloudflare KV SESSION (via adapter + our API) is the durable cross-device source of truth for future SSR pages.

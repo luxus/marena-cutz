@@ -1,7 +1,6 @@
 ---
 import { getEntry } from 'astro:content';
 import InstagramIcon from './InstagramIcon.astro';
-import Logo from './Logo.astro';
 import ThemeSwitcher from './ThemeSwitcher.svelte';
 import TikTokIcon from './TikTokIcon.astro';
 
@@ -16,7 +15,14 @@ const s = settingsEntry!.data;
         href="/"
         class="inline-flex focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
       >
-        <Logo alt={`${s.name} – ${s.tagline}`} class="site-logo-footer" />
+        <img
+          src="/images/logo.webp"
+          alt={`${s.name} – ${s.tagline}`}
+          width="2983"
+          height="700"
+          class="site-logo-footer"
+          loading="lazy"
+        />
       </a>
       <div class="mt-4 text-xs text-on-surface-variant opacity-70 space-y-0.5">
         <div>{s.address}</div>
