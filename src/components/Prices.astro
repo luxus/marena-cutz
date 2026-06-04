@@ -40,12 +40,12 @@ const barbers = barbersEntries
       <div>
         {
           barbers.map((barber, index) => (
-            <div class={index > 0 ? 'border-t border-outline-variant pt-8' : ''}>
+            <div class={index > 0 ? 'border-t border-outline-variant pt-5' : ''}>
               <BarberPrice client:load {barber} />
             </div>
           ))
         }
-        <div class="border-t border-outline-variant pt-8">
+        <div class="border-t border-outline-variant pt-5">
         <BookingDrawer
           client:load
           bookingUrl={s.bookingUrl}
