@@ -88,6 +88,7 @@ const booking = defineCollection({
   loader: glob({ pattern: 'booking.md', base: './src/content' }),
   schema: z.object({
     title: z.string().optional().default(''),
+    paymentNote: z.string().optional().default(''),
     availabilityTitle: z.string().optional().default(''),
     availabilityText: z.string().optional().default(''),
     walkInsTitle: z.string().optional().default(''),

@@ -5,6 +5,7 @@
   let {
     bookingUrl,
     drawerTitle = 'Wichtige Hinweise zur Terminbuchung',
+    paymentNote = '',
     availabilityTitle = 'Terminverfügbarkeit',
     availabilityText = '',
     walkInsTitle = 'Walk-ins',
@@ -18,6 +19,7 @@
   }: {
     bookingUrl: string;
     drawerTitle?: string;
+    paymentNote?: string;
     availabilityTitle?: string;
     availabilityText?: string;
     walkInsTitle?: string;
@@ -33,6 +35,11 @@
 
 <Drawer bind:open={bookingDrawer.open} title={drawerTitle}>
   <div class="space-y-5">
+    {#if paymentNote}
+      <div class="border border-error bg-error/10 px-4 py-3">
+        <p class="text-sm font-medium text-error">{paymentNote}</p>
+      </div>
+    {/if}
     {#if availabilityText}
       <div class="border-l-2 border-primary pl-4 space-y-1">
         <p class="text-title-sm !text-on-surface">{availabilityTitle}</p>

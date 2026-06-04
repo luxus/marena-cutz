@@ -40,6 +40,7 @@ const barbers = barbersEntries.map((e) => e.data).sort((a, b) => (a.order || 0) 
           client:load
           bookingUrl={s.bookingUrl}
           drawerTitle={booking.title}
+          paymentNote={booking.paymentNote}
           availabilityTitle={booking.availabilityTitle}
           availabilityText={booking.availabilityText}
           walkInsTitle={booking.walkInsTitle}
