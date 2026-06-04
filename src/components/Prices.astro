@@ -37,8 +37,15 @@ const barbers = barbersEntries
         <span class="h-0.5 w-8 bg-secondary section-accent"></span>
         <h2 class="text-headline-lg uppercase">{prices.title}</h2>
       </div>
-      <div class="space-y-5">
-        {barbers.map((barber) => <BarberPrice client:load {barber} />)}
+      <div>
+        {
+          barbers.map((barber, index) => (
+            <div class={index > 0 ? 'border-t border-outline-variant pt-8' : ''}>
+              <BarberPrice client:load {barber} />
+            </div>
+          ))
+        }
+        <div class="border-t border-outline-variant pt-8">
         <BookingDrawer
           client:load
           bookingUrl={s.bookingUrl}
@@ -55,6 +62,7 @@ const barbers = barbersEntries
           ctaLabel={booking.ctaLabel}
           cancelLabel={booking.cancelLabel}
         />
+        </div>
         {
           paymentMethods.length > 0 && (
             <div class="pt-2">

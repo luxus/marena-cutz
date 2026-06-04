@@ -126,5 +126,3 @@
     {/if}
   </div>
 {/if}
-
-<div class="mt-5 h-px bg-outline-variant"></div>
