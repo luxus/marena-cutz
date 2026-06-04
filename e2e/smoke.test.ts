@@ -16,6 +16,16 @@ test.describe('Homepage', () => {
     await expect(hero).toBeVisible();
   });
 
+  test('hero headline is visible after entrance animation', async ({ page }) => {
+    await page.goto('/');
+    const headline = page.locator('main h1 span.hero-slide-left');
+    await expect(headline).toBeVisible();
+    // Production CSS minification once broke split animation rules (opacity stuck at 0).
+    await page.waitForTimeout(2000);
+    const opacity = await headline.evaluate((el) => parseFloat(getComputedStyle(el).opacity));
+    expect(opacity).toBeGreaterThan(0.9);
+  });
+
   test('main nav links are present', async ({ page }) => {
     await page.goto('/');
     // Header is present

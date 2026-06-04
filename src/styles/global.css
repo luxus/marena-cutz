@@ -532,6 +532,15 @@ h1, h2, h3, h4 {
     transform: none !important;
     will-change: auto;
   }
+
+  .hero-text,
+  .hero-slide-left,
+  .hero-slide-right,
+  .hero-bg {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -900,14 +909,18 @@ img {
   }
 }
 
-/* Hero headline slide-in from sides */
-.hero-slide {
+/* Hero headline slide-in from sides
+   Keep each direction as one complete animation shorthand — splitting base + animation-name
+   breaks in production CSS minification (duration becomes 0s, headline stays opacity: 0). */
+.hero-slide-left {
   opacity: 0;
-  animation: 1300ms cubic-bezier(0.12, 1, 0.2, 1) forwards;
+  animation: heroSlideLeft 1300ms cubic-bezier(0.12, 1, 0.2, 1) forwards;
 }
 
-.hero-slide-left  { animation-name: heroSlideLeft; }
-.hero-slide-right { animation-name: heroSlideRight; }
+.hero-slide-right {
+  opacity: 0;
+  animation: heroSlideRight 1300ms cubic-bezier(0.12, 1, 0.2, 1) forwards;
+}
 
 @keyframes heroSlideLeft {
   from { opacity: 0; transform: translateX(-120vw); }
