@@ -14,8 +14,8 @@ socialItems:
     alt: TikTok Clip
     objectPosition: center
   - platform: Instagram
-    imageUrl: /images/instagram-dxsuwndbmf-browser.jpg
-    permalink: 'https://www.instagram.com/reel/DXsU-WNDBmf/'
+    imageUrl: /images/instagram-dxwhmimrpk-browser.jpg
+    permalink: 'https://www.instagram.com/reel/DXw-HmiMrPk/'
     alt: Instagram Reel
     objectPosition: center
   - platform: TikTok
@@ -29,8 +29,8 @@ socialItems:
     alt: Instagram Reel
     objectPosition: center
   - platform: TikTok
-    imageUrl: /images/tiktok-7633944669751348502.jpg
-    permalink: 'https://www.tiktok.com/@marenacutz/video/7633944669751348502'
+    imageUrl: /images/tiktok-7592735864283827478.jpg
+    permalink: 'https://www.tiktok.com/@marenacutz/video/7592735864283827478'
     alt: TikTok Clip
     objectPosition: center
 ---
