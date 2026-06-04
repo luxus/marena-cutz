@@ -12,7 +12,9 @@ const s = settingsEntry!.data;
   id="site-header"
   class="fixed left-0 top-0 z-50 w-full border-b border-transparent transition-colors duration-300 header-transparent"
 >
-  <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
+  <div
+    class="mx-auto flex max-w-7xl items-center justify-between gap-2 py-3 pl-3 pr-4 md:gap-4 md:px-5 md:py-4"
+  >
     <a
       href="/"
       class="inline-flex shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
@@ -50,33 +52,21 @@ const s = settingsEntry!.data;
         >
       </div>
     </nav>
-    <div class="flex items-center gap-3 md:hidden">
+    <div class="flex shrink-0 items-center gap-3 md:hidden">
       <a
-        href="#ueber"
-        class="nav-link text-label-caps text-on-surface-variant hover:text-primary whitespace-nowrap"
-        >Über uns</a
+        href="#social"
+        aria-label="Instagram"
+        class="social-icon-link text-on-surface-variant hover:text-primary"
       >
+        <InstagramIcon />
+      </a>
       <a
-        href="#barbers"
-        class="nav-link text-label-caps text-on-surface-variant hover:text-primary whitespace-nowrap"
-        >Barbers</a
+        href="#social"
+        aria-label="TikTok"
+        class="social-icon-link text-on-surface-variant hover:text-primary"
       >
-      <div class="flex items-center gap-3 pl-2 border-l border-outline-variant">
-        <a
-          href="#social"
-          aria-label="Instagram"
-          class="social-icon-link text-on-surface-variant hover:text-primary"
-        >
-          <InstagramIcon />
-        </a>
-        <a
-          href="#social"
-          aria-label="TikTok"
-          class="social-icon-link text-on-surface-variant hover:text-primary"
-        >
-          <TikTokIcon />
-        </a>
-      </div>
+        <TikTokIcon />
+      </a>
     </div>
   </div>
 </header>
