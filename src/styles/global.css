@@ -909,30 +909,30 @@ html[data-mode='dark'] .brand-logo__img--light {
 
 /* Header logo — wide asset; override global img sizing (max-width: 100% blew it up) */
 .site-logo {
-  height: 2.85rem;
-  max-height: 2.85rem;
-  max-width: 12.5rem;
+  height: 3.1rem;
+  max-height: 3.1rem;
+  max-width: 13.5rem;
 }
 
 @media (min-width: 768px) {
   .site-logo {
-    height: 3.2rem;
-    max-height: 3.2rem;
-    max-width: 15.25rem;
+    height: 3.45rem;
+    max-height: 3.45rem;
+    max-width: 16.5rem;
   }
 }
 
 .site-logo-footer {
-  height: 2.35rem;
-  max-height: 2.35rem;
-  max-width: 10.5rem;
+  height: 2.55rem;
+  max-height: 2.55rem;
+  max-width: 11.5rem;
 }
 
 @media (min-width: 768px) {
   .site-logo-footer {
-    height: 2.65rem;
-    max-height: 2.65rem;
-    max-width: 12rem;
+    height: 2.85rem;
+    max-height: 2.85rem;
+    max-width: 13rem;
   }
 }
 
