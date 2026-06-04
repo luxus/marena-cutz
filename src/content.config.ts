@@ -24,6 +24,11 @@ const openingHourSchema = z.object({
   hours: z.string(),
 });
 
+const paymentMethodSchema = z.object({
+  name: z.string(),
+  enabled: z.boolean().optional().default(true),
+});
+
 // ─── Collections ──────────────────────────────────────────────────────────
 
 const barbers = defineCollection({
@@ -75,7 +80,7 @@ const about = defineCollection({
     title: z.string().optional().default(''),
     text: z.string().optional().default(''),
     openingHours: z.array(openingHourSchema).optional().default([]),
-    paymentMethods: z.array(z.string()).optional().default([]),
+    paymentMethods: z.array(paymentMethodSchema).optional().default([]),
   }),
 });
 

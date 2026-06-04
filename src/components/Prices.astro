@@ -21,11 +21,9 @@ const parking = parkingEntry!.data;
 const prices = pricesEntry!.data;
 const s = settingsEntry!.data;
 
-const paymentMethods = about.paymentMethods;
+const paymentMethods = about.paymentMethods.filter((m) => m.enabled);
 
-const barbers = barbersEntries
-  .map((e) => e.data)
-  .sort((a, b) => (a.order || 0) - (b.order || 0));
+const barbers = barbersEntries.map((e) => e.data).sort((a, b) => (a.order || 0) - (b.order || 0));
 ---
 
 <section id="preise" class="border-b border-outline-variant bg-surface px-5 py-16 scroll-mt-4">
@@ -59,7 +57,7 @@ const barbers = barbersEntries
               <p class="mb-2 text-label-caps text-on-surface-variant">Akzeptierte Zahlungsmittel</p>
               <div class="flex flex-wrap gap-2">
                 {paymentMethods.map((method) => {
-                  const key = method.toLowerCase();
+                  const key = method.name.toLowerCase();
                   return (
                     <span class="payment-tag border border-secondary px-3 py-1.5 text-label-caps text-secondary flex items-center gap-2">
                       {key === 'twint' && (
@@ -96,7 +94,7 @@ const barbers = barbersEntries
                           <line x1="14" y1="15" x2="14" y2="15.01" />
                         </svg>
                       )}
-                      {method}
+                      {method.name}
                     </span>
                   );
                 })}

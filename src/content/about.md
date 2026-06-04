@@ -17,6 +17,8 @@ openingHours:
   - day: Sonntag
     hours: Geschlossen
 paymentMethods:
-  - TWINT
-  - Bar
+  - name: TWINT
+    enabled: false
+  - name: Bar
+    enabled: true
 ---
