@@ -29,10 +29,10 @@ const barbers = barbersEntries
   .sort((a, b) => (a.order || 0) - (b.order || 0));
 ---
 
-<section id="preise" class="border-b border-outline-variant bg-surface px-5 py-16 scroll-mt-4">
+<section class="border-b border-outline-variant bg-surface px-5 py-16">
   <div class="mx-auto grid max-w-7xl items-start gap-10 md:grid-cols-[1fr_2fr]">
-    <!-- Prices column: now a plain element with reveal class for the single lightweight enhancer -->
-    <div class="scroll-reveal reveal-from-left">
+    <!-- Prices column: anchor on column (not section) so #preise and #standort align on desktop -->
+    <div id="preise" class="scroll-reveal reveal-from-left flex flex-col">
       <div class="mb-7 flex items-center gap-4">
         <span class="h-0.5 w-8 bg-secondary section-accent"></span>
         <h2 class="text-headline-lg uppercase">{prices.title}</h2>
@@ -118,7 +118,7 @@ const barbers = barbersEntries
     </div>
 
     <!-- Location / map column -->
-    <div id="standort" class="scroll-reveal reveal-deep flex flex-col scroll-mt-20">
+    <div id="standort" class="scroll-reveal reveal-deep flex flex-col">
       <div class="mb-7 flex items-center gap-4">
         <span class="h-0.5 w-8 bg-secondary section-accent"></span>
         <h2 class="text-headline-lg uppercase">Standort</h2>

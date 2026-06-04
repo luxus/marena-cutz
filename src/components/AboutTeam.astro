@@ -21,7 +21,7 @@ const getBarberImage = (barber: (typeof barbers)[number]) =>
   barber.image || (barber.name === 'Angelo' ? '/images/cut-1.jpg' : '/images/cut-2.jpg');
 ---
 
-<section class="relative border-b border-outline-variant px-5 py-16 md:py-20 scroll-mt-20">
+<section class="relative border-b border-outline-variant px-5 py-16 md:py-20">
   <!-- Shared mirrored salon background for Über uns + Team -->
   <div
     class="absolute inset-0 bg-cover bg-center scale-x-[-1] opacity-55 [filter:contrast(1.12)_saturate(1.25)_brightness(0.85)]"
@@ -43,7 +43,7 @@ const getBarberImage = (barber: (typeof barbers)[number]) =>
   <div class="relative mx-auto max-w-7xl">
     <div class="grid gap-8 lg:gap-12 md:grid-cols-[1.1fr_0.9fr]">
       <!-- Left: Über uns -->
-      <div id="ueber" class="scroll-reveal reveal-from-left pr-4 lg:pr-8 scroll-mt-20">
+      <div id="ueber" class="scroll-reveal reveal-from-left pr-4 lg:pr-8">
         <div class="mb-7 flex items-center gap-4">
           <span class="h-0.5 w-8 bg-secondary section-accent"></span>
           <h2 class="text-headline-lg uppercase">{about.title}</h2>
@@ -108,7 +108,7 @@ const getBarberImage = (barber: (typeof barbers)[number]) =>
       </div>
 
       <!-- Right: Barbers (editorial cards) -->
-      <div id="barbers" class="scroll-reveal reveal-deep flex flex-col scroll-mt-20">
+      <div id="barbers" class="scroll-reveal reveal-deep flex flex-col">
         <div class="mb-7 flex items-center gap-4">
           <span class="h-0.5 w-8 bg-secondary section-accent"></span>
           <h2 class="text-headline-lg uppercase">Barbers</h2>

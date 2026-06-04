@@ -94,6 +94,14 @@ html {
   color: var(--color-on-surface);
   background-color: var(--color-background);
   -webkit-font-smoothing: antialiased;
+  /* Fixed header + breathing room below section dividers on hash navigation */
+  scroll-padding-top: 6.5rem;
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 7.25rem;
+  }
 }
 
 body {
