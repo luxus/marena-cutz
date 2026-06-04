@@ -5,8 +5,21 @@
   "order": 2,
   "about": "Eros bringt frische Energie und moderne Technik in jeden Cut. Spezialisiert auf präzise Haarschnitte und stylische Looks.",
   "services": [
-    { "name": "Haarschnitt", "duration": "45 min", "price": "35 CHF", "featured": true },
-    { "name": "Haarschnitt inkl. Bart", "duration": "45 min", "price": "45 CHF" },
-    { "name": "Haarschnitt bis 15J.", "duration": "45 min", "price": "30 CHF" }
+    {
+      "name": "Haarschnitt",
+      "duration": "45 min",
+      "price": "35 CHF",
+      "featured": true
+    },
+    {
+      "name": "Haarschnitt bis 15J.",
+      "duration": "45 min",
+      "price": "30 CHF"
+    },
+    {
+      "name": "Haarschnitt inkl. Bart",
+      "duration": "45 min",
+      "price": "45 CHF"
+    }
   ]
 }
