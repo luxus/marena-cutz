@@ -903,6 +903,23 @@ img {
   }
 }
 
+.site-logo-footer {
+  display: block;
+  height: 2.35rem;
+  width: auto;
+  max-height: 2.35rem;
+  max-width: 10.5rem;
+  object-fit: contain;
+}
+
+@media (min-width: 768px) {
+  .site-logo-footer {
+    height: 2.65rem;
+    max-height: 2.65rem;
+    max-width: 12rem;
+  }
+}
+
 /* Hero entrance animations */
 .hero-text {
   opacity: 0;
