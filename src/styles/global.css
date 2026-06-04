@@ -885,7 +885,7 @@ img {
   height: auto;
 }
 
-/* Brand logo — colors live in public/images/logo.svg (+ logo-light.svg) */
+/* Brand logo — dark/light assets in public/images/logo.webp (+ logo-light.webp) */
 .brand-logo {
   display: block;
   line-height: 0;
