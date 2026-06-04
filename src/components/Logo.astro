@@ -1,0 +1,32 @@
+---
+interface Props {
+  class?: string;
+  alt: string;
+  priority?: boolean;
+}
+
+const { class: className = 'site-logo', alt, priority = false } = Astro.props;
+---
+
+<span class:list={['brand-logo', className]}>
+  <img
+    src="/images/logo.svg"
+    alt={alt}
+    width="2983"
+    height="700"
+    class="brand-logo__img brand-logo__img--dark"
+    decoding="async"
+    fetchpriority={priority ? 'high' : undefined}
+    loading={priority ? 'eager' : 'lazy'}
+  />
+  <img
+    src="/images/logo-light.svg"
+    alt=""
+    aria-hidden="true"
+    width="2983"
+    height="700"
+    class="brand-logo__img brand-logo__img--light"
+    decoding="async"
+    loading="lazy"
+  />
+</span>

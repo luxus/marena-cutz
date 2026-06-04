@@ -885,14 +885,33 @@ img {
   height: auto;
 }
 
+/* Brand logo — colors live in public/images/logo.svg (+ logo-light.svg) */
+.brand-logo {
+  display: block;
+  line-height: 0;
+}
+
+.brand-logo__img {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+html[data-mode='light'] .brand-logo__img--dark {
+  display: none;
+}
+
+html[data-mode='dark'] .brand-logo__img--light {
+  display: none;
+}
+
 /* Header logo — wide asset; override global img sizing (max-width: 100% blew it up) */
 .site-logo {
-  display: block;
   height: 2.85rem;
-  width: auto;
   max-height: 2.85rem;
   max-width: 12.5rem;
-  object-fit: contain;
 }
 
 @media (min-width: 768px) {
@@ -904,12 +923,9 @@ img {
 }
 
 .site-logo-footer {
-  display: block;
   height: 2.35rem;
-  width: auto;
   max-height: 2.35rem;
   max-width: 10.5rem;
-  object-fit: contain;
 }
 
 @media (min-width: 768px) {
