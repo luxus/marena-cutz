@@ -39,6 +39,7 @@ const barbers = defineCollection({
     image: z.string().optional().default(''),
     about: z.string().optional().default(''),
     order: z.number().optional().default(0),
+    enabled: z.boolean().optional().default(true),
     services: z.array(serviceSchema).optional().default([]),
   }),
 });

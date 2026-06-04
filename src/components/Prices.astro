@@ -23,7 +23,10 @@ const s = settingsEntry!.data;
 
 const paymentMethods = about.paymentMethods.filter((m) => m.enabled);
 
-const barbers = barbersEntries.map((e) => e.data).sort((a, b) => (a.order || 0) - (b.order || 0));
+const barbers = barbersEntries
+  .map((e) => e.data)
+  .filter((b) => b.enabled !== false)
+  .sort((a, b) => (a.order || 0) - (b.order || 0));
 ---
 
 <section id="preise" class="border-b border-outline-variant bg-surface px-5 py-16 scroll-mt-4">
