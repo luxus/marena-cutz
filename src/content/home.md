@@ -1,7 +1,6 @@
 ---
 eyebrow: Modern Barber in Bülach
 headline: Clean Cuts. Sharp Fades.
-text: Präzise Schnitte. Klare Linien. Dein Style. Unser Fokus.
 socialItems:
   - platform: Instagram
     imageUrl: /images/instagram-dxjdicbjld0-browser.jpg
