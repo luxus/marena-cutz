@@ -888,18 +888,18 @@ img {
 /* Header logo — wide asset; override global img sizing (max-width: 100% blew it up) */
 .site-logo {
   display: block;
-  height: 2rem;
+  height: 2.4rem;
   width: auto;
-  max-height: 2rem;
-  max-width: 9.5rem;
+  max-height: 2.4rem;
+  max-width: 11.4rem;
   object-fit: contain;
 }
 
 @media (min-width: 768px) {
   .site-logo {
-    height: 2.25rem;
-    max-height: 2.25rem;
-    max-width: 10.75rem;
+    height: 2.7rem;
+    max-height: 2.7rem;
+    max-width: 12.9rem;
   }
 }
 
