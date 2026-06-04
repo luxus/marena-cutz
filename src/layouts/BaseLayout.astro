@@ -63,7 +63,7 @@ const { title = s.name } = Astro.props;
           let mode = params.get('mode');
 
           // Keep in sync with src/lib/themes.ts (see export comment there). Duplication is unavoidable for is:inline.
-          const validThemes = ['architectural', 'brutalist', 'warm', 'cool'];
+          const validThemes = ['architectural'];
           const validModes = ['light', 'dark', 'system'];
 
           // Robust cookie parser (never throws on bad % or unusual cookies)

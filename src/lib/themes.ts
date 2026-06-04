@@ -8,9 +8,6 @@
 
 export const themeNames: Record<string, string> = {
   architectural: 'Architectural Neon',
-  brutalist: 'Brutalist',
-  warm: 'Warm Minimal',
-  cool: 'Cool Industrial',
 };
 
 export type ThemeName = keyof typeof themeNames;

@@ -69,42 +69,21 @@ test.describe('Booking drawer', () => {
   });
 });
 
-// ─── Theme Switcher ────────────────────────────────────────────────────────
+// ─── Light / dark toggle ─────────────────────────────────────────────────────
 
-test.describe('Theme switcher', () => {
-  test('theme dropdown opens and lists themes', async ({ page }) => {
+test.describe('Light/dark toggle', () => {
+  test('mode toggle is visible and switches data-mode', async ({ page }) => {
     await page.goto('/');
 
-    // The theme toggle button controls #theme-dropdown-menu
-    const toggleBtn = page.locator('[aria-controls="theme-dropdown-menu"]');
+    const toggleBtn = page.getByRole('button', { name: /hell- oder dunkelmodus/i });
     await expect(toggleBtn).toBeVisible();
+
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'architectural');
+
+    const modeBefore = await page.locator('html').getAttribute('data-mode');
+    const expectedMode = modeBefore === 'dark' ? 'light' : 'dark';
     await toggleBtn.click();
-
-    const menu = page.locator('#theme-dropdown-menu');
-    await expect(menu).toBeVisible();
-
-    // At least one theme option should be in the list
-    const options = menu.getByRole('option');
-    await expect(options.first()).toBeVisible();
-  });
-
-  test('selecting a theme updates data-theme on <html>', async ({ page }) => {
-    await page.goto('/');
-
-    const toggleBtn = page.locator('[aria-controls="theme-dropdown-menu"]');
-    await toggleBtn.click();
-
-    const menu = page.locator('#theme-dropdown-menu');
-    const options = menu.getByRole('option');
-    const count = await options.count();
-    expect(count).toBeGreaterThan(0);
-
-    // Click the first theme option
-    await options.first().click();
-
-    // data-theme attribute should now be set on <html>
-    const dataTheme = await page.locator('html').getAttribute('data-theme');
-    expect(dataTheme).toBeTruthy();
+    await expect(page.locator('html')).toHaveAttribute('data-mode', expectedMode);
   });
 });
 
