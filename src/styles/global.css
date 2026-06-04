@@ -885,6 +885,24 @@ img {
   height: auto;
 }
 
+/* Header logo — wide asset; override global img sizing (max-width: 100% blew it up) */
+.site-logo {
+  display: block;
+  height: 2rem;
+  width: auto;
+  max-height: 2rem;
+  max-width: 9.5rem;
+  object-fit: contain;
+}
+
+@media (min-width: 768px) {
+  .site-logo {
+    height: 2.25rem;
+    max-height: 2.25rem;
+    max-width: 10.75rem;
+  }
+}
+
 /* Hero entrance animations */
 .hero-text {
   opacity: 0;
