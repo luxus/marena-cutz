@@ -30,11 +30,6 @@ screenshots/
 REVIEW.md
 skills-lock.json
 
-# wrangler files
-.wrangler
-.dev.vars*
-!.dev.vars.example
-!.env.example
 test-results/
 playwright-report/
 .playwright-mcp/
