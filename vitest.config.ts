@@ -5,9 +5,5 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['src/**/*.test.ts'],
     tsconfig: './tsconfig.test.json',
-    coverage: {
-      provider: 'v8',
-      include: ['src/lib/**'],
-    },
   },
 });

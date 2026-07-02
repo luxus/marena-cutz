@@ -2,13 +2,10 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",
-    "preview": "npm run build && wrangler dev",
-    "generate-types": "wrangler types",
-    "deploy": "npm run build && wrangler deploy",
+    "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "lint": "prettier --check .",
     "format": "prettier --write .",
@@ -17,23 +14,25 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",
-    "@astrojs/cloudflare": "^13.5.3",
-    "@astrojs/svelte": "^8.1.1",
-    "@tailwindcss/vite": "^4.3.0",
-    "astro": "^6.3.6",
-    "svelte": "5.55.9",
-    "tailwindcss": "^4.3.0",
-    "typescript": "latest"
+
+    "@astrojs/svelte": "^9.0.1",
+    "@tailwindcss/vite": "^4.3.2",
+    "astro": "^7.0.5",
+    "svelte": "^5.56.4",
+    "tailwindcss": "^4.3.2",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.60.0",
-    "@types/node": "^25.9.1",
-    "@vitest/coverage-v8": "^4.1.7",
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^25.9.4",
     "jsdom": "^29.1.1",
-    "prettier": "^3.8.3",
+    "prettier": "^3.9.4",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-svelte": "^4.0.0",
-    "vitest": "^4.1.7",
-    "wrangler": "^4.93.0"
+    "prettier-plugin-svelte": "^4.1.1",
+    "vitest": "^4.1.9"
+  },
+  "overrides": {
+    "esbuild": "^0.28.1",
+    "yaml": "^2.9.0"
   }
 }

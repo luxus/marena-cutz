@@ -15,10 +15,10 @@ const openingHours = about.openingHours;
 const barbersEntries = await getCollection('barbers');
 const barbers = barbersEntries
   .map((e) => e.data)
+  .filter((b) => b.enabled !== false)
   .sort((a, b) => (a.order || 0) - (b.order || 0));
 
-const getBarberImage = (barber: (typeof barbers)[number]) =>
-  barber.image || (barber.name === 'Angelo' ? '/images/cut-1.jpg' : '/images/cut-2.jpg');
+const getBarberImage = (barber: (typeof barbers)[number]) => barber.image;
 ---
 
 <section class="relative border-b border-outline-variant px-5 py-16 md:py-20">
@@ -66,7 +66,7 @@ const getBarberImage = (barber: (typeof barbers)[number]) =>
                 href={`tel:${s.phone}`}
                 class="group/contact flex items-center gap-2 hover:text-primary transition-colors duration-150"
               >
-                <PhoneIcon /><span class="nav-link group-hover/contact:[&::after]:scale-x-100"
+                <PhoneIcon /> <span class="nav-link group-hover/contact:[&::after]:scale-x-100"
                   >Telefon</span
                 >
               </a>
@@ -74,7 +74,7 @@ const getBarberImage = (barber: (typeof barbers)[number]) =>
                 href={`mailto:${s.email}`}
                 class="group/contact flex items-center gap-2 hover:text-primary transition-colors duration-150"
               >
-                <MailIcon /><span class="nav-link group-hover/contact:[&::after]:scale-x-100"
+                <MailIcon /> <span class="nav-link group-hover/contact:[&::after]:scale-x-100"
                   >E-Mail</span
                 >
               </a>

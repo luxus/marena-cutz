@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { parkingDrawer } from '../lib/parkingDrawer.svelte.js';
+  import { parkingDrawer } from '../lib/ui.svelte.js';
 
   let {
     class: className = '',

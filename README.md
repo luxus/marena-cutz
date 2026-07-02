@@ -1,6 +1,6 @@
 # Marena Cutz Website
 
-Astro + Tailwind landingpage for Marena Cutz.
+Astro 7 + Svelte islands + Tailwind landing page for Marena Cutz.
 
 ## Install
 
@@ -15,12 +15,14 @@ npm run dev
 npm run build
 ```
 
-Cloudflare Pages:
+Cloudflare Pages (static):
 
 ```txt
 Build command: npm run build
 Output directory: dist
 ```
+
+No Cloudflare adapter — fully static site, `astro dev` runs on Vite (no workerd).
 
 ## Content bearbeiten
 
@@ -38,10 +40,13 @@ Bilder liegen in:
 public/images/
 ```
 
+## Themes
+
+Nur **Architectural Neon** ist aktiv. Weitere Themes: siehe Kommentar in `src/lib/themes.ts` (Key in `themes.ts`, CSS-Blöcke in `global.css`, `validThemes` in `BaseLayout.astro`).
+
 ## Design-Entscheidung
 
-- Astro only, kein Svelte nötig
+- Astro static-first, Svelte 5 islands für Drawer/Accordion/Carousel
 - Tailwind 4 via Vite Plugin
 - Mobile Sticky-Bar: Preise / Buchen / Route
 - Preise direkt nach Hero
-- Stuhl, Clipper, Karte und Social-Previews als lokale Bildassets

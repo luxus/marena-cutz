@@ -1,5 +1,5 @@
 <script>
-  import { userTheme } from '../lib/theme.svelte.js';
+  import { userTheme } from '../lib/ui.svelte.js';
   import { defaultTheme } from '../lib/themes';
 
   const theme = defaultTheme;
@@ -31,12 +31,6 @@
       url.searchParams.set('theme', theme);
       url.searchParams.set('mode', newMode);
       history.replaceState(null, '', url.toString());
-
-      fetch('/api/preferences', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ theme, mode: newMode }),
-      }).catch(() => {});
     };
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

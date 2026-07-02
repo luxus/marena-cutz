@@ -130,6 +130,10 @@ content:
         path: src/content/barbers/angelo.json
         format: json
         fields:
+          - name: enabled
+            label: Auf Website anzeigen
+            type: boolean
+            default: true
           - name: name
             label: Name
             type: string
@@ -172,6 +176,10 @@ content:
         path: src/content/barbers/sean.json
         format: json
         fields:
+          - name: enabled
+            label: Auf Website anzeigen
+            type: boolean
+            default: false
           - name: name
             label: Name
             type: string

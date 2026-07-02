@@ -46,15 +46,10 @@ const { title = s.name } = Astro.props;
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- Theme initialization (prevents flash). 
-         Priority: URL params (for testing/sharing) > readable cookies (set by /api/preferences for server session + survive localStorage clear) > localStorage > system pref.
-         The Cloudflare KV SESSION (via adapter + our API) is the durable cross-device source of truth for future SSR pages.
-         This script is the only remaining is:inline; everything else is now proper Svelte 5 runes + actions.
-
-         Cookie parsing is now robust (Issue 2): splits on first '=', per-value decode with try/catch fallback to raw value,
-         never throws on malformed % sequences from other cookies. Called once.
-         The allowlist arrays below MUST be kept manually in sync with src/lib/themes.ts:VALID_THEMES / VALID_MODES
-         (the is:inline script cannot import ES modules). -->
+    <!-- Theme initialization (prevents flash).
+         Priority: URL params (testing/sharing) > localStorage > defaults.
+         The allowlist arrays below MUST stay in sync with src/lib/themes.ts VALID_THEMES / VALID_MODES
+         (is:inline scripts cannot import ES modules). Add a theme: update themes.ts, this script, and global.css. -->
     <script is:inline>
       (function () {
         try {
@@ -65,38 +60,6 @@ const { title = s.name } = Astro.props;
           // Keep in sync with src/lib/themes.ts (see export comment there). Duplication is unavoidable for is:inline.
           const validThemes = ['architectural'];
           const validModes = ['light', 'dark', 'system'];
-
-          // Robust cookie parser (never throws on bad % or unusual cookies)
-          function parseCookies() {
-            const out = Object.create(null);
-            const raw = document.cookie || '';
-            if (!raw) return out;
-            raw.split(';').forEach((pair) => {
-              const eq = pair.indexOf('=');
-              if (eq === -1) return;
-              const k = pair.slice(0, eq).trim();
-              let v = pair.slice(eq + 1).trim();
-              if (!k) return;
-              try {
-                v = decodeURIComponent(v);
-              } catch {
-                // leave raw value for cookies with literal % not part of a valid sequence
-              }
-              out[k] = v;
-            });
-            return out;
-          }
-
-          // URL params have highest priority (for testing + sharing)
-          if (!theme || !validThemes.includes(theme)) {
-            const cookies = parseCookies();
-            theme = cookies.theme || theme;
-            mode = cookies.mode || mode;
-          }
-          if (!mode || !validModes.includes(mode)) {
-            const cookies = parseCookies();
-            mode = cookies.mode || mode;
-          }
 
           if (!theme || !validThemes.includes(theme)) {
             theme = localStorage.getItem('theme');

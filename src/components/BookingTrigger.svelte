@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { bookingDrawer } from '../lib/bookingDrawer.svelte.js';
+  import { bookingDrawer } from '../lib/ui.svelte.js';
 
   let {
     class: className = '',

@@ -1,6 +1,6 @@
 /* ==========================================================================
    Marena Cutz — Premium Global Styles
-   Tailwind 4 + 8-theme runtime system (Architectural Neon / Brutalist / Warm Minimal / Cool Industrial × light/dark)
+   Tailwind 4 + extensible theme runtime ([data-theme][data-mode] blocks in themes.ts + global.css)
    Premium restrained motion, first-paint polished, editorial barber feel.
    ========================================================================== */
 
@@ -39,7 +39,7 @@
    Architectural Neon (dark) — the canonical brand theme from DESIGN.md.
    Applied to :root / html when no data-theme/data-mode attributes are present
    (no-JS users, bootstrap script failure in the try/catch, or very early paint).
-   The 8 specific [data-...] blocks below override when the inline bootstrap succeeds.
+   Per-theme [data-theme][data-mode] blocks below override when the inline bootstrap succeeds.
    This guarantees the site is *always* fully themed and beautiful, even with JS disabled.
 --------------------------------------------------------------------------- */
 :root,
@@ -190,231 +190,6 @@ p, li, a {
   --team-card-border: #c9c2b8;
   --team-card-blur: 4px;
   --map-tint-color: #c45c2e;
-  --map-tint-opacity: 0.07;
-  --map-tint-blend: multiply;
-}
-
-[data-theme="brutalist"][data-mode="dark"] {
-  --color-background: #0f0f0f;
-  --color-surface: #0f0f0f;
-  --color-surface-dim: #0f0f0f;
-  --color-surface-bright: #292929;
-  --color-surface-container-lowest: #0a0a0a;
-  --color-surface-container-low: #141414;
-  --color-surface-container: #1a1a1a;
-  --color-surface-container-high: #252525;
-  --color-surface-container-highest: #303030;
-  --color-on-surface: #e5e2e1;
-  --color-on-surface-variant: #a3a3a3;
-  --color-primary: #e05a2b;
-  --color-on-primary: #ffffff;
-  --color-primary-container: #5c2a1f;
-  --color-on-primary-container: #f5d3c0;
-  --color-secondary: #64748b;
-  --color-on-secondary: #0f172a;
-  --color-secondary-container: #334155;
-  --color-on-secondary-container: #e2e8f0;
-  --color-outline: #57534e;
-  --color-outline-variant: #44403c;
-  --color-error: #ef4444;
-  --color-on-error: #ffffff;
-  --team-card-bg: rgba(26, 26, 26, 0.95);
-  --team-card-border: #44403c;
-  --team-card-blur: 0px;
-  --map-tint-color: #e05a2b;
-  --map-tint-opacity: 0.11;
-  --map-tint-blend: screen;
-
-  /* Brutalist — raw, industrial, aggressive (from original design) */
-  --font-display: 'Anton', 'Bebas Neue', 'Arial Black', sans-serif;
-  --font-display-weight: 400;
-  --font-display-letter-spacing: -0.055em;
-
-  --font-sans: 'Helvetica Neue', Arial, sans-serif;
-  --font-sans-weight: 900;
-  --font-sans-letter-spacing: -0.05em;
-
-  --font-mono: 'Space Mono', ui-monospace, monospace;
-}
-
-[data-theme="brutalist"][data-mode="light"] {
-  --color-background: #f4f1eb;
-  --color-surface: #f4f1eb;
-  --color-surface-dim: #e8e3d9;
-  --color-surface-bright: #ffffff;
-  --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #f4f1eb;
-  --color-surface-container: #e8e3d9;
-  --color-surface-container-high: #d9d1c3;
-  --color-surface-container-highest: #c9bea9;
-  --color-on-surface: #1f1c18;
-  --color-on-surface-variant: #4a4236;
-  --color-primary: #c2410f;
-  --color-on-primary: #ffffff;
-  --color-primary-container: #f5d3c0;
-  --color-on-primary-container: #3d1f12;
-  --color-secondary: #334155;
-  --color-on-secondary: #ffffff;
-  --color-secondary-container: #cbd5e1;
-  --color-on-secondary-container: #0f172a;
-  --color-outline: #78716c;
-  --color-outline-variant: #c9bea9;
-  --color-error: #b91c1c;
-  --color-on-error: #ffffff;
-  --team-card-bg: rgba(232, 227, 217, 0.9);
-  --team-card-border: #c9bea9;
-  --team-card-blur: 0px;
-  --map-tint-color: #c2410f;
-  --map-tint-opacity: 0.08;
-  --map-tint-blend: multiply;
-}
-
-[data-theme="warm"][data-mode="dark"] {
-  --color-background: #1c1814;
-  --color-surface: #1c1814;
-  --color-surface-dim: #1c1814;
-  --color-surface-bright: #2f2923;
-  --color-surface-container-lowest: #14110e;
-  --color-surface-container-low: #1f1a15;
-  --color-surface-container: #252018;
-  --color-surface-container-high: #2f2923;
-  --color-surface-container-highest: #3a332b;
-  --color-on-surface: #e8e0d3;
-  --color-on-surface-variant: #c5b9a5;
-  --color-primary: #c8854a;
-  --color-on-primary: #ffffff;
-  --color-primary-container: #6b4e31;
-  --color-on-primary-container: #f5e1d3;
-  --color-secondary: #b8a38c;
-  --color-on-secondary: #2c2520;
-  --color-secondary-container: #4a3f33;
-  --color-on-secondary-container: #e8e0d3;
-  --color-outline: #8a7762;
-  --color-outline-variant: #4a3f33;
-  --color-error: #e07a5f;
-  --color-on-error: #3a2f25;
-  --team-card-bg: rgba(37, 32, 24, 0.92);
-  --team-card-border: #4a3f33;
-  --team-card-blur: 8px;
-  --map-tint-color: #d4a373;
-  --map-tint-opacity: 0.1;
-  --map-tint-blend: multiply;
-
-  /* Warm Minimal — elegant serif display (from original design) */
-  --font-display: 'Playfair Display', ui-serif, serif;
-  --font-display-weight: 400;
-  --font-display-letter-spacing: 0.06em;
-
-  --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
-  --font-sans-weight: 400;
-  --font-sans-letter-spacing: 0.04em;
-
-  --font-mono: 'Space Mono', ui-monospace, monospace;
-}
-
-[data-theme="warm"][data-mode="light"] {
-  --color-background: #f8f5f0;
-  --color-surface: #f8f5f0;
-  --color-surface-dim: #f0e9df;
-  --color-surface-bright: #ffffff;
-  --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #f8f5f0;
-  --color-surface-container: #f0e9df;
-  --color-surface-container-high: #e5d9c9;
-  --color-surface-container-highest: #d9c9b3;
-  --color-on-surface: #2c2520;
-  --color-on-surface-variant: #6b5f52;
-  --color-primary: #9c6644;
-  --color-on-primary: #ffffff;
-  --color-primary-container: #f5e1d3;
-  --color-on-primary-container: #4a2f1f;
-  --color-secondary: #7d6e5d;
-  --color-on-secondary: #ffffff;
-  --color-secondary-container: #e8dccf;
-  --color-on-secondary-container: #3a2f25;
-  --color-outline: #a38d74;
-  --color-outline-variant: #d9c9b3;
-  --color-error: #b45309;
-  --color-on-error: #ffffff;
-  --team-card-bg: rgba(240, 233, 223, 0.95);
-  --team-card-border: #d9c9b3;
-  --team-card-blur: 6px;
-  --map-tint-color: #9c6644;
-  --map-tint-opacity: 0.06;
-  --map-tint-blend: multiply;
-}
-
-[data-theme="cool"][data-mode="dark"] {
-  --color-background: #0f172a;
-  --color-surface: #0f172a;
-  --color-surface-dim: #0f172a;
-  --color-surface-bright: #1e293b;
-  --color-surface-container-lowest: #020617;
-  --color-surface-container-low: #1e293b;
-  --color-surface-container: #334155;
-  --color-surface-container-high: #475569;
-  --color-surface-container-highest: #64748b;
-  --color-on-surface: #e2e8f0;
-  --color-on-surface-variant: #94a3b8;
-  --color-primary: #14b8a6;
-  --color-on-primary: #0f172a;
-  --color-primary-container: #0f766e;
-  --color-on-primary-container: #ccfbf1;
-  --color-secondary: #94a3b8;
-  --color-on-secondary: #0f172a;
-  --color-secondary-container: #475569;
-  --color-on-secondary-container: #e2e8f0;
-  --color-outline: #475569;
-  --color-outline-variant: #334155;
-  --color-error: #f87171;
-  --color-on-error: #0f172a;
-  --team-card-bg: rgba(51, 65, 85, 0.88);
-  --team-card-border: #334155;
-  --team-card-blur: 10px;
-  --map-tint-color: #14b8a6;
-  --map-tint-opacity: 0.12;
-  --map-tint-blend: screen;
-
-  /* Cool Industrial — modern geometric (from original) */
-  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
-  --font-display-weight: 650;
-  --font-display-letter-spacing: -0.025em;
-
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-sans-weight: 550;
-  --font-sans-letter-spacing: -0.01em;
-
-  --font-mono: 'Space Mono', ui-monospace, monospace;
-}
-
-[data-theme="cool"][data-mode="light"] {
-  --color-background: #f1f5f9;
-  --color-surface: #f1f5f9;
-  --color-surface-dim: #e2e8f0;
-  --color-surface-bright: #ffffff;
-  --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #f1f5f9;
-  --color-surface-container: #e2e8f0;
-  --color-surface-container-high: #cbd5e1;
-  --color-surface-container-highest: #94a3b8;
-  --color-on-surface: #1e293b;
-  --color-on-surface-variant: #475569;
-  --color-primary: #0f766e;
-  --color-on-primary: #ffffff;
-  --color-primary-container: #ccfbf1;
-  --color-on-primary-container: #134e4b;
-  --color-secondary: #475569;
-  --color-on-secondary: #ffffff;
-  --color-secondary-container: #e0e7ff;
-  --color-on-secondary-container: #1e293b;
-  --color-outline: #64748b;
-  --color-outline-variant: #94a3b8;
-  --color-error: #b91c1c;
-  --color-on-error: #ffffff;
-  --team-card-bg: rgba(226, 232, 240, 0.9);
-  --team-card-border: #94a3b8;
-  --team-card-blur: 4px;
-  --map-tint-color: #0f766e;
   --map-tint-opacity: 0.07;
   --map-tint-blend: multiply;
 }
@@ -608,13 +383,43 @@ h1, h2, h3, h4 {
   transform: scaleX(1);
 }
 
-/* Price rows & barber cards — more luxurious hover states */
-button[aria-expanded] .text-on-surface,
+/* Price rows & barber accordion */
 .price-row {
-  transition: background-color 160ms ease, color 160ms ease;
+  transition: background-color 160ms ease;
 }
 .price-row:hover {
   background-color: color-mix(in srgb, var(--color-primary) 6%, transparent);
+}
+
+.barber-price__toggle {
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.barber-price__toggle--open {
+  transform: rotate(45deg);
+}
+
+/* One DOM for peek + expanded — height animates, typography stays put */
+.price-more {
+  overflow: hidden;
+  max-height: 3.25rem;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  transition:
+    max-height 320ms cubic-bezier(0.23, 1, 0.32, 1),
+    -webkit-mask-image 200ms ease,
+    mask-image 200ms ease;
+}
+.price-more--open {
+  max-height: 40rem;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barber-price__toggle,
+  .price-more {
+    transition: none;
+  }
 }
 
 .opening-hour-row:hover {

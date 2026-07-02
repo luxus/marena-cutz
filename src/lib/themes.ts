@@ -1,10 +1,10 @@
 // Theme allowlists and display names.
 // Colour values live exclusively in src/styles/global.css ([data-theme][data-mode] blocks).
-// Adding a theme requires:
-//   1. Adding the key here
-//   2. Adding [data-theme="<key>"][data-mode="dark"] and [data-theme="<key>"][data-mode="light"]
-//      blocks to global.css
-//   3. Updating the is:inline bootstrap script in BaseLayout.astro (validThemes array)
+// To add a theme later:
+//   1. Add the key + display name here
+//   2. Add [data-theme="<key>"][data-mode="dark|light"] blocks to global.css
+//   3. Sync validThemes in BaseLayout.astro inline bootstrap (cannot import modules)
+//   4. Wire a picker in ThemeSwitcher when you have more than one theme
 
 export const themeNames: Record<string, string> = {
   architectural: 'Architectural Neon',
@@ -16,7 +16,7 @@ export type ThemeMode = 'light' | 'dark' | 'system';
 export const defaultTheme: ThemeName = 'architectural';
 export const defaultMode: ThemeMode = 'dark';
 
-// Canonical allowlists used by API validation and the early bootstrap script.
+// Canonical allowlists used by the early bootstrap script in BaseLayout.
 // IMPORTANT: The is:inline script in BaseLayout.astro cannot import modules, so the string
 // literals are duplicated there with an explicit "keep in sync" comment. Adding a theme
 // requires updating both.

@@ -3,7 +3,7 @@
   "position": "Barber",
   "image": "/images/sean.jpg",
   "order": 3,
-  "enabled": true,
+  "enabled": false,
   "about": "Sean ist ein leidenschaftlicher Barber, der sich auf saubere Übergänge und moderne Stylings spezialisiert hat.",
   "services": [
     {
