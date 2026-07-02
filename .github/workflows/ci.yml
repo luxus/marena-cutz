@@ -63,5 +63,4 @@ jobs:
       - run: npm ci
       - run: npm run check
 
-  # Deploy: Cloudflare Pages native GitHub integration (Settings → Builds:
-  # output directory must be `dist`, not `dist/client`).
+  # Deploy: Cloudflare Pages native GitHub integration (output: dist, Node 24).

@@ -31,6 +31,7 @@ pnpm-debug.log*
 preview/
 screenshots/
 REVIEW.md
+skills-lock.json
 
 # wrangler files
 .wrangler

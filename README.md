@@ -15,18 +15,15 @@ npm run dev
 npm run build
 ```
 
-Cloudflare Pages (static):
+Cloudflare Pages (static, native GitHub integration):
 
 ```txt
 Build command: npm run build
 Output directory: dist
+Node: 24 (.node-version)
 ```
 
-Deploy uses Cloudflare Pages' native GitHub integration. After removing the
-Cloudflare adapter, set **output directory** to `dist` (was `dist/client`).
-Then retry the failed deployment in the Cloudflare dashboard.
-
-No Cloudflare adapter — fully static site, `astro dev` runs on Vite (no workerd).
+Fully static — no adapter, no workerd.
 
 ## Content bearbeiten
 
