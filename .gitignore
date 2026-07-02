@@ -23,9 +23,6 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# design source files (exported assets live in public/images/)
-*.pxd
-
 # agent/local artifacts
 .pi/
 preview/
