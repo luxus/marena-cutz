@@ -22,14 +22,9 @@ Build command: npm run build
 Output directory: dist
 ```
 
-Important: output must be `dist`, not `dist/client` (that was only with the old Cloudflare adapter).
-
-Deploy on push to `main` runs in the CI workflow after tests pass. Required GitHub repo secrets:
-
-- `CLOUDFLARE_API_TOKEN` — Pages Edit permission
-- `CLOUDFLARE_ACCOUNT_ID` — from Cloudflare dashboard
-
-If the native Cloudflare Pages GitHub integration is still enabled, either disable it (to avoid double deploys) or set its output directory to `dist` and retry the failed build.
+Deploy uses Cloudflare Pages' native GitHub integration. After removing the
+Cloudflare adapter, set **output directory** to `dist` (was `dist/client`).
+Then retry the failed deployment in the Cloudflare dashboard.
 
 No Cloudflare adapter — fully static site, `astro dev` runs on Vite (no workerd).
 
