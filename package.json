@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",
-    "preview": "astro preview",
+    "preview": "npm run build && wrangler dev",
     "check": "astro check",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -13,10 +13,13 @@
     "lint": "prettier --check .",
     "format": "prettier --write .",
     "fetch:social-thumbs": "node scripts/fetch-social-thumbs.mjs",
-    "fetch:barber-prices": "node scripts/fetch-barber-prices.mjs"
+    "fetch:barber-prices": "node scripts/fetch-barber-prices.mjs",
+    "generate-types": "wrangler types",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",
+    "@astrojs/cloudflare": "^14.1.0",
     "@astrojs/svelte": "^9.0.1",
     "@tailwindcss/vite": "^4.3.2",
     "astro": "^7.0.5",
@@ -32,7 +35,8 @@
     "prettier": "^3.9.4",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-svelte": "^4.1.1",
-    "vitest": "^4.1.9"
+    "vitest": "^4.1.9",
+    "wrangler": "^4.107.0"
   },
   "overrides": {
     "yaml": "^2.9.0"
