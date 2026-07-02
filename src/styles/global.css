@@ -1086,3 +1086,22 @@ html[data-mode='dark'] .brand-logo__img--light {
   pointer-events: none;
   z-index: 5;
 }
+
+/* Light hero — secondary teal is too pale on the bright photo */
+[data-mode='light'] .hero .hero-text-1 {
+  color: var(--color-on-secondary-container);
+}
+
+[data-mode='light'] .hero .btn-secondary {
+  color: var(--color-on-secondary-container);
+  border-color: var(--color-on-secondary-container);
+  background-color: rgba(255, 253, 250, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+[data-mode='light'] .hero .btn-secondary:hover {
+  background-color: var(--color-on-secondary-container);
+  border-color: var(--color-on-secondary-container);
+  color: var(--color-secondary-container);
+}
