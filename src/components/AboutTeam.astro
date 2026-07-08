@@ -17,8 +17,6 @@ const barbers = barbersEntries
   .map((e) => e.data)
   .filter((b) => b.enabled !== false)
   .sort((a, b) => (a.order || 0) - (b.order || 0));
-
-const getBarberImage = (barber: (typeof barbers)[number]) => barber.image;
 ---
 
 <section class="relative border-b border-outline-variant px-5 py-16 md:py-20">
@@ -120,9 +118,9 @@ const getBarberImage = (barber: (typeof barbers)[number]) => barber.image;
                 <div class="flex gap-5">
                   <div class="flex-1 min-w-0 flex flex-col justify-between">
                     <div>
-                      <h4 class="text-title-md uppercase transition-colors duration-300 group-hover:text-primary">
+                      <h3 class="text-title-md uppercase transition-colors duration-300 group-hover:text-primary">
                         {barber.name}
-                      </h4>
+                      </h3>
                       {barber.position && (
                         <p class="mt-0.5 text-label-caps text-secondary">{barber.position}</p>
                       )}
@@ -142,7 +140,7 @@ const getBarberImage = (barber: (typeof barbers)[number]) => barber.image;
 
                   <div class="flex-shrink-0 overflow-hidden border border-outline-variant w-2/5 aspect-[15/16] transition-colors duration-500 group-hover:border-primary">
                     <img
-                      src={getBarberImage(barber)}
+                      src={barber.image}
                       alt={barber.name}
                       class="w-full h-full object-cover object-top transition-[transform,filter] duration-700 group-hover:scale-[1.035] group-hover:brightness-[1.035]"
                       loading="lazy"

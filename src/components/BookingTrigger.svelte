@@ -8,7 +8,12 @@
   }: { class?: string; label?: string; showIcons?: boolean } = $props();
 </script>
 
-<button onclick={() => (bookingDrawer.open = true)} class={className}>
+<button
+  type="button"
+  aria-haspopup="dialog"
+  onclick={() => (bookingDrawer.open = true)}
+  class={className}
+>
   {#if showIcons}
     <svg
       width="16"

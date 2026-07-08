@@ -2,6 +2,7 @@
 import { getCollection, getEntry } from 'astro:content';
 import BarberPrice from './BarberPrice.svelte';
 import BookingDrawer from './BookingDrawer.svelte';
+import MapPinIcon from './MapPinIcon.astro';
 import ParkingDrawer from './ParkingDrawer.svelte';
 import ParkingTrigger from './ParkingTrigger.svelte';
 
@@ -41,27 +42,27 @@ const barbers = barbersEntries
         {
           barbers.map((barber, index) => (
             <div class={index > 0 ? 'border-t border-outline-variant pt-5' : ''}>
-              <BarberPrice client:load {barber} />
+              <BarberPrice client:visible {barber} />
             </div>
           ))
         }
         <div class="border-t border-outline-variant pt-5">
-        <BookingDrawer
-          client:load
-          bookingUrl={s.bookingUrl}
-          drawerTitle={booking.title}
-          paymentNote={booking.paymentNote}
-          availabilityTitle={booking.availabilityTitle}
-          availabilityText={booking.availabilityText}
-          walkInsTitle={booking.walkInsTitle}
-          walkInsText={booking.walkInsText}
-          cancellationTitle={booking.cancellationTitle}
-          cancellationText={booking.cancellationText}
-          latenessTitle={booking.latenessTitle}
-          latenessText={booking.latenessText}
-          ctaLabel={booking.ctaLabel}
-          cancelLabel={booking.cancelLabel}
-        />
+          <BookingDrawer
+            client:idle
+            bookingUrl={s.bookingUrl}
+            drawerTitle={booking.title}
+            paymentNote={booking.paymentNote}
+            availabilityTitle={booking.availabilityTitle}
+            availabilityText={booking.availabilityText}
+            walkInsTitle={booking.walkInsTitle}
+            walkInsText={booking.walkInsText}
+            cancellationTitle={booking.cancellationTitle}
+            cancellationText={booking.cancellationText}
+            latenessTitle={booking.latenessTitle}
+            latenessText={booking.latenessText}
+            ctaLabel={booking.ctaLabel}
+            cancelLabel={booking.cancelLabel}
+          />
         </div>
         {
           paymentMethods.length > 0 && (
@@ -127,7 +128,7 @@ const barbers = barbersEntries
         <a
           href={s.mapsUrl}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           aria-label={`Route zu ${s.name} auf Google Maps öffnen`}
           class="block"
         >
@@ -150,14 +151,15 @@ const barbers = barbersEntries
           <div
             class="absolute bottom-3 left-3 flex items-center gap-2 border border-outline-variant bg-surface/95 px-3 py-1 text-label-caps text-secondary backdrop-blur pointer-events-none transition group-hover:border-secondary"
           >
-            <span>📍 {s.address}, {s.zipCity}</span>
+            <MapPinIcon class="h-3.5 w-3.5" />
+            <span>{s.address}, {s.zipCity}</span>
           </div>
         </a>
       </div>
       <div class="mt-4">
-        <ParkingTrigger client:load label={parking.title} />
+        <ParkingTrigger client:visible label={parking.title} />
         <ParkingDrawer
-          client:load
+          client:idle
           title={parking.title}
           image={parking.image}
           entrance={parking.entrance}

@@ -5,6 +5,9 @@ import { getEntry } from 'astro:content';
 const settingsEntry = await getEntry('settings', 'settings');
 const s = settingsEntry!.data;
 
+const siteUrl = 'https://marenacutz.ch';
+const ogImage = `${siteUrl}/images/salon-hero-new.png`;
+
 const { title = s.name } = Astro.props;
 ---
 
@@ -28,9 +31,9 @@ const { title = s.name } = Astro.props;
       content={s.ogDescription || 'Präzise Schnitte. Klare Linien. Dein Style. Unser Fokus.'}
     />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://marenacutz.ch" />
+    <meta property="og:url" content={siteUrl} />
     <meta property="og:locale" content="de_CH" />
-    <meta property="og:image" content="/images/salon-hero-new.png" />
+    <meta property="og:image" content={ogImage} />
     <meta property="og:image:alt" content={s.ogImageAlt || `${s.name} barber shop in Bülach`} />
 
     <!-- Twitter -->
@@ -40,7 +43,7 @@ const { title = s.name } = Astro.props;
       name="twitter:description"
       content={s.twitterDescription || 'Clean Cuts. Sharp Fades. Präzise Schnitte in Bülach.'}
     />
-    <meta name="twitter:image" content="/images/salon-hero-new.png" />
+    <meta name="twitter:image" content={ogImage} />
 
     <!-- Favicon -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

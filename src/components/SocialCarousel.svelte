@@ -11,9 +11,12 @@
 
   let track: HTMLDivElement | undefined = $state();
   let paused = $state(false);
-  let interval: ReturnType<typeof setInterval>;
+  let interval: ReturnType<typeof setInterval> | undefined;
 
   $effect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
     interval = setInterval(() => {
       if (paused || !track) return;
       const tileW = track.firstElementChild
@@ -27,13 +30,16 @@
       }
     }, 3000);
 
-    return () => clearInterval(interval);
+    return () => {
+      if (interval !== undefined) clearInterval(interval);
+    };
   });
 </script>
 
 <div
   role="region"
   aria-label="Social Media Carousel"
+  aria-roledescription="Karussell"
   class="relative"
   onmouseenter={() => (paused = true)}
   onmouseleave={() => (paused = false)}
@@ -48,7 +54,7 @@
       <a
         href={item.permalink}
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
         class="social-tile group relative flex-none w-[38vw] md:w-[22%] lg:w-[18%] snap-start overflow-hidden border bg-surface {item.featured
           ? 'border-primary'
           : 'border-outline-variant'}"

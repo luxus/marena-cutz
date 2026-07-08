@@ -43,7 +43,7 @@
       <a
         href={mapsUrl}
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
         class="mt-2 inline-flex items-center gap-2 border border-outline-variant px-4 py-3 text-label-caps text-on-surface hover:border-primary hover:text-primary transition-colors"
       >
         <svg

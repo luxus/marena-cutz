@@ -7,13 +7,75 @@
     children,
   }: { open: boolean; title: string; children?: Snippet } = $props();
 
+  let panel: HTMLDivElement | undefined = $state();
+  let previouslyFocused: HTMLElement | null = null;
+
   function close() {
     open = false;
   }
 
-  function onKeydown(e: KeyboardEvent) {
-    if (e.key === 'Escape') close();
+  function getFocusable(root: HTMLElement): HTMLElement[] {
+    const selector =
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+    return Array.from(root.querySelectorAll<HTMLElement>(selector)).filter(
+      (el) => el.tabIndex !== -1 && !el.hasAttribute('disabled')
+    );
   }
+
+  function onKeydown(e: KeyboardEvent) {
+    if (!open) return;
+
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      close();
+      return;
+    }
+
+    if (e.key !== 'Tab' || !panel) return;
+
+    const focusable = getFocusable(panel);
+    if (focusable.length === 0) {
+      e.preventDefault();
+      panel.focus();
+      return;
+    }
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    const active = document.activeElement as HTMLElement | null;
+
+    if (e.shiftKey) {
+      if (active === first || !panel.contains(active)) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else if (active === last || !panel.contains(active)) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  // Focus management: move into dialog on open, restore on close.
+  $effect(() => {
+    if (!open) return;
+
+    previouslyFocused =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+    const id = requestAnimationFrame(() => {
+      if (!panel) return;
+      const focusable = getFocusable(panel);
+      (focusable[0] ?? panel).focus();
+    });
+
+    return () => {
+      cancelAnimationFrame(id);
+      if (previouslyFocused && document.contains(previouslyFocused)) {
+        previouslyFocused.focus();
+      }
+      previouslyFocused = null;
+    };
+  });
 
   // Portal action: moves the element into document.body so fixed positioning
   // is never clipped by an ancestor overflow/transform.
@@ -39,10 +101,12 @@
   <!-- Sheet: full-width on mobile, centered max-w-lg on desktop -->
   <div
     use:portal
+    bind:this={panel}
     role="dialog"
     aria-modal="true"
     aria-label={title}
-    class="drawer-sheet fixed bottom-0 z-[101] max-h-[85dvh] overflow-y-auto border border-outline-variant bg-surface"
+    tabindex="-1"
+    class="drawer-sheet fixed bottom-0 z-[101] max-h-[85dvh] overflow-y-auto border border-outline-variant bg-surface outline-none"
     style="left: 50%; transform: translateX(-50%); width: min(100%, 32rem);"
   >
     <!-- Handle -->
@@ -54,6 +118,7 @@
     <div class="flex items-center justify-between border-b border-outline-variant px-5 py-4">
       <h2 class="text-label-caps text-on-surface">{title}</h2>
       <button
+        type="button"
         onclick={close}
         aria-label="Schließen"
         class="grid h-8 w-8 place-items-center text-on-surface-variant hover:text-on-surface transition-colors"

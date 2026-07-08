@@ -7,6 +7,7 @@ import TikTokIcon from './TikTokIcon.astro';
 
 const settingsEntry = await getEntry('settings', 'settings');
 const s = settingsEntry!.data;
+const year = new Date().getFullYear();
 ---
 
 <footer class="border-t border-outline-variant bg-background px-5 py-10 pb-28 md:pb-10">
@@ -24,7 +25,7 @@ const s = settingsEntry!.data;
       </div>
     </div>
     <p class="text-xs tracking-widest text-on-surface-variant uppercase">
-      © 2026 {s.name}. Alle Rechte vorbehalten.
+      © {year} {s.name}. Alle Rechte vorbehalten.
     </p>
     <div class="flex items-center gap-4 text-xs tracking-widest text-on-surface-variant">
       <a href="/impressum/" class="nav-link hover:text-primary">Impressum</a>
@@ -34,7 +35,7 @@ const s = settingsEntry!.data;
         <a
           href={s.instagramUrl}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           aria-label="Instagram"
           class="social-icon-link hover:text-primary"
         >
@@ -43,7 +44,7 @@ const s = settingsEntry!.data;
         <a
           href={s.tiktokUrl}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           aria-label="TikTok"
           class="social-icon-link hover:text-primary"
         >
@@ -51,9 +52,9 @@ const s = settingsEntry!.data;
         </a>
       </div>
 
-      <!-- Light/dark toggle (architectural theme only) -->
+      <!-- Light/dark toggle (architectural theme only; more themes may return later) -->
       <div class="pl-3 border-l border-outline-variant">
-        <ThemeSwitcher client:load />
+        <ThemeSwitcher client:idle />
       </div>
     </div>
   </div>

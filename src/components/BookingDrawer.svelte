@@ -69,7 +69,7 @@
       <a
         href={bookingUrl}
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
         onclick={() => (bookingDrawer.open = false)}
         class="group btn-primary justify-between px-6 py-4 active:scale-[0.982]"
       >
@@ -103,6 +103,7 @@
         >
       </a>
       <button
+        type="button"
         onclick={() => (bookingDrawer.open = false)}
         class="btn-secondary px-6 py-3 text-label-caps"
       >

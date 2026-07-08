@@ -23,39 +23,51 @@ const s = settingsEntry!.data;
       <Logo alt={`${s.name} – ${s.tagline}`} class="site-logo" priority />
     </a>
     <nav class="hidden items-center gap-8 text-label-caps text-on-surface-variant md:flex">
-      <a href="#preise" class="nav-link hover:text-primary">Preise</a><a
-        href="#standort"
-        class="nav-link hover:text-primary">Standort</a
-      ><a href="#ueber" class="nav-link hover:text-primary">Über uns</a><a
-        href="#barbers"
-        class="nav-link hover:text-primary">Barbers</a
-      ><BookingTrigger
-        client:load
+      <a href="#preise" class="nav-link hover:text-primary">Preise</a>
+      <a href="#standort" class="nav-link hover:text-primary">Standort</a>
+      <a href="#ueber" class="nav-link hover:text-primary">Über uns</a>
+      <a href="#barbers" class="nav-link hover:text-primary">Barbers</a>
+      <BookingTrigger
+        client:media="(min-width: 768px)"
         label="Termin buchen"
         showIcons={false}
         class="btn-primary px-4 py-2 text-label-caps"
-      /><div class="flex items-center gap-3">
+      />
+      <div class="flex items-center gap-3">
         <a
-          href="#social"
+          href={s.instagramUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           aria-label="Instagram"
-          class="social-icon-link text-on-surface-variant hover:text-primary"><InstagramIcon /></a
-        ><a
-          href="#social"
-          aria-label="TikTok"
-          class="social-icon-link text-on-surface-variant hover:text-primary"><TikTokIcon /></a
+          class="social-icon-link text-on-surface-variant hover:text-primary"
         >
+          <InstagramIcon />
+        </a>
+        <a
+          href={s.tiktokUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="TikTok"
+          class="social-icon-link text-on-surface-variant hover:text-primary"
+        >
+          <TikTokIcon />
+        </a>
       </div>
     </nav>
     <div class="flex shrink-0 items-center gap-3 md:hidden">
       <a
-        href="#social"
+        href={s.instagramUrl}
+        target="_blank"
+        rel="noopener noreferrer"
         aria-label="Instagram"
         class="social-icon-link text-on-surface-variant hover:text-primary"
       >
         <InstagramIcon />
       </a>
       <a
-        href="#social"
+        href={s.tiktokUrl}
+        target="_blank"
+        rel="noopener noreferrer"
         aria-label="TikTok"
         class="social-icon-link text-on-surface-variant hover:text-primary"
       >

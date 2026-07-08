@@ -47,7 +47,7 @@ import BookingTrigger from './BookingTrigger.svelte';
     Über uns
   </a>
   <BookingTrigger
-    client:load
+    client:media="(max-width: 767px)"
     label="Termin"
     showIcons={true}
     class="flex flex-col items-center gap-1 py-2.5 text-primary transition-all duration-150 ease-[cubic-bezier(0.23,1.0,0.32,1)] hover:scale-[1.015] active:scale-[0.982]"
@@ -76,6 +76,7 @@ import BookingTrigger from './BookingTrigger.svelte';
   <a
     href="#standort"
     class="mobile-nav-link flex flex-col items-center gap-1 py-2.5 hover:text-primary"
-    ><MapPinIcon class="h-4 w-4" /> Standort</a
   >
+    <MapPinIcon class="h-4 w-4" /> Standort
+  </a>
 </nav>

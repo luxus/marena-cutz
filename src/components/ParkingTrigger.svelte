@@ -8,6 +8,8 @@
 </script>
 
 <button
+  type="button"
+  aria-haspopup="dialog"
   onclick={() => (parkingDrawer.open = true)}
   class="group/parking inline-flex items-center gap-2 text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-150 {className}"
 >
