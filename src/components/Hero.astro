@@ -57,10 +57,11 @@ const lines = splitHeadline(c.headline);
 </section>
 
 <script>
-  import { mountHero } from './hero/mountHero';
-
   const stage = document.getElementById('hero-stage');
-  if (stage) mountHero(stage);
+  if (stage) {
+    const { mountHero } = await import('./hero/mountHero');
+    mountHero(stage);
+  }
 
   const hero = document.getElementById('hero');
   if (hero && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

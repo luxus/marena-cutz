@@ -24,10 +24,12 @@
 </section>
 
 <script>
-  import { mountProduct } from './stage/mountProduct';
-
-  document.querySelectorAll<HTMLElement>('[data-model]').forEach((stage) => {
-    const url = stage.dataset.model;
-    if (url) mountProduct(stage, url);
-  });
+  const stages = document.querySelectorAll<HTMLElement>('[data-model]');
+  if (stages.length > 0) {
+    const { mountProduct } = await import('./stage/mountProduct');
+    stages.forEach((stage) => {
+      const url = stage.dataset.model;
+      if (url) mountProduct(stage, url);
+    });
+  }
 </script>

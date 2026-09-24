@@ -72,20 +72,22 @@ test.describe('Booking drawer', () => {
 
     const trigger = page.getByRole('button', { name: /termin/i }).first();
     await expect(trigger).toBeVisible();
-    await trigger.click();
-
     const drawer = page.getByRole('dialog');
-    await expect(drawer).toBeVisible();
+    await expect(async () => {
+      await trigger.click();
+      await expect(drawer).toBeVisible({ timeout: 1000 });
+    }).toPass();
   });
 
   test('closes when the close button is clicked', async ({ page }) => {
     await page.goto('/');
 
     const trigger = page.getByRole('button', { name: /termin/i }).first();
-    await trigger.click();
-
     const drawer = page.getByRole('dialog');
-    await expect(drawer).toBeVisible();
+    await expect(async () => {
+      await trigger.click();
+      await expect(drawer).toBeVisible({ timeout: 1000 });
+    }).toPass();
 
     await page.getByRole('button', { name: /schließen/i }).click();
     await expect(drawer).not.toBeVisible();
