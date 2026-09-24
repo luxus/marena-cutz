@@ -110,13 +110,13 @@ test.describe('Light/dark toggle', () => {
   });
 });
 
-test.describe('Hero photo', () => {
-  test('is a full-bleed photo with no WebGL craft piece', async ({ page }) => {
+test.describe('Hero stage', () => {
+  test('mounts a WebGL scissors-and-chairs stage', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('#hero-stage, #fade-ribbon, canvas')).toHaveCount(0);
-    await expect(page.locator('#hero img')).toHaveCount(1);
-    await page.waitForTimeout(2800);
-    await expect(page.locator('#hero img')).toBeVisible();
+    const canvas = page.locator('#hero canvas.crazy-stage');
+    await expect(canvas).toHaveCount(1);
+    await expect(canvas).toHaveAttribute('data-stage-mode', 'live');
+    await expect(page.locator('#hero-stage, #fade-ribbon')).toHaveCount(0);
   });
 
   test('reduced motion keeps the headline readable', async ({ page }) => {
@@ -126,6 +126,7 @@ test.describe('Hero photo', () => {
     await expect(headline).toBeVisible();
     const opacity = await headline.evaluate((el) => parseFloat(getComputedStyle(el).opacity));
     expect(opacity).toBeGreaterThan(0.9);
+    await expect(page.locator('#hero canvas')).toHaveAttribute('data-stage-mode', 'still');
   });
 });
 

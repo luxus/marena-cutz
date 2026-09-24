@@ -20,13 +20,8 @@ const barbers = barbersEntries
 ---
 
 <section class="about-barbers relative border-b border-outline-variant">
-  <div
-    class="absolute inset-0 bg-cover bg-center scale-x-[-1] opacity-50 [filter:contrast(1.12)_saturate(1.25)_brightness(0.82)]"
-    style="background-image: url('/images/about-salon-hero.png')"
-  >
-  </div>
-  <div class="mouse-glow absolute inset-0 pointer-events-none"></div>
-  <div class="absolute inset-0 bg-background/72"></div>
+  <div class="about-neon-plate" style="background-image: url('/images/about-salon-hero.png')"></div>
+  <div class="absolute inset-0 bg-background/78"></div>
 
   <div class="relative shell py-16 md:py-24">
     <div class="grid gap-16 lg:grid-cols-12 lg:gap-12">
@@ -71,7 +66,10 @@ const barbers = barbersEntries
         <div class="mt-8 divide-y divide-outline-variant">
           {
             barbers.map((barber, index) => (
-              <article class="barber-card scroll-reveal group py-8 first:pt-0">
+              <article
+                id={`barber-${barber.name.toLowerCase()}`}
+                class="barber-card scroll-reveal group py-8 first:pt-0"
+              >
                 <div
                   class:list={[
                     'flex flex-col gap-6 sm:items-stretch',

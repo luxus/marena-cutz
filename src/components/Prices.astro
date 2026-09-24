@@ -38,7 +38,10 @@ const barbers = barbersEntries
       <div class="mt-8">
         {
           barbers.map((barber, index) => (
-            <div class={index > 0 ? 'border-t border-outline-variant pt-6' : ''}>
+            <div
+              id={`preis-${barber.name.toLowerCase()}`}
+              class={index > 0 ? 'border-t border-outline-variant pt-6' : ''}
+            >
               <BarberPrice client:visible {barber} />
             </div>
           ))
