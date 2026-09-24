@@ -71,7 +71,10 @@ const barbers = barbersEntries
         <div class="mt-8 divide-y divide-outline-variant">
           {
             barbers.map((barber, index) => (
-              <article class="barber-card scroll-reveal group py-8 first:pt-0">
+              <article
+                id={`barber-${barber.name.toLowerCase()}`}
+                class="barber-card scroll-reveal group py-8 first:pt-0"
+              >
                 <div
                   class:list={[
                     'flex flex-col gap-6 sm:items-stretch',
@@ -117,3 +120,20 @@ const barbers = barbersEntries
     </div>
   </div>
 </section>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) {
+    document.querySelectorAll<HTMLElement>('.barber-photo').forEach((photo) => {
+      photo.addEventListener('pointermove', (event) => {
+        const rect = photo.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        photo.style.transform = `perspective(900px) rotateY(${x * 7}deg) rotateX(${-y * 5}deg)`;
+      });
+      photo.addEventListener('pointerleave', () => {
+        photo.style.transform = '';
+      });
+    });
+  }
+</script>

@@ -110,13 +110,19 @@ test.describe('Light/dark toggle', () => {
   });
 });
 
-test.describe('Hero photo', () => {
-  test('is a full-bleed photo with no WebGL craft piece', async ({ page }) => {
+test.describe('Hero stage', () => {
+  test('shows the scan stage and keeps the headline readable', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('#hero-stage, #fade-ribbon, canvas')).toHaveCount(0);
-    await expect(page.locator('#hero img')).toHaveCount(1);
-    await page.waitForTimeout(2800);
-    await expect(page.locator('#hero img')).toBeVisible();
+    const stage = page.locator('#hero-stage');
+    await expect(stage).toHaveCount(1);
+    await expect(stage).toHaveAttribute('aria-hidden', 'true');
+    await page.waitForFunction(
+      () => document.querySelector('#hero-stage')?.getAttribute('data-ready') === 'true'
+    );
+    await expect(page.locator('#hero-stage canvas')).toHaveCount(1);
+    const headline = page.locator('main h1');
+    await expect(headline).toContainText(/Clean Cuts/i);
+    await expect(headline).toContainText(/Sharp Fades/i);
   });
 
   test('reduced motion keeps the headline readable', async ({ page }) => {

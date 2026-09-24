@@ -4,12 +4,8 @@ import { splitHeadline } from '../lib/headline';
 import BookingTrigger from './BookingTrigger.svelte';
 import ReceiptIcon from './ReceiptIcon.astro';
 
-const [homeEntry, settingsEntry] = await Promise.all([
-  getEntry('home', 'home'),
-  getEntry('settings', 'settings'),
-]);
+const homeEntry = await getEntry('home', 'home');
 const c = homeEntry!.data;
-const s = settingsEntry!.data;
 const lines = splitHeadline(c.headline);
 ---
 
@@ -17,17 +13,9 @@ const lines = splitHeadline(c.headline);
   id="hero"
   class="hero relative min-h-[100svh] overflow-hidden border-b border-outline-variant"
 >
-  <img
-    src="/images/salon-hero-new.png"
-    alt={s.ogImageAlt || `${s.name} barber shop in Bülach`}
-    width="1536"
-    height="1024"
-    class="hero-photo absolute inset-0 h-full w-full object-cover"
-    fetchpriority="high"
-    decoding="async"
-  />
+  <div id="hero-stage" class="absolute inset-0" aria-hidden="true"></div>
   <div class="mouse-glow absolute inset-0 pointer-events-none"></div>
-  <div class="absolute inset-0 hero-overlay"></div>
+  <div class="absolute inset-0 hero-stage-shade"></div>
 
   <div class="relative z-10 flex min-h-[100svh] flex-col">
     <div class="flex-1"></div>
@@ -69,6 +57,11 @@ const lines = splitHeadline(c.headline);
 </section>
 
 <script>
+  import { mountHero } from './hero/mountHero';
+
+  const stage = document.getElementById('hero-stage');
+  if (stage) mountHero(stage);
+
   const hero = document.getElementById('hero');
   if (hero && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const glow = hero.querySelector<HTMLElement>('.mouse-glow');

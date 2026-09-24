@@ -1,0 +1,33 @@
+<section class="border-b border-outline-variant bg-background" aria-label="Werkzeug">
+  <div class="shell grid gap-6 py-12 md:grid-cols-2 md:gap-10 md:py-16">
+    <figure>
+      <div
+        class="product-stage h-72 border border-outline-variant md:h-80"
+        data-model="/models/scissors.glb"
+        aria-hidden="true"
+      >
+      </div>
+      <figcaption class="mt-3 text-label-caps text-on-surface-variant">Schere</figcaption>
+    </figure>
+    <figure>
+      <div
+        class="product-stage h-72 border border-outline-variant md:h-80"
+        data-model="/models/clipper.glb"
+        aria-hidden="true"
+      >
+      </div>
+      <figcaption class="mt-3 text-label-caps text-on-surface-variant">
+        Maschine <span class="text-primary">· Hebel & Schalter</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<script>
+  import { mountProduct } from './stage/mountProduct';
+
+  document.querySelectorAll<HTMLElement>('[data-model]').forEach((stage) => {
+    const url = stage.dataset.model;
+    if (url) mountProduct(stage, url);
+  });
+</script>
