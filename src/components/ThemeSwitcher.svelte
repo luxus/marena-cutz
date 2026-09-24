@@ -47,7 +47,7 @@
 </script>
 
 <button
-  class="flex h-8 w-8 items-center justify-center rounded border border-outline-variant bg-surface text-on-surface hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary transition"
+  class="flex h-8 w-8 items-center justify-center border border-outline-variant bg-surface text-on-surface hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary transition"
   aria-label="Hell- oder Dunkelmodus umschalten"
   onclick={toggleMode}
   type="button"

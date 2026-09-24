@@ -6,35 +6,61 @@ test.describe('Homepage', () => {
   test('loads with 200 and shows the shop name', async ({ page }) => {
     const response = await page.goto('/');
     expect(response?.status()).toBe(200);
-    // The page title contains the shop name from settings.md
     await expect(page).toHaveTitle(/Marena/i);
   });
 
   test('hero section is visible', async ({ page }) => {
     await page.goto('/');
-    const hero = page.locator('#hero, section').first();
+    const hero = page.locator('#hero');
     await expect(hero).toBeVisible();
   });
 
   test('hero headline is visible after entrance animation', async ({ page }) => {
     await page.goto('/');
-    const headline = page.locator('main h1 span.hero-slide-left');
+    const headline = page.locator('main h1');
     await expect(headline).toBeVisible();
-    // Production CSS minification once broke split animation rules (opacity stuck at 0).
+    await expect(headline).toContainText(/Clean Cuts/i);
+    const line = page.locator('main h1 span.hero-slide-left');
+    await expect(line).toBeVisible();
     await page.waitForTimeout(2000);
-    const opacity = await headline.evaluate((el) => parseFloat(getComputedStyle(el).opacity));
+    const opacity = await line.evaluate((el) => parseFloat(getComputedStyle(el).opacity));
     expect(opacity).toBeGreaterThan(0.9);
+  });
+
+  test('core sections stay scannable', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('#preise')).toBeVisible();
+    await expect(page.locator('#standort')).toBeVisible();
+    await expect(page.locator('#ueber')).toBeVisible();
+    await expect(page.locator('#barbers')).toBeVisible();
+    await expect(page.locator('#social')).toBeVisible();
+    await expect(page.getByRole('heading', { name: /preise/i })).toBeVisible();
+  });
+
+  test('does not invent prices — published barber rates remain', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.getByText('45 CHF').first()).toBeVisible();
+    await expect(page.getByText('35 CHF').first()).toBeVisible();
   });
 
   test('main nav links are present', async ({ page }) => {
     await page.goto('/');
-    // Header is present
     await expect(page.locator('header')).toBeVisible();
+    await expect(page.locator('header a[href="#preise"]')).toBeVisible();
   });
 
-  test('footer is present', async ({ page }) => {
+  test('footer is present with legal links', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('footer')).toBeVisible();
+    await expect(page.locator('footer a[href="/impressum/"]')).toBeVisible();
+    await expect(page.locator('footer a[href="/datenschutz/"]')).toBeVisible();
+  });
+
+  test('sticky mobile nav is visible on small screens', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    await expect(page.getByRole('navigation', { name: 'Hauptnavigation' })).toBeVisible();
+    await expect(page.getByRole('button', { name: /termin/i }).first()).toBeVisible();
   });
 });
 
@@ -44,12 +70,10 @@ test.describe('Booking drawer', () => {
   test('opens when the booking trigger is clicked', async ({ page }) => {
     await page.goto('/');
 
-    // BookingTrigger renders a button with label "Termin" (default)
     const trigger = page.getByRole('button', { name: /termin/i }).first();
     await expect(trigger).toBeVisible();
     await trigger.click();
 
-    // Drawer renders with role="dialog"
     const drawer = page.getByRole('dialog');
     await expect(drawer).toBeVisible();
   });
@@ -63,7 +87,6 @@ test.describe('Booking drawer', () => {
     const drawer = page.getByRole('dialog');
     await expect(drawer).toBeVisible();
 
-    // Drawer close button has aria-label="Schließen"
     await page.getByRole('button', { name: /schließen/i }).click();
     await expect(drawer).not.toBeVisible();
   });
@@ -84,6 +107,25 @@ test.describe('Light/dark toggle', () => {
     const expectedMode = modeBefore === 'dark' ? 'light' : 'dark';
     await toggleBtn.click();
     await expect(page.locator('html')).toHaveAttribute('data-mode', expectedMode);
+  });
+});
+
+// ─── Accessibility of the craft piece ─────────────────────────────────────
+
+test.describe('Hero craft piece', () => {
+  test('SVG tube fallback is in the DOM so WebGL is not required', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('#hero-tubes-fallback')).toHaveCount(1);
+    await expect(page.locator('#hero-tubes')).toHaveCount(1);
+  });
+
+  test('reduced motion keeps the headline readable without relying on WebGL', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    const headline = page.locator('main h1');
+    await expect(headline).toBeVisible();
+    const opacity = await headline.evaluate((el) => parseFloat(getComputedStyle(el).opacity));
+    expect(opacity).toBeGreaterThan(0.9);
   });
 });
 

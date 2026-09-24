@@ -5,6 +5,13 @@
    ========================================================================== */
 
 @import "tailwindcss";
+@import "@fontsource/bodoni-moda/latin-700.css";
+@import "@fontsource/bodoni-moda/latin-900.css";
+@import "@fontsource/hanken-grotesk/latin-400.css";
+@import "@fontsource/hanken-grotesk/latin-500.css";
+@import "@fontsource/hanken-grotesk/latin-600.css";
+@import "@fontsource/space-mono/latin-400.css";
+@import "@fontsource/space-mono/latin-700.css";
 
 /* Map Tailwind semantic colors to our runtime CSS variables (set via data-theme + data-mode attributes + the blocks below).
    This enables instant live theme switching with full View Transitions support. */
@@ -319,10 +326,19 @@ h1, h2, h3, h4 {
   .hero-text,
   .hero-slide-left,
   .hero-slide-right,
-  .hero-bg {
+  .hero-line,
+  .hero-bg,
+  .hero-photo,
+  .hero-tubes-fallback,
+  .hero-scroll-line,
+  .scroll-progress {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .hero-tubes-canvas {
+    display: none !important;
   }
 }
 
@@ -533,10 +549,10 @@ h1, h2, h3, h4 {
 }
 
 .btn-primary:hover {
-  transform: translateY(-3px) scale(1.032);
-  box-shadow: 
-    0 22px 50px -10px color-mix(in srgb, var(--color-primary) 38%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--color-primary) 28%, transparent);
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color-primary) 40%, transparent),
+    0 0 28px color-mix(in srgb, var(--color-primary) 28%, transparent);
   background-color: color-mix(in srgb, var(--color-primary) 100%, #fff 10%);
 }
 
@@ -773,29 +789,6 @@ html[data-mode='dark'] .brand-logo__img--light {
   }
 }
 
-/* Hero headline slide-in from sides
-   Keep each direction as one complete animation shorthand — splitting base + animation-name
-   breaks in production CSS minification (duration becomes 0s, headline stays opacity: 0). */
-.hero-slide-left {
-  opacity: 0;
-  animation: heroSlideLeft 1300ms cubic-bezier(0.12, 1, 0.2, 1) forwards;
-}
-
-.hero-slide-right {
-  opacity: 0;
-  animation: heroSlideRight 1300ms cubic-bezier(0.12, 1, 0.2, 1) forwards;
-}
-
-@keyframes heroSlideLeft {
-  from { opacity: 0; transform: translateX(-120vw); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes heroSlideRight {
-  from { opacity: 0; transform: translateX(120vw); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
 /* Social carousel — intentional right-edge fade: signals scrollable content */
 .social-carousel-fade-mask {
   position: relative;
@@ -829,7 +822,7 @@ html[data-mode='dark'] .brand-logo__img--light {
 
 /* Hero overlay — dark: even wash; light: gradient so ceiling/color panels stay vivid, text area still readable */
 .hero-overlay {
-  background-color: color-mix(in srgb, var(--color-background) 60%, transparent);
+  background-color: color-mix(in srgb, var(--color-background) 58%, transparent);
 }
 
 [data-mode='light'] .hero-overlay {
@@ -842,25 +835,147 @@ html[data-mode='dark'] .brand-logo__img--light {
   );
 }
 
-/* Hero background — slow late fade
-   Starts after all text has settled (~1.8s), eases in unhurried over 2s.
-   The long ease-in curve keeps it near-invisible for the first half,
-   then glides to full opacity — moody, not mechanical. */
-.hero-bg {
-  opacity: 0;
-  animation: heroBgFade 2000ms cubic-bezier(0.4, 0, 0.6, 1) forwards;
-  animation-delay: 1000ms;
-  filter: contrast(1.12) saturate(1.3) brightness(0.88);
+/* Hero photo is LCP — visible immediately (no fade). WebGL tubes layer on top. */
+.hero-photo {
+  max-width: none;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  filter: contrast(1.12) saturate(1.28) brightness(0.88);
 }
 
-[data-mode='light'] .hero-bg {
-  /* Salon photo is muted in-camera; lift warmth (ceiling) + cyan panels without milky wash */
+[data-mode='light'] .hero-photo {
   filter: contrast(1.14) saturate(1.72) brightness(1.04);
 }
 
-@keyframes heroBgFade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+.hero-headline {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+  text-transform: uppercase;
+  font-size: clamp(2.7rem, 11vw, 4.15rem);
+}
+
+@media (min-width: 768px) {
+  .hero-headline {
+    font-size: clamp(4.6rem, 7.4vw, 6.55rem);
+    line-height: 0.9;
+  }
+}
+
+.hero-line {
+  display: block;
+  overflow: hidden;
+}
+
+/* Blade wipe — keep complete animation shorthands (minifiers broke split rules before). */
+.hero-slide-left {
+  opacity: 0;
+  animation: heroBlade 1100ms cubic-bezier(0.12, 1, 0.2, 1) forwards;
+}
+
+.hero-slide-right {
+  opacity: 0;
+  animation: heroBlade 1100ms cubic-bezier(0.12, 1, 0.2, 1) 140ms forwards;
+}
+
+@keyframes heroBlade {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+  }
+}
+
+.hero-tubes-canvas {
+  opacity: 0;
+  mix-blend-mode: screen;
+  transition: opacity 700ms ease;
+}
+
+.hero-tubes-canvas.is-live {
+  opacity: 0.92;
+}
+
+[data-mode='light'] .hero-tubes-canvas.is-live {
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+}
+
+.hero-tubes-fallback {
+  opacity: 0.55;
+  transition: opacity 400ms ease;
+  mix-blend-mode: screen;
+}
+
+.hero-tubes-fallback.is-replaced {
+  opacity: 0;
+}
+
+[data-mode='light'] .hero-tubes-fallback {
+  mix-blend-mode: multiply;
+  opacity: 0.35;
+}
+
+.hero-grid::before,
+.hero-grid::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: color-mix(in srgb, var(--color-outline-variant) 70%, transparent);
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hero-grid::before,
+  .hero-grid::after {
+    display: block;
+  }
+  .hero-grid::before { left: 5rem; }
+  .hero-grid::after { right: 5rem; }
+}
+
+.hero-rail {
+  position: absolute;
+  right: max(1.25rem, calc((100vw - 90rem) / 2 + 1.5rem));
+  top: 36%;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: 0.22em;
+  opacity: 0.72;
+  z-index: 12;
+}
+
+.hero-scroll-cue {
+  position: absolute;
+  bottom: 1.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  z-index: 12;
+}
+
+.hero-scroll-line {
+  width: 1px;
+  height: 2.5rem;
+  background: var(--color-primary);
+  transform-origin: top;
+  animation: scrollPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { transform: scaleY(0.35); opacity: 0.4; }
+  50% { transform: scaleY(1); opacity: 1; }
 }
 
 @keyframes drawerSlideUp {
@@ -909,4 +1024,123 @@ html[data-mode='dark'] .brand-logo__img--light {
   background-color: var(--color-on-secondary-container);
   border-color: var(--color-on-secondary-container);
   color: var(--color-secondary-container);
+}
+
+/* --------------------------------------------------------------------------
+   Layout shell, nav, hours, legal — visual rewrite extras
+--------------------------------------------------------------------------- */
+
+.shell {
+  width: min(90rem, 100%);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .shell {
+    padding-inline: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .shell {
+    padding-inline: 5rem;
+  }
+}
+
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  height: 2px;
+  width: 100%;
+  background: var(--color-primary);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--color-primary) 45%, transparent);
+}
+
+.nav-link.is-active {
+  color: var(--color-primary);
+}
+
+.nav-link.is-active::after {
+  transform: scaleX(1);
+}
+
+.mobile-nav-link.is-active {
+  color: var(--color-primary);
+}
+
+.mobile-nav-link.is-active::before {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.sticky-book {
+  position: relative;
+}
+
+.sticky-book::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 36px;
+  height: 2px;
+  background: var(--color-primary);
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-primary) 50%, transparent);
+}
+
+.opening-hour-row--today {
+  background-color: color-mix(in srgb, var(--color-primary) 8%, transparent);
+  box-shadow: inset 2px 0 0 var(--color-primary);
+  padding-inline: 0.4rem;
+}
+
+.map-image {
+  filter: brightness(0.94) contrast(1.1) saturate(0.9);
+}
+
+.site-footer {
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-primary) 22%, transparent);
+}
+
+.legal-content {
+  padding-top: 4.5rem;
+}
+
+.legal-content h1 {
+  margin-bottom: 1.5rem;
+}
+
+.legal-content h2 {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.legal-content p {
+  margin-bottom: 1rem;
+}
+
+.legal-content a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.section-heading h2 {
+  color: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll-cue {
+    display: none;
+  }
 }
