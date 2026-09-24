@@ -13,112 +13,96 @@ const s = settingsEntry!.data;
 const lines = splitHeadline(c.headline);
 ---
 
-<section
-  id="hero"
-  class="hero relative min-h-[100svh] overflow-hidden border-b border-outline-variant"
->
-  <img
-    src="/images/salon-hero-new.png"
-    alt={s.ogImageAlt || `${s.name} barber shop in Bülach`}
-    width="1536"
-    height="1024"
-    class="hero-photo absolute inset-0 h-full w-full object-cover"
-    fetchpriority="high"
-    decoding="async"
-  />
+<section id="hero" class="hero relative overflow-hidden border-b border-outline-variant">
+  <div class="hero-layout">
+    <div class="hero-photo-wrap">
+      <img
+        src="/images/salon-hero-new.png"
+        alt={s.ogImageAlt || `${s.name} barber shop in Bülach`}
+        width="1536"
+        height="1024"
+        class="hero-photo absolute inset-0 h-full w-full object-cover"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <div class="mouse-glow absolute inset-0 pointer-events-none"></div>
+      <div class="absolute inset-0 hero-overlay"></div>
 
-  <!-- CSS fallback of the ceiling tubes — always in the DOM so the site works without WebGL -->
-  <svg
-    id="hero-tubes-fallback"
-    class="hero-tubes-fallback pointer-events-none absolute inset-0 h-full w-full"
-    viewBox="0 0 1440 900"
-    preserveAspectRatio="xMidYMid slice"
-    aria-hidden="true"
-  >
-    <g fill="none" stroke-linecap="square">
-      <line x1="80" y1="40" x2="620" y2="210" stroke="#ffb68b" stroke-width="3" opacity="0.55"
-      ></line>
-      <line x1="420" y1="20" x2="980" y2="250" stroke="#ff7a00" stroke-width="2.5" opacity="0.4"
-      ></line>
-      <line x1="700" y1="10" x2="1380" y2="180" stroke="#ffb68b" stroke-width="3" opacity="0.5"
-      ></line>
-      <line x1="180" y1="160" x2="540" y2="420" stroke="#00eefc" stroke-width="1.75" opacity="0.35"
-      ></line>
-      <line x1="860" y1="80" x2="1320" y2="360" stroke="#ffb68b" stroke-width="2.25" opacity="0.45"
-      ></line>
-      <line x1="40" y1="280" x2="480" y2="80" stroke="#ff7a00" stroke-width="2" opacity="0.32"
-      ></line>
-      <line x1="980" y1="40" x2="1180" y2="420" stroke="#00eefc" stroke-width="1.5" opacity="0.28"
-      ></line>
-    </g>
-  </svg>
-
-  <canvas
-    id="hero-tubes"
-    class="hero-tubes-canvas pointer-events-none absolute inset-0 h-full w-full"
-    aria-hidden="true"></canvas>
-
-  <div class="mouse-glow absolute inset-0 pointer-events-none"></div>
-  <div class="absolute inset-0 hero-overlay"></div>
-  <div class="hero-grid pointer-events-none absolute inset-0" aria-hidden="true"></div>
-
-  <div class="relative z-10 flex min-h-[100svh] flex-col">
-    <div class="flex-1"></div>
-
-    <div class="shell pb-28 md:pb-20">
-      <p class="hero-text hero-text-1 mb-4 text-label-caps text-secondary md:mb-5">{c.eyebrow}</p>
-
-      <h1 class="hero-headline">
-        {
-          lines.map((line, i) => (
-            <span
-              class:list={[
-                'hero-line block',
-                i % 2 === 0 ? 'hero-slide-left' : 'hero-slide-right',
-                `hero-text-${i + 2}`,
-              ]}
-            >
-              {line}
-            </span>
-          ))
-        }
-      </h1>
-
-      <div class="hero-text hero-text-6 mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
-        <BookingTrigger
-          client:idle
-          label="Termin buchen"
-          showIcons={true}
-          class="group btn-primary w-full justify-between px-8 py-4 sm:w-72 active:scale-[0.982]"
-        />
-
-        <a
-          href="#preise"
-          class="group btn-secondary w-full justify-between px-8 py-4 sm:w-72 active:scale-[0.982]"
-        >
-          <ReceiptIcon class="h-4 w-4" /> Preise ansehen
-        </a>
+      <div class="hero-copy relative z-10 flex min-h-full flex-col justify-end">
+        <p class="hero-text hero-text-1 mb-4 text-label-caps text-secondary md:mb-5">{c.eyebrow}</p>
+        <h1 class="hero-headline">
+          {
+            lines.map((line, i) => (
+              <span
+                class:list={[
+                  'hero-line block',
+                  i % 2 === 0 ? 'hero-slide-left' : 'hero-slide-right',
+                  `hero-text-${i + 2}`,
+                ]}
+              >
+                {line}
+              </span>
+            ))
+          }
+        </h1>
+        <div class="hero-text hero-text-6 mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
+          <BookingTrigger
+            client:idle
+            label="Termin buchen"
+            showIcons={true}
+            class="group btn-primary w-full justify-between px-8 py-4 sm:w-72 active:scale-[0.982]"
+          />
+          <a
+            href="#preise"
+            class="group btn-secondary w-full justify-between px-8 py-4 sm:w-72 active:scale-[0.982]"
+          >
+            <ReceiptIcon class="h-4 w-4" /> Preise ansehen
+          </a>
+        </div>
+        <p class="mt-6 text-label-caps text-on-surface-variant">{s.address} · {s.zipCity}</p>
       </div>
     </div>
-  </div>
 
-  <p
-    class="hero-rail pointer-events-none hidden text-label-caps text-on-surface-variant lg:block"
-    aria-hidden="true"
-  >
-    {s.address} · {s.zipCity}
-  </p>
-
-  <div class="hero-scroll-cue pointer-events-none hidden md:flex" aria-hidden="true">
-    <span class="text-label-caps text-on-surface-variant">Scroll</span>
-    <span class="hero-scroll-line"></span>
+    <div id="hero-stage" class="hero-stage">
+      <svg
+        id="hero-tubes-fallback"
+        class="hero-tubes-fallback pointer-events-none absolute inset-0 h-full w-full"
+        viewBox="0 0 640 980"
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden="true"
+      >
+        <g fill="none" stroke-linecap="square">
+          <line x1="40" y1="80" x2="520" y2="340" stroke="#ffb68b" stroke-width="10" opacity="0.9"
+          ></line>
+          <line x1="80" y1="160" x2="560" y2="420" stroke="#ffb68b" stroke-width="22" opacity="0.18"
+          ></line>
+          <line x1="120" y1="40" x2="600" y2="260" stroke="#ff7a00" stroke-width="8" opacity="0.85"
+          ></line>
+          <line x1="20" y1="420" x2="400" y2="180" stroke="#ffb68b" stroke-width="9" opacity="0.75"
+          ></line>
+          <line x1="180" y1="520" x2="620" y2="300" stroke="#00eefc" stroke-width="5" opacity="0.7"
+          ></line>
+          <line x1="60" y1="700" x2="480" y2="520" stroke="#ffb68b" stroke-width="10" opacity="0.8"
+          ></line>
+          <line x1="200" y1="860" x2="600" y2="640" stroke="#ff7a00" stroke-width="8" opacity="0.7"
+          ></line>
+          <line x1="40" y1="900" x2="360" y2="720" stroke="#00eefc" stroke-width="4" opacity="0.55"
+          ></line>
+        </g>
+      </svg>
+      <canvas
+        id="hero-tubes"
+        class="hero-tubes-canvas pointer-events-none absolute inset-0 h-full w-full"
+        aria-hidden="true"></canvas>
+      <p class="hero-stage-mark text-label-caps">01 — {s.zipCity}</p>
+    </div>
   </div>
 </section>
 
 <script>
   import { shouldMountWebGL } from '../lib/webgl-guard';
 
-  const section = document.getElementById('hero');
+  const stage = document.getElementById('hero-stage');
   const canvas = document.getElementById('hero-tubes') as HTMLCanvasElement | null;
   const fallback = document.getElementById('hero-tubes-fallback');
 
@@ -128,7 +112,7 @@ const lines = splitHeadline(c.headline);
     const start = () => {
       import('../lib/light-tubes')
         .then(({ mountLightTubes }) => {
-          const handle = mountLightTubes(canvas, { root: section ?? canvas });
+          const handle = mountLightTubes(canvas, { root: stage ?? canvas });
           if (handle.live) {
             canvas.classList.add('is-live');
             fallback?.classList.add('is-replaced');
@@ -146,25 +130,22 @@ const lines = splitHeadline(c.headline);
     }
   };
 
-  if (document.readyState === 'complete') {
-    bootTubes();
-  } else {
-    window.addEventListener('load', bootTubes, { once: true });
-  }
+  if (document.readyState === 'complete') bootTubes();
+  else window.addEventListener('load', bootTubes, { once: true });
 
-  if (section && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll<HTMLElement>('.mouse-glow').forEach((glow) => {
-      const container = glow.closest<HTMLElement>('section') || glow.parentElement;
-      if (!container) return;
-      container.addEventListener(
+  const photo = document.querySelector<HTMLElement>('.hero-photo-wrap');
+  if (photo && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const glow = photo.querySelector<HTMLElement>('.mouse-glow');
+    if (glow) {
+      photo.addEventListener(
         'pointermove',
         (e) => {
-          const rect = container.getBoundingClientRect();
+          const rect = photo.getBoundingClientRect();
           glow.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
           glow.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
         },
         { passive: true }
       );
-    });
+    }
   }
 </script>

@@ -1,0 +1,40 @@
+---
+import { getEntry } from 'astro:content';
+import { summarizeOpeningHours } from '../lib/opening-status';
+
+const [aboutEntry, settingsEntry] = await Promise.all([
+  getEntry('about', 'about'),
+  getEntry('settings', 'settings'),
+]);
+const about = aboutEntry!.data;
+const s = settingsEntry!.data;
+
+const payments = about.paymentMethods
+  .filter((method) => method.enabled)
+  .map((method) => method.name);
+const facts = [
+  s.name,
+  s.tagline,
+  s.address,
+  s.zipCity,
+  ...summarizeOpeningHours(about.openingHours),
+  ...payments,
+].filter(Boolean);
+---
+
+<div class="fact-rail" aria-hidden="true">
+  <div class="fact-rail__track">
+    {
+      [0, 1].map(() => (
+        <ul class="fact-rail__list">
+          {facts.map((fact) => (
+            <li>
+              <span>{fact}</span>
+              <span class="fact-rail__tick" />
+            </li>
+          ))}
+        </ul>
+      ))
+    }
+  </div>
+</div>

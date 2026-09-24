@@ -32,69 +32,62 @@ type TubeSpec = {
   tone: TubeTone;
 };
 
-/** Designed cluster echoing the salon’s crossing linear fixtures — not random noise. */
+/** Crossing linear fixtures, scaled to fill the dark hero stage — not random noise. */
 const TUBE_LAYOUT: TubeSpec[] = [
   {
-    length: 5.8,
-    radius: 0.032,
-    position: [-2.15, 1.7, -0.55],
-    rotation: [0.16, 0.22, 1.08],
+    length: 3.4,
+    radius: 0.055,
+    position: [-0.85, 1.15, 0],
+    rotation: [0.15, 0.2, 0.95],
     tone: 'primary',
   },
   {
-    length: 4.5,
-    radius: 0.028,
-    position: [0.35, 2.12, -1.05],
-    rotation: [0.42, -0.18, -0.88],
-    tone: 'primary',
-  },
-  {
-    length: 6.2,
-    radius: 0.03,
-    position: [1.85, 1.42, -0.18],
-    rotation: [-0.12, 0.32, 0.96],
+    length: 2.7,
+    radius: 0.048,
+    position: [0.55, 1.55, -0.35],
+    rotation: [0.4, -0.1, -0.72],
     tone: 'hot',
   },
   {
-    length: 3.5,
-    radius: 0.024,
-    position: [-0.55, 2.22, 0.28],
-    rotation: [0.52, 0.08, 0.18],
-    tone: 'cool',
-  },
-  {
-    length: 5.15,
-    radius: 0.03,
-    position: [2.55, 1.92, -0.82],
-    rotation: [0.18, -0.38, -1.18],
+    length: 3.8,
+    radius: 0.05,
+    position: [1.15, 0.15, -0.15],
+    rotation: [-0.08, 0.25, 1.05],
     tone: 'primary',
   },
   {
-    length: 4.7,
-    radius: 0.026,
-    position: [-2.72, 1.12, 0.38],
-    rotation: [-0.22, 0.2, 0.72],
+    length: 2.2,
+    radius: 0.04,
+    position: [-0.2, 0.35, 0.45],
+    rotation: [0.55, 0.05, 0.22],
+    tone: 'cool',
+  },
+  {
+    length: 3.1,
+    radius: 0.052,
+    position: [-1.35, -0.55, -0.2],
+    rotation: [0.12, -0.3, -0.85],
+    tone: 'primary',
+  },
+  {
+    length: 2.5,
+    radius: 0.044,
+    position: [0.95, -1.15, 0.2],
+    rotation: [-0.2, 0.18, 0.62],
     tone: 'hot',
   },
   {
-    length: 3.15,
-    radius: 0.022,
-    position: [0.18, 1.52, 0.85],
-    rotation: [0.1, 0.58, -0.42],
+    length: 1.8,
+    radius: 0.036,
+    position: [-0.15, -1.45, 0.55],
+    rotation: [0.08, 0.4, -0.35],
     tone: 'cool',
   },
   {
-    length: 5.4,
-    radius: 0.03,
-    position: [1.05, 2.38, -0.28],
-    rotation: [0.06, -0.12, 1.32],
-    tone: 'primary',
-  },
-  {
-    length: 4.05,
-    radius: 0.025,
-    position: [-1.42, 0.95, -0.95],
-    rotation: [0.34, 0.24, -0.58],
+    length: 3.2,
+    radius: 0.05,
+    position: [0.15, 0.85, -0.55],
+    rotation: [0.05, -0.12, 1.25],
     tone: 'primary',
   },
 ];
@@ -148,9 +141,9 @@ export function mountLightTubes(
   renderer.outputColorSpace = SRGBColorSpace;
 
   const scene = new Scene();
-  const camera = new PerspectiveCamera(32, 1, 0.1, 40);
-  camera.position.set(0, 1.15, 8.4);
-  camera.lookAt(0, 1.35, 0);
+  const camera = new PerspectiveCamera(38, 1, 0.1, 40);
+  camera.position.set(0.15, 0.15, 6.1);
+  camera.lookAt(0, 0.15, 0);
 
   const group = new Group();
   scene.add(group);
@@ -187,7 +180,7 @@ export function mountLightTubes(
       const glowMat = new MeshBasicMaterial({
         color,
         transparent: true,
-        opacity: 0.14,
+        opacity: 0.28,
         blending: AdditiveBlending,
         depthWrite: false,
       });

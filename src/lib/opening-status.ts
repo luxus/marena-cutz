@@ -40,6 +40,35 @@ export function getZonedClock(
   };
 }
 
+const DAY_SHORT: Record<string, string> = {
+  montag: 'Mo',
+  dienstag: 'Di',
+  mittwoch: 'Mi',
+  donnerstag: 'Do',
+  freitag: 'Fr',
+  samstag: 'Sa',
+  sonntag: 'So',
+};
+
+/** Collapse consecutive days that share hours: "Di–Fr 09:00–19:00". Closed days are omitted. */
+export function summarizeOpeningHours(openingHours: OpeningHour[]): string[] {
+  const groups: { days: string[]; hours: string }[] = [];
+  for (const row of openingHours) {
+    if (!row.hours || CLOSED_RE.test(row.hours)) continue;
+    const last = groups[groups.length - 1];
+    if (last && last.hours === row.hours) last.days.push(row.day);
+    else groups.push({ days: [row.day], hours: row.hours });
+  }
+  return groups.map((group) => {
+    const short = (day: string) => DAY_SHORT[day.toLowerCase()] ?? day.slice(0, 2);
+    const label =
+      group.days.length === 1
+        ? short(group.days[0])
+        : `${short(group.days[0])}–${short(group.days[group.days.length - 1])}`;
+    return `${label} ${group.hours}`;
+  });
+}
+
 export function getOpeningStatus(
   openingHours: OpeningHour[],
   now: Date = new Date(),

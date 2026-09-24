@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getOpeningStatus, parseHoursRange } from '../opening-status';
+import { getOpeningStatus, parseHoursRange, summarizeOpeningHours } from '../opening-status';
 
 const HOURS = [
   { day: 'Montag', hours: 'Geschlossen' },
@@ -18,6 +18,12 @@ describe('parseHoursRange', () => {
 
   it('parses an en-dash range into minutes', () => {
     expect(parseHoursRange('09:00–19:00')).toEqual({ start: 9 * 60, end: 19 * 60 });
+  });
+});
+
+describe('summarizeOpeningHours', () => {
+  it('groups consecutive open days and skips closed days', () => {
+    expect(summarizeOpeningHours(HOURS)).toEqual(['Di–Fr 09:00–19:00', 'Sa 09:00–16:00']);
   });
 });
 

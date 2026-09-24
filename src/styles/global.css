@@ -330,7 +330,7 @@ h1, h2, h3, h4 {
   .hero-bg,
   .hero-photo,
   .hero-tubes-fallback,
-  .hero-scroll-line,
+  .fact-rail__track,
   .scroll-progress {
     animation: none !important;
     opacity: 1 !important;
@@ -835,12 +835,75 @@ html[data-mode='dark'] .brand-logo__img--light {
   );
 }
 
-/* Hero photo is LCP — visible immediately (no fade). WebGL tubes layer on top. */
+.hero-layout {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+}
+
+.hero-stage {
+  position: relative;
+  order: -1;
+  height: 42svh;
+  min-height: 240px;
+  background: #070707;
+  overflow: hidden;
+}
+
+.hero-photo-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 58svh;
+}
+
+.hero-copy {
+  padding: 1.5rem 1.25rem 6.5rem;
+}
+
+.hero-stage-mark {
+  position: absolute;
+  left: 1.25rem;
+  bottom: 1rem;
+  z-index: 2;
+  color: var(--color-primary);
+  opacity: 0.85;
+}
+
+@media (min-width: 1024px) {
+  .hero-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+    min-height: 100svh;
+  }
+
+  .hero-stage {
+    order: 0;
+    height: auto;
+    min-height: 100svh;
+    border-left: 1px solid var(--color-outline-variant);
+  }
+
+  .hero-photo-wrap {
+    min-height: 100svh;
+  }
+
+  .hero-copy {
+    padding: 7.5rem 3rem 4.5rem 5rem;
+  }
+
+  .hero-stage-mark {
+    left: 1.5rem;
+    bottom: 1.5rem;
+  }
+}
+
+/* Hero photo is LCP — visible immediately. WebGL lives in the dark stage beside it. */
 .hero-photo {
   max-width: none;
   height: 100%;
   width: 100%;
   object-fit: cover;
+  object-position: center 40%;
   filter: contrast(1.12) saturate(1.28) brightness(0.88);
 }
 
@@ -857,9 +920,9 @@ html[data-mode='dark'] .brand-logo__img--light {
   font-size: clamp(2.7rem, 11vw, 4.15rem);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .hero-headline {
-    font-size: clamp(4.6rem, 7.4vw, 6.55rem);
+    font-size: clamp(3.6rem, 5.4vw, 5.6rem);
     line-height: 0.9;
   }
 }
@@ -895,87 +958,94 @@ html[data-mode='dark'] .brand-logo__img--light {
 
 .hero-tubes-canvas {
   opacity: 0;
-  mix-blend-mode: screen;
   transition: opacity 700ms ease;
 }
 
 .hero-tubes-canvas.is-live {
-  opacity: 0.92;
-}
-
-[data-mode='light'] .hero-tubes-canvas.is-live {
-  mix-blend-mode: multiply;
-  opacity: 0.5;
+  opacity: 1;
 }
 
 .hero-tubes-fallback {
-  opacity: 0.55;
+  opacity: 1;
   transition: opacity 400ms ease;
-  mix-blend-mode: screen;
 }
 
 .hero-tubes-fallback.is-replaced {
   opacity: 0;
 }
 
-[data-mode='light'] .hero-tubes-fallback {
-  mix-blend-mode: multiply;
-  opacity: 0.35;
+.fact-rail {
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-outline-variant);
+  background: #070707;
+  color: var(--color-primary);
 }
 
-.hero-grid::before,
-.hero-grid::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: color-mix(in srgb, var(--color-outline-variant) 70%, transparent);
-  display: none;
+.fact-rail__track {
+  display: flex;
+  width: max-content;
+  animation: factMarquee 32s linear infinite;
 }
 
-@media (min-width: 1024px) {
-  .hero-grid::before,
-  .hero-grid::after {
-    display: block;
-  }
-  .hero-grid::before { left: 5rem; }
-  .hero-grid::after { right: 5rem; }
-}
-
-.hero-rail {
-  position: absolute;
-  right: max(1.25rem, calc((100vw - 90rem) / 2 + 1.5rem));
-  top: 36%;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  letter-spacing: 0.22em;
-  opacity: 0.72;
-  z-index: 12;
-}
-
-.hero-scroll-cue {
-  position: absolute;
-  bottom: 1.75rem;
-  left: 50%;
-  transform: translateX(-50%);
-  flex-direction: column;
+.fact-rail__list {
+  display: flex;
   align-items: center;
-  gap: 0.55rem;
-  z-index: 12;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0.85rem 0.75rem;
+  list-style: none;
 }
 
-.hero-scroll-line {
-  width: 1px;
-  height: 2.5rem;
-  background: var(--color-primary);
-  transform-origin: top;
-  animation: scrollPulse 2.2s ease-in-out infinite;
+.fact-rail__list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
-@keyframes scrollPulse {
-  0%, 100% { transform: scaleY(0.35); opacity: 0.4; }
-  50% { transform: scaleY(1); opacity: 1; }
+.fact-rail__tick {
+  width: 1.25rem;
+  height: 1px;
+  background: var(--color-secondary-container);
+}
+
+@keyframes factMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.price-figure {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+.price-figure--quiet {
+  color: var(--color-secondary);
+  font-size: 0.75rem;
+}
+
+#preise,
+#standort,
+#ueber,
+#barbers,
+#social {
+  scroll-margin-top: 6.5rem;
+}
+
+@media (min-width: 768px) {
+  .standort-panel {
+    position: sticky;
+    top: 6.5rem;
+  }
 }
 
 @keyframes drawerSlideUp {
@@ -1140,7 +1210,18 @@ html[data-mode='dark'] .brand-logo__img--light {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-scroll-cue {
+  .fact-rail__track {
+    animation: none;
+    width: 100%;
+  }
+
+  .fact-rail__list:last-child {
     display: none;
+  }
+
+  .fact-rail__list {
+    flex-wrap: wrap;
+    width: 100%;
+    padding-inline: 1.25rem;
   }
 }
