@@ -68,7 +68,7 @@
           <p class="mt-1 text-label-caps text-on-surface-variant">{primary.duration}</p>
         {/if}
       </div>
-      <span class="text-label-caps text-secondary">{primary.price}</span>
+      <span class="price-figure">{primary.price}</span>
     </div>
   {/if}
 
@@ -82,7 +82,7 @@
               <p class="mt-1 text-label-caps text-on-surface-variant">{service.duration}</p>
             {/if}
           </div>
-          <span class="text-label-caps text-secondary">{service.price}</span>
+          <span class="price-figure price-figure--quiet">{service.price}</span>
         </div>
       {/each}
     </div>

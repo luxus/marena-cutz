@@ -5,6 +5,7 @@ import BookingDrawer from './BookingDrawer.svelte';
 import MapPinIcon from './MapPinIcon.astro';
 import ParkingDrawer from './ParkingDrawer.svelte';
 import ParkingTrigger from './ParkingTrigger.svelte';
+import SectionHeading from './SectionHeading.astro';
 
 const [aboutEntry, bookingEntry, parkingEntry, pricesEntry, settingsEntry, barbersEntries] =
   await Promise.all([
@@ -30,18 +31,14 @@ const barbers = barbersEntries
   .sort((a, b) => (a.order || 0) - (b.order || 0));
 ---
 
-<section class="border-b border-outline-variant bg-surface px-5 py-16">
-  <div class="mx-auto grid max-w-7xl items-start gap-10 md:grid-cols-[1fr_2fr]">
-    <!-- Prices column: anchor on column (not section) so #preise and #standort align on desktop -->
-    <div id="preise" class="scroll-reveal reveal-from-left flex flex-col">
-      <div class="mb-7 flex items-center gap-4">
-        <span class="h-0.5 w-8 bg-secondary section-accent"></span>
-        <h2 class="text-headline-lg uppercase">{prices.title}</h2>
-      </div>
-      <div>
+<section class="prices-standort border-b border-outline-variant bg-surface">
+  <div class="shell grid items-start gap-14 py-16 md:grid-cols-12 md:gap-10 md:py-24">
+    <div id="preise" class="scroll-reveal reveal-from-left md:col-span-5">
+      <SectionHeading index="02" title={prices.title} />
+      <div class="mt-8">
         {
           barbers.map((barber, index) => (
-            <div class={index > 0 ? 'border-t border-outline-variant pt-5' : ''}>
+            <div class={index > 0 ? 'border-t border-outline-variant pt-6' : ''}>
               <BarberPrice client:visible {barber} />
             </div>
           ))
@@ -66,8 +63,8 @@ const barbers = barbersEntries
         </div>
         {
           paymentMethods.length > 0 && (
-            <div class="pt-2">
-              <p class="mb-2 text-label-caps text-on-surface-variant">Akzeptierte Zahlungsmittel</p>
+            <div class="pt-6">
+              <p class="mb-3 text-label-caps text-on-surface-variant">Akzeptierte Zahlungsmittel</p>
               <div class="flex flex-wrap gap-2">
                 {paymentMethods.map((method) => {
                   const key = method.name.toLowerCase();
@@ -118,13 +115,9 @@ const barbers = barbersEntries
       </div>
     </div>
 
-    <!-- Location / map column -->
-    <div id="standort" class="scroll-reveal reveal-deep flex flex-col">
-      <div class="mb-7 flex items-center gap-4">
-        <span class="h-0.5 w-8 bg-secondary section-accent"></span>
-        <h2 class="text-headline-lg uppercase">Standort</h2>
-      </div>
-      <div class="group relative overflow-hidden border border-outline-variant">
+    <div id="standort" class="standort-panel scroll-reveal reveal-deep md:col-span-7">
+      <SectionHeading index="03" title="Standort" />
+      <div class="group relative mt-8 overflow-hidden border border-outline-variant">
         <a
           href={s.mapsUrl}
           target="_blank"
@@ -135,24 +128,26 @@ const barbers = barbersEntries
           <img
             src="/images/location-map.jpg"
             alt={`Satellitenkarte zum Standort von ${s.name} in Bülach`}
-            class="w-full max-h-[540px] object-cover object-[68%_58%] transition duration-700 group-hover:scale-[1.02] [filter:brightness(0.94)_contrast(1.10)_saturate(0.90)]"
+            class="map-image w-full max-h-[min(62vh,560px)] object-cover object-[68%_58%] transition duration-700 group-hover:scale-[1.02]"
             loading="lazy"
           />
-          <!-- Dynamic map tint based on theme primary color -->
           <div
             class="absolute inset-0 mix-blend-[var(--map-tint-blend)] pointer-events-none"
             style="background-color: var(--map-tint-color); opacity: var(--map-tint-opacity);"
           >
           </div>
           <div
-            class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"
+            class="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent"
           >
           </div>
           <div
-            class="absolute bottom-3 left-3 flex items-center gap-2 border border-outline-variant bg-surface/95 px-3 py-1 text-label-caps text-secondary backdrop-blur pointer-events-none transition group-hover:border-secondary"
+            class="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-3 border border-outline-variant bg-surface/95 px-3 py-2 text-label-caps text-secondary backdrop-blur pointer-events-none transition group-hover:border-secondary"
           >
-            <MapPinIcon class="h-3.5 w-3.5" />
-            <span>{s.address}, {s.zipCity}</span>
+            <span class="inline-flex items-center gap-2">
+              <MapPinIcon class="h-3.5 w-3.5" />
+              <span>{s.address}, {s.zipCity}</span>
+            </span>
+            <span class="hidden text-on-surface sm:inline">Route</span>
           </div>
         </a>
       </div>

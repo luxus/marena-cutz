@@ -4,11 +4,12 @@ import BookingTrigger from './BookingTrigger.svelte';
 ---
 
 <nav
-  class="fixed bottom-0 left-0 z-50 grid w-full grid-cols-5 border-t border-outline-variant bg-surface/85 text-[10px] tracking-widest uppercase text-on-surface-variant backdrop-blur-xl md:hidden"
+  class="sticky-mobile-nav fixed bottom-0 left-0 z-50 grid w-full grid-cols-5 border-t border-outline-variant bg-surface/88 text-[10px] tracking-widest uppercase text-on-surface-variant backdrop-blur-xl md:hidden"
   aria-label="Hauptnavigation"
 >
   <a
     href="#preise"
+    data-nav-section="preise"
     class="mobile-nav-link flex flex-col items-center gap-1 py-2.5 hover:text-primary"
   >
     <svg
@@ -28,6 +29,7 @@ import BookingTrigger from './BookingTrigger.svelte';
   </a>
   <a
     href="#ueber"
+    data-nav-section="ueber"
     class="mobile-nav-link flex flex-col items-center gap-1 py-2.5 hover:text-primary"
   >
     <svg
@@ -50,10 +52,11 @@ import BookingTrigger from './BookingTrigger.svelte';
     client:media="(max-width: 767px)"
     label="Termin"
     showIcons={true}
-    class="flex flex-col items-center gap-1 py-2.5 text-primary transition-all duration-150 ease-[cubic-bezier(0.23,1.0,0.32,1)] hover:scale-[1.015] active:scale-[0.982]"
+    class="sticky-book flex flex-col items-center gap-1 py-2.5 text-primary transition-all duration-150 ease-[cubic-bezier(0.23,1.0,0.32,1)] hover:scale-[1.015] active:scale-[0.982]"
   />
   <a
     href="#barbers"
+    data-nav-section="barbers"
     class="mobile-nav-link flex flex-col items-center gap-1 py-2.5 hover:text-primary"
   >
     <svg
@@ -75,6 +78,7 @@ import BookingTrigger from './BookingTrigger.svelte';
   </a>
   <a
     href="#standort"
+    data-nav-section="standort"
     class="mobile-nav-link flex flex-col items-center gap-1 py-2.5 hover:text-primary"
   >
     <MapPinIcon class="h-4 w-4" /> Standort

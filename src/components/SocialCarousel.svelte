@@ -48,14 +48,14 @@
 >
   <div
     bind:this={track}
-    class="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    class="flex gap-3 overflow-x-auto snap-x snap-mandatory px-5 pb-2 md:px-12 lg:px-20 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
   >
     {#each items as item}
       <a
         href={item.permalink}
         target="_blank"
         rel="noopener noreferrer"
-        class="social-tile group relative flex-none w-[38vw] md:w-[22%] lg:w-[18%] snap-start overflow-hidden border bg-surface {item.featured
+        class="social-tile group relative flex-none w-[70vw] snap-start overflow-hidden border bg-surface sm:w-[42vw] md:w-[30%] lg:w-[22%] {item.featured
           ? 'border-primary'
           : 'border-outline-variant'}"
       >

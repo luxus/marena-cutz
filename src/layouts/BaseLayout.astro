@@ -96,16 +96,24 @@ const { title = s.name } = Astro.props;
     <a href="#main" class="skip-link">Zum Inhalt springen</a>
     <slot />
 
-    <!-- Scroll-reveal: extracted to src/lib/scroll-reveal.ts, run after first paint -->
+    <!-- Scroll-reveal + section nav: run after first paint -->
     <script>
       import { initScrollReveals } from '../lib/scroll-reveal';
+      import { initSectionNav } from '../lib/section-nav';
+
+      const boot = () => {
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => {
+            initScrollReveals();
+            initSectionNav();
+          })
+        );
+      };
 
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-          requestAnimationFrame(() => requestAnimationFrame(initScrollReveals));
-        });
+        document.addEventListener('DOMContentLoaded', boot);
       } else {
-        requestAnimationFrame(() => requestAnimationFrame(initScrollReveals));
+        boot();
       }
     </script>
   </body>

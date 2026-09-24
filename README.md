@@ -9,11 +9,21 @@ npm install
 npm run dev
 ```
 
+Dev server: `http://localhost:4321`
+
 ## Build
 
 ```bash
 npm run build
 ```
+
+Preview the Workers build locally:
+
+```bash
+npm run preview
+```
+
+(`astro check && astro build`, then `wrangler dev` for worker `marena-cutz`.)
 
 Cloudflare Pages (static, native GitHub integration):
 
@@ -23,7 +33,7 @@ Output directory: dist
 Node: 24 (.node-version)
 ```
 
-Fully static — no adapter, no workerd.
+Worker name: `marena-cutz`.
 
 ## Content bearbeiten
 
@@ -49,5 +59,6 @@ Nur **Architectural Neon** ist aktiv. Weitere Themes: siehe Kommentar in `src/li
 
 - Astro static-first, Svelte 5 islands für Drawer/Accordion/Carousel
 - Tailwind 4 via Vite Plugin
-- Mobile Sticky-Bar: Preise / Buchen / Route
+- Mobile Sticky-Bar: Preise / Über uns / Termin / Barbers / Standort
 - Preise direkt nach Hero
+- Full-bleed salon photo. The photo fades in after a short delay so the shop LEDs feel like they power on. No WebGL.

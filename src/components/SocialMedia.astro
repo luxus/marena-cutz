@@ -1,6 +1,7 @@
 ---
 import { getEntry } from 'astro:content';
 import InstagramIcon from './InstagramIcon.astro';
+import SectionHeading from './SectionHeading.astro';
 import SocialCarousel from './SocialCarousel.svelte';
 import TikTokIcon from './TikTokIcon.astro';
 
@@ -14,18 +15,14 @@ const s = settingsEntry!.data;
 const items = home.socialItems;
 ---
 
-<section id="social" class="bg-background py-20 pb-32 md:pb-20">
-  <div class="mx-auto max-w-7xl px-5">
-    <!-- Left column: intro + links -->
-    <div class="scroll-reveal">
-      <div class="mb-8 flex items-center gap-4">
-        <span class="h-0.5 w-8 bg-secondary section-accent"></span>
-        <h2 class="text-headline-lg uppercase">Social Media</h2>
-      </div>
-      <p class="max-w-sm text-body-lg text-on-surface-variant">
+<section id="social" class="bg-background pb-32 pt-16 md:pb-20 md:pt-24">
+  <div class="shell">
+    <div class="scroll-reveal max-w-xl">
+      <SectionHeading index="06" title="Social Media" />
+      <p class="mt-8 text-body-lg text-on-surface-variant">
         Ausgewählte Cuts, Transformationen und Barber-Momente aus Instagram und TikTok.
       </p>
-      <div class="mt-8 flex flex-wrap gap-3">
+      <div class="mt-8 flex flex-wrap gap-5">
         <a
           href={s.instagramUrl}
           target="_blank"
@@ -48,8 +45,7 @@ const items = home.socialItems;
     </div>
   </div>
 
-  <!-- Auto-scroll carousel — right-edge fade signals more content beyond -->
-  <div class="mt-10 px-5 relative">
+  <div class="mt-12 relative">
     <div class="social-carousel-fade-mask">
       <SocialCarousel client:visible {items} />
     </div>

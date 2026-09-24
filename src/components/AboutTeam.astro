@@ -1,59 +1,44 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
 import MailIcon from './MailIcon.astro';
+import OpeningHours from './OpeningHours.svelte';
 import PhoneIcon from './PhoneIcon.astro';
+import SectionHeading from './SectionHeading.astro';
 
-const [aboutEntry, settingsEntry] = await Promise.all([
+const [aboutEntry, settingsEntry, barbersEntries] = await Promise.all([
   getEntry('about', 'about'),
   getEntry('settings', 'settings'),
+  getCollection('barbers'),
 ]);
 const about = aboutEntry!.data;
 const s = settingsEntry!.data;
 
-const openingHours = about.openingHours;
-
-const barbersEntries = await getCollection('barbers');
 const barbers = barbersEntries
   .map((e) => e.data)
   .filter((b) => b.enabled !== false)
   .sort((a, b) => (a.order || 0) - (b.order || 0));
 ---
 
-<section class="relative border-b border-outline-variant px-5 py-16 md:py-20">
-  <!-- Shared mirrored salon background for Über uns + Team -->
+<section class="about-barbers relative border-b border-outline-variant">
   <div
-    class="absolute inset-0 bg-cover bg-center scale-x-[-1] opacity-55 [filter:contrast(1.12)_saturate(1.25)_brightness(0.85)]"
+    class="absolute inset-0 bg-cover bg-center scale-x-[-1] opacity-50 [filter:contrast(1.12)_saturate(1.25)_brightness(0.82)]"
     style="background-image: url('/images/about-salon-hero.png')"
   >
   </div>
-
-  <!-- Mouse-following glow on the second background -->
   <div class="mouse-glow absolute inset-0 pointer-events-none"></div>
+  <div class="absolute inset-0 bg-background/72"></div>
 
-  <div class="absolute inset-0 bg-background/45"></div>
+  <div class="relative shell py-16 md:py-24">
+    <div class="grid gap-16 lg:grid-cols-12 lg:gap-12">
+      <div id="ueber" class="scroll-reveal reveal-from-left lg:col-span-5">
+        <SectionHeading index="04" title={about.title} />
 
-  <!-- Very light full-width frosted panel over the whole content -->
-  <div
-    class="absolute inset-x-0 bottom-0 top-0 bg-background/20 backdrop-blur-sm pointer-events-none"
-  >
-  </div>
-
-  <div class="relative mx-auto max-w-7xl">
-    <div class="grid gap-8 lg:gap-12 md:grid-cols-[1.1fr_0.9fr]">
-      <!-- Left: Über uns -->
-      <div id="ueber" class="scroll-reveal reveal-from-left pr-4 lg:pr-8">
-        <div class="mb-7 flex items-center gap-4">
-          <span class="h-0.5 w-8 bg-secondary section-accent"></span>
-          <h2 class="text-headline-lg uppercase">{about.title}</h2>
-        </div>
-
-        <p class="text-body-lg text-on-surface-variant">{about.text}</p>
+        <p class="mt-8 max-w-xl text-body-lg text-on-surface-variant">{about.text}</p>
 
         <div
-          class="mt-8 grid grid-cols-[130px_1fr] gap-x-6 gap-y-0 text-label-caps text-on-surface-variant"
+          class="mt-10 grid grid-cols-[minmax(7.5rem,130px)_1fr] gap-x-6 gap-y-0 text-label-caps text-on-surface-variant"
         >
-          <!-- Left: Inhaber + Kontakt + Zahlung -->
-          <div class="flex flex-col gap-6">
+          <div class="flex flex-col gap-8">
             <div class="space-y-2">
               <h3 class="mb-3 text-label-caps !text-on-surface">Inhaber</h3>
               <p>{s.owner}</p>
@@ -64,68 +49,45 @@ const barbers = barbersEntries
                 href={`tel:${s.phone}`}
                 class="group/contact flex items-center gap-2 hover:text-primary transition-colors duration-150"
               >
-                <PhoneIcon /> <span class="nav-link group-hover/contact:[&::after]:scale-x-100"
-                  >Telefon</span
-                >
+                <PhoneIcon />
+                <span class="nav-link group-hover/contact:[&::after]:scale-x-100">Telefon</span>
               </a>
               <a
                 href={`mailto:${s.email}`}
                 class="group/contact flex items-center gap-2 hover:text-primary transition-colors duration-150"
               >
-                <MailIcon /> <span class="nav-link group-hover/contact:[&::after]:scale-x-100"
-                  >E-Mail</span
-                >
+                <MailIcon />
+                <span class="nav-link group-hover/contact:[&::after]:scale-x-100">E-Mail</span>
               </a>
             </div>
           </div>
 
-          <!-- Right: Öffnungszeiten -->
-          <div>
-            <h3 class="mb-3 text-label-caps !text-on-surface">Öffnungszeiten</h3>
-            <div>
-              {
-                openingHours.map((item) => (
-                  <div class="opening-hour-row flex items-center justify-between gap-2 border-b border-outline-variant py-2 last:border-0 transition-colors hover:bg-surface-container text-xs tracking-wide">
-                    <span>{item.day}</span>
-                    <span
-                      class:list={[
-                        'font-bold whitespace-nowrap',
-                        item.hours.toLowerCase().includes('geschlossen')
-                          ? 'text-on-surface-variant'
-                          : 'text-on-surface',
-                      ]}
-                    >
-                      {item.hours}
-                    </span>
-                  </div>
-                ))
-              }
-            </div>
-          </div>
+          <OpeningHours client:idle hours={about.openingHours} />
         </div>
       </div>
 
-      <!-- Right: Barbers (editorial cards) -->
-      <div id="barbers" class="scroll-reveal reveal-deep flex flex-col">
-        <div class="mb-7 flex items-center gap-4">
-          <span class="h-0.5 w-8 bg-secondary section-accent"></span>
-          <h2 class="text-headline-lg uppercase">Barbers</h2>
-        </div>
-        <div class="space-y-0 divide-y divide-outline-variant">
+      <div id="barbers" class="scroll-reveal reveal-deep lg:col-span-7">
+        <SectionHeading index="05" title="Barbers" />
+        <div class="mt-8 divide-y divide-outline-variant">
           {
-            barbers.map((barber) => (
-              <div class="scroll-reveal group py-8 first:pt-0">
-                <div class="flex gap-5">
-                  <div class="flex-1 min-w-0 flex flex-col justify-between">
+            barbers.map((barber, index) => (
+              <article class="barber-card scroll-reveal group py-8 first:pt-0">
+                <div
+                  class:list={[
+                    'flex flex-col gap-6 sm:items-stretch',
+                    index % 2 === 1 ? 'sm:flex-row-reverse' : 'sm:flex-row',
+                  ]}
+                >
+                  <div class="flex min-w-0 flex-1 flex-col justify-between">
                     <div>
                       <h3 class="text-title-md uppercase transition-colors duration-300 group-hover:text-primary">
                         {barber.name}
                       </h3>
                       {barber.position && (
-                        <p class="mt-0.5 text-label-caps text-secondary">{barber.position}</p>
+                        <p class="mt-1 text-label-caps text-secondary">{barber.position}</p>
                       )}
                       {barber.about && (
-                        <p class="mt-4 text-sm leading-snug text-on-surface-variant">
+                        <p class="mt-4 max-w-md text-sm leading-relaxed text-on-surface-variant">
                           {barber.about}
                         </p>
                       )}
@@ -138,16 +100,16 @@ const barbers = barbersEntries
                     </a>
                   </div>
 
-                  <div class="flex-shrink-0 overflow-hidden border border-outline-variant w-2/5 aspect-[15/16] transition-colors duration-500 group-hover:border-primary">
+                  <div class="barber-photo w-full overflow-hidden border border-outline-variant sm:w-[44%] sm:max-w-[280px] aspect-[4/5] transition-colors duration-500 group-hover:border-primary">
                     <img
                       src={barber.image}
                       alt={barber.name}
-                      class="w-full h-full object-cover object-top transition-[transform,filter] duration-700 group-hover:scale-[1.035] group-hover:brightness-[1.035]"
+                      class="h-full w-full object-cover object-top transition-[transform,filter] duration-700 group-hover:scale-[1.035] group-hover:brightness-[1.04]"
                       loading="lazy"
                     />
                   </div>
                 </div>
-              </div>
+              </article>
             ))
           }
         </div>
