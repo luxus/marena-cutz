@@ -421,12 +421,12 @@ export function createShow(
   const rand = mulberry32(11);
   const scene = new Scene();
   scene.background = new Color(0x070708);
-  scene.fog = new FogExp2(0x070708, profile.mobile ? 0.11 : 0.085);
+  scene.fog = new FogExp2(0x070708, profile.mobile ? 0.06 : 0.045);
 
-  const camera = new PerspectiveCamera(42, 1, 0.1, 40);
-  camera.position.set(0.35, 1.48, 5.15);
+  const camera = new PerspectiveCamera(profile.mobile ? 48 : 40, 1, 0.1, 40);
+  camera.position.set(profile.mobile ? 0.05 : 0.2, 1.35, profile.mobile ? 4.15 : 4.6);
 
-  scene.add(new AmbientLight(0xffe6d4, 0.35));
+  scene.add(new AmbientLight(0xfff1e6, 0.85));
   const key = new PointLight(ORANGE, 28, 14, 2);
   key.position.set(2.4, 2.6, 1.4);
   const fill = new PointLight(CYAN, 18, 12, 2);
@@ -450,8 +450,8 @@ export function createShow(
 
   const neons: NeonTube[] = [];
   const head = mannequinHead(profile.mobile);
-  head.group.position.set(0.42, 0, 0.15);
-  head.group.scale.setScalar(profile.mobile ? 1.05 : 1.2);
+  head.group.position.set(profile.mobile ? 0.05 : 0.55, 0, 0.35);
+  head.group.scale.setScalar(profile.mobile ? 1.15 : 1.45);
   scene.add(head.group);
   neons.push({
     material: head.lineup,
@@ -471,25 +471,36 @@ export function createShow(
 
   const cast = options?.cast?.length ? options.cast : DEFAULT_CAST;
   const loadPhotos = Boolean(options?.loadPhotos);
-  const spots = [
-    { x: 1.72, z: 0.28 },
-    { x: 2.62, z: -0.08 },
-  ];
+  const spots = profile.mobile
+    ? [
+        { x: -0.95, z: 0.15 },
+        { x: 1.05, z: 0.05 },
+      ]
+    : [
+        { x: -1.15, z: 0.2 },
+        { x: 2.05, z: 0.05 },
+      ];
   const rigs: BarberRig[] = cast.slice(0, profile.mobile ? 2 : 3).map((member, index) => {
     const rig = barberFigure(member, index, loadPhotos);
     const spot = spots[index] ?? { x: 1.7 + index, z: 0 };
     rig.group.position.set(spot.x, 0, spot.z);
-    rig.group.scale.setScalar(profile.mobile ? 0.78 : 0.9);
+    rig.group.scale.setScalar(profile.mobile ? 0.62 : 0.95);
     scene.add(rig.group);
     return rig;
   });
   const targets = rigs.map((rig) => rig.group);
 
-  const chairSpecs = [
-    { x: -1.7, z: -1.25, y: 0, color: TEAL, spin: 0.9, tilt: 0.14, rot: 0.5 },
-    { x: 0.2, z: -1.65, y: 0, color: PINK, spin: -1.25, tilt: -0.18, rot: -0.3 },
-    { x: 2.15, z: -1.35, y: 0, color: ORANGE, spin: 1.7, tilt: 0.22, rot: 0.8 },
-  ];
+  const chairSpecs = profile.mobile
+    ? [
+        { x: -1.15, z: -1.05, y: 0, color: TEAL, spin: 0.9, tilt: 0.14, rot: 0.5 },
+        { x: 0.15, z: -1.35, y: 0, color: PINK, spin: -1.25, tilt: -0.18, rot: -0.3 },
+        { x: 1.2, z: -1.05, y: 0, color: ORANGE, spin: 1.7, tilt: 0.22, rot: 0.8 },
+      ]
+    : [
+        { x: -2.15, z: -0.85, y: 0, color: TEAL, spin: 0.9, tilt: 0.14, rot: 0.5 },
+        { x: 0.35, z: -1.45, y: 0, color: PINK, spin: -1.25, tilt: -0.18, rot: -0.3 },
+        { x: 2.35, z: -0.95, y: 0, color: ORANGE, spin: 1.7, tilt: 0.22, rot: 0.8 },
+      ];
   const chairs: Chair[] = chairSpecs.slice(0, profile.chairs).map((spec, i) => {
     const group = chair(spec.color);
     group.position.set(spec.x, spec.y, spec.z);
@@ -522,9 +533,10 @@ export function createShow(
     const cut = scissors();
     const angle = (i / profile.scissors) * Math.PI * 2;
     const radius = 1.35 + (i % 3) * 0.55;
-    cut.baseX = Math.cos(angle) * radius + (i === 0 ? 1.1 : 0);
-    cut.baseY = 0.85 + (i % 4) * 0.38;
-    cut.baseZ = Math.sin(angle) * 1.15 + (i === 0 ? 1.35 : 0);
+    const homeX = profile.mobile ? 0.05 : 0.45;
+    cut.baseX = homeX + Math.cos(angle) * radius * (profile.mobile ? 0.62 : 0.85);
+    cut.baseY = 1.05 + (i % 4) * 0.42;
+    cut.baseZ = Math.sin(angle) * (profile.mobile ? 0.7 : 1.05) + (i === 0 ? 1.15 : 0.15);
     cut.phase = angle;
     cut.speed = 1.15 + (i % 5) * 0.28;
     cut.group.scale.setScalar(i === 0 ? 1.25 : 0.62 + (i % 3) * 0.16);
@@ -634,10 +646,12 @@ export function createShow(
     }
 
     const sway = profile.reducedMotion ? 0 : 1;
-    camera.position.x = 0.15 + Math.sin(t * 0.45) * 0.42 * sway + pointerX * 0.55 * sway;
-    camera.position.y = 1.52 + pointerY * 0.28 * sway;
-    camera.position.z = 5.35;
-    camera.lookAt(1.05, 1.22, 0);
+    const focusX = profile.mobile ? 0.05 : 0.45;
+    camera.position.x =
+      (profile.mobile ? 0.05 : 0.15) + Math.sin(t * 0.45) * 0.35 * sway + pointerX * 0.45 * sway;
+    camera.position.y = (profile.mobile ? 1.15 : 1.32) + pointerY * 0.22 * sway;
+    camera.position.z = profile.mobile ? 4.15 : 4.6;
+    camera.lookAt(focusX, profile.mobile ? 1.15 : 1.28, 0);
   };
 
   const dispose = () => {

@@ -64,9 +64,9 @@
       let pointerY = 0;
 
       const fit = () => {
-        if (!host) return;
-        width = Math.max(1, host.clientWidth);
-        height = Math.max(1, host.clientHeight);
+        const rect = canvas.getBoundingClientRect();
+        width = Math.max(1, Math.floor(rect.width || host?.clientWidth || window.innerWidth));
+        height = Math.max(1, Math.floor(rect.height || host?.clientHeight || window.innerHeight));
         show.camera.aspect = width / height;
         show.camera.updateProjectionMatrix();
         renderer.setSize(width, height, false);
@@ -95,18 +95,22 @@
         cancelAnimationFrame(frame);
       };
 
-      fit();
-      draw(profile.reducedMotion ? 1650 : 0);
-      canvas.classList.add('is-live');
-      canvas.dataset.stageMode = profile.reducedMotion ? 'still' : 'live';
-      if (!profile.reducedMotion) start();
-
       const resize = new ResizeObserver(() => {
         fit();
         if (profile.reducedMotion || !running)
           draw(profile.reducedMotion ? 1650 : performance.now());
       });
-      if (host) resize.observe(host);
+      resize.observe(canvas);
+      if (host && host !== canvas) resize.observe(host);
+
+      requestAnimationFrame(() => {
+        if (disposed) return;
+        fit();
+        draw(profile.reducedMotion ? 1650 : performance.now());
+        canvas.classList.add('is-live');
+        canvas.dataset.stageMode = profile.reducedMotion ? 'still' : 'live';
+        if (!profile.reducedMotion) start();
+      });
 
       const section = canvas.closest('section') ?? host;
       const io = new IntersectionObserver(
