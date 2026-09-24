@@ -1,4 +1,4 @@
-import { Box3, Vector3 } from 'three';
+import { Box3, Group, Vector3 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { createStudio, readStageMode } from './studio';
 
@@ -26,23 +26,32 @@ export function mountProduct(root: HTMLElement, url: string) {
       const bounds = new Box3().setFromObject(model);
       const size = bounds.getSize(new Vector3());
       const center = bounds.getCenter(new Vector3());
-      const maxDim = Math.max(size.x, size.y, size.z, 0.001);
       model.position.sub(center);
-      scene.add(model);
+      const pivot = new Group();
+      pivot.add(model);
+      scene.add(pivot);
 
-      const fit = maxDim * 1.45;
-      const thinY = size.y < size.x * 0.35 && size.y < size.z * 0.35;
-      camera.position.set(thinY ? fit * 0.2 : fit * 0.62, thinY ? fit * 1.05 : fit * 0.42, fit * 0.72);
-      camera.near = maxDim / 100;
-      camera.far = maxDim * 20;
-      camera.lookAt(0, 0, 0);
-      camera.updateProjectionMatrix();
+      const radius = size.length() * 0.5;
+      const view = root.dataset.view ?? 'three-quarter';
+      const direction =
+        view === 'top'
+          ? new Vector3(0.4, 1.55, 0.62)
+          : view === 'side'
+            ? new Vector3(1.2, 0.38, 0.82)
+            : new Vector3(0.95, 0.46, 1.2);
 
       const draw = () => {
-        model.rotation.y = turn;
+        pivot.rotation.y = turn;
         const width = root.clientWidth || 1;
         const height = root.clientHeight || 1;
         camera.aspect = width / height;
+        const vHalf = ((camera.fov * Math.PI) / 180) / 2;
+        const hHalf = Math.atan(Math.tan(vHalf) * camera.aspect);
+        const distance = (radius / Math.sin(Math.min(vHalf, hHalf))) * 1.32;
+        camera.position.copy(direction.clone().normalize().multiplyScalar(distance));
+        camera.near = Math.max(distance / 80, 0.001);
+        camera.far = distance * 12;
+        camera.lookAt(0, 0, 0);
         camera.updateProjectionMatrix();
         renderer.setSize(width, height, false);
         renderer.render(scene, camera);
