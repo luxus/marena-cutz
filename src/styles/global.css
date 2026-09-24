@@ -736,9 +736,19 @@ html[data-mode='dark'] .brand-logo__img--light {
 
 @media (min-width: 768px) {
   .site-logo {
-    height: 3.45rem;
-    max-height: 3.45rem;
-    max-width: 16.5rem;
+    height: 60px;
+    max-height: 60px;
+    max-width: 260px;
+  }
+
+  /* Integer CSS pixels from the 2983×700 asset — avoids a half-pixel scale that softens the wordmark. */
+  .site-logo .brand-logo__img {
+    width: 256px;
+    height: 60px;
+    max-width: none;
+    object-fit: contain;
+    image-rendering: auto;
+    transform: none;
   }
 }
 
