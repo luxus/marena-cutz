@@ -336,9 +336,6 @@ h1, h2, h3, h4 {
     transform: none !important;
   }
 
-  .fade-ribbon-canvas {
-    display: none !important;
-  }
 }
 
 /* --------------------------------------------------------------------------
@@ -659,14 +656,9 @@ h1, h2, h3, h4 {
   letter-spacing: 0;
 }
 
-/* Subtle brand accent line treatment — 2px thick, fades out on both ends */
+/* Subtle brand accent — width only; no bar drawn in front of headlines. */
 .section-accent {
-  transition: width 400ms cubic-bezier(0.23, 1, 0.32, 1);
-  mask-image: linear-gradient(to right, transparent, black 25%, black 75%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 25%, black 75%, transparent);
-}
-.scroll-reveal.in-view .section-accent {
-  width: 2rem;
+  display: none;
 }
 
 /* Button micro-interactions already excellent — reinforce with primary glow on dark themes */
@@ -842,10 +834,35 @@ html[data-mode='dark'] .brand-logo__img--light {
   object-fit: cover;
   object-position: center 40%;
   filter: contrast(1.12) saturate(1.28) brightness(0.88);
+  opacity: 0;
+  animation: heroLightsOn 1800ms cubic-bezier(0.4, 0, 0.6, 1) 800ms forwards;
 }
 
 [data-mode='light'] .hero-photo {
   filter: contrast(1.14) saturate(1.72) brightness(1.04);
+  animation-name: heroLightsOnLight;
+}
+
+@keyframes heroLightsOn {
+  from {
+    opacity: 0;
+    filter: contrast(1.05) saturate(0.55) brightness(0.18);
+  }
+  to {
+    opacity: 1;
+    filter: contrast(1.12) saturate(1.28) brightness(0.88);
+  }
+}
+
+@keyframes heroLightsOnLight {
+  from {
+    opacity: 0;
+    filter: contrast(1.05) saturate(0.7) brightness(0.45);
+  }
+  to {
+    opacity: 1;
+    filter: contrast(1.14) saturate(1.72) brightness(1.04);
+  }
 }
 
 .hero-headline {
@@ -867,53 +884,6 @@ html[data-mode='dark'] .brand-logo__img--light {
 .hero-line {
   display: block;
   overflow: hidden;
-}
-
-/* Fade ribbon sits on the photo behind the headline. CSS gradient is the no-WebGL fade. */
-.fade-ribbon-slot {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 12%;
-  z-index: 2;
-  height: min(42vh, 380px);
-  pointer-events: none;
-}
-
-.fade-ribbon-fallback,
-.fade-ribbon-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.fade-ribbon-fallback {
-  background: linear-gradient(
-    100deg,
-    rgba(12, 8, 6, 0.05) 0%,
-    rgba(20, 12, 8, 0.62) 16%,
-    rgba(255, 122, 0, 0.38) 48%,
-    rgba(255, 182, 139, 0.55) 74%,
-    rgba(127, 216, 223, 0.16) 100%
-  );
-  filter: blur(22px);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-  transition: opacity 500ms ease;
-}
-
-.fade-ribbon-fallback.is-replaced {
-  opacity: 0;
-}
-
-.fade-ribbon-canvas {
-  opacity: 0;
-  transition: opacity 700ms ease;
-}
-
-.fade-ribbon-canvas.is-live {
-  opacity: 0.92;
 }
 
 /* Blade wipe — keep complete animation shorthands (minifiers broke split rules before). */

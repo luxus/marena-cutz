@@ -61,4 +61,4 @@ Nur **Architectural Neon** ist aktiv. Weitere Themes: siehe Kommentar in `src/li
 - Tailwind 4 via Vite Plugin
 - Mobile Sticky-Bar: Preise / Über uns / Termin / Barbers / Standort
 - Preise direkt nach Hero
-- Full-bleed salon photo hero with one Fade Ribbon (Three.js). Lazy-loaded, paused offscreen, skipped for reduced-motion / Save-Data / missing WebGL. A CSS gradient stays behind the headline when WebGL is off.
+- Full-bleed salon photo. The photo fades in after a short delay so the shop LEDs feel like they power on. No WebGL.
