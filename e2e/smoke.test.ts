@@ -110,16 +110,16 @@ test.describe('Light/dark toggle', () => {
   });
 });
 
-// ─── Accessibility of the craft piece ─────────────────────────────────────
-
-test.describe('Hero craft piece', () => {
-  test('SVG tube fallback is in the DOM so WebGL is not required', async ({ page }) => {
+test.describe('Hero photo', () => {
+  test('is a full-bleed photo with a fade ribbon, not a tube stage', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('#hero-tubes-fallback')).toHaveCount(1);
-    await expect(page.locator('#hero-tubes')).toHaveCount(1);
+    await expect(page.locator('#hero-tubes, #hero-tubes-fallback, #hero-stage')).toHaveCount(0);
+    await expect(page.locator('#hero img')).toBeVisible();
+    await expect(page.locator('#fade-ribbon-fallback')).toBeVisible();
+    await expect(page.locator('#fade-ribbon')).toHaveCount(1);
   });
 
-  test('reduced motion keeps the headline readable without relying on WebGL', async ({ page }) => {
+  test('reduced motion keeps the headline readable', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
     const headline = page.locator('main h1');

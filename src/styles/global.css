@@ -329,7 +329,6 @@ h1, h2, h3, h4 {
   .hero-line,
   .hero-bg,
   .hero-photo,
-  .hero-tubes-fallback,
   .fact-rail__track,
   .scroll-progress {
     animation: none !important;
@@ -337,7 +336,7 @@ h1, h2, h3, h4 {
     transform: none !important;
   }
 
-  .hero-tubes-canvas {
+  .fade-ribbon-canvas {
     display: none !important;
   }
 }
@@ -835,69 +834,7 @@ html[data-mode='dark'] .brand-logo__img--light {
   );
 }
 
-.hero-layout {
-  display: flex;
-  min-height: 100svh;
-  flex-direction: column;
-}
-
-.hero-stage {
-  position: relative;
-  order: -1;
-  height: 42svh;
-  min-height: 240px;
-  background: #070707;
-  overflow: hidden;
-}
-
-.hero-photo-wrap {
-  position: relative;
-  flex: 1;
-  min-height: 58svh;
-}
-
-.hero-copy {
-  padding: 1.5rem 1.25rem 6.5rem;
-}
-
-.hero-stage-mark {
-  position: absolute;
-  left: 1.25rem;
-  bottom: 1rem;
-  z-index: 2;
-  color: var(--color-primary);
-  opacity: 0.85;
-}
-
-@media (min-width: 1024px) {
-  .hero-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
-    min-height: 100svh;
-  }
-
-  .hero-stage {
-    order: 0;
-    height: auto;
-    min-height: 100svh;
-    border-left: 1px solid var(--color-outline-variant);
-  }
-
-  .hero-photo-wrap {
-    min-height: 100svh;
-  }
-
-  .hero-copy {
-    padding: 7.5rem 3rem 4.5rem 5rem;
-  }
-
-  .hero-stage-mark {
-    left: 1.5rem;
-    bottom: 1.5rem;
-  }
-}
-
-/* Hero photo is LCP — visible immediately. WebGL lives in the dark stage beside it. */
+/* Full-bleed salon photo. The shop's own ceiling LEDs stay in the photograph. */
 .hero-photo {
   max-width: none;
   height: 100%;
@@ -920,9 +857,9 @@ html[data-mode='dark'] .brand-logo__img--light {
   font-size: clamp(2.7rem, 11vw, 4.15rem);
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .hero-headline {
-    font-size: clamp(3.6rem, 5.4vw, 5.6rem);
+    font-size: clamp(4.4rem, 7.2vw, 6.4rem);
     line-height: 0.9;
   }
 }
@@ -930,6 +867,53 @@ html[data-mode='dark'] .brand-logo__img--light {
 .hero-line {
   display: block;
   overflow: hidden;
+}
+
+/* Fade ribbon sits on the photo behind the headline. CSS gradient is the no-WebGL fade. */
+.fade-ribbon-slot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12%;
+  z-index: 2;
+  height: min(42vh, 380px);
+  pointer-events: none;
+}
+
+.fade-ribbon-fallback,
+.fade-ribbon-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.fade-ribbon-fallback {
+  background: linear-gradient(
+    100deg,
+    rgba(12, 8, 6, 0.05) 0%,
+    rgba(20, 12, 8, 0.62) 16%,
+    rgba(255, 122, 0, 0.38) 48%,
+    rgba(255, 182, 139, 0.55) 74%,
+    rgba(127, 216, 223, 0.16) 100%
+  );
+  filter: blur(22px);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  transition: opacity 500ms ease;
+}
+
+.fade-ribbon-fallback.is-replaced {
+  opacity: 0;
+}
+
+.fade-ribbon-canvas {
+  opacity: 0;
+  transition: opacity 700ms ease;
+}
+
+.fade-ribbon-canvas.is-live {
+  opacity: 0.92;
 }
 
 /* Blade wipe — keep complete animation shorthands (minifiers broke split rules before). */
@@ -954,24 +938,6 @@ html[data-mode='dark'] .brand-logo__img--light {
     clip-path: inset(0 0 0 0);
     transform: translateY(0);
   }
-}
-
-.hero-tubes-canvas {
-  opacity: 0;
-  transition: opacity 700ms ease;
-}
-
-.hero-tubes-canvas.is-live {
-  opacity: 1;
-}
-
-.hero-tubes-fallback {
-  opacity: 1;
-  transition: opacity 400ms ease;
-}
-
-.hero-tubes-fallback.is-replaced {
-  opacity: 0;
 }
 
 .fact-rail {
