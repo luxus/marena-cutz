@@ -5,17 +5,5 @@
   "order": 3,
   "enabled": false,
   "about": "Sean ist ein leidenschaftlicher Barber, der sich auf saubere Übergänge und moderne Stylings spezialisiert hat.",
-  "services": [
-    {
-      "name": "Haarschnitt",
-      "duration": "45 min",
-      "price": "25 CHF",
-      "featured": true
-    },
-    {
-      "name": "Haarschnitt + Bart",
-      "duration": "45 min",
-      "price": "30 CHF"
-    }
-  ]
+  "services": []
 }
