@@ -42,7 +42,7 @@ test.describe('Homepage', () => {
     await expect(page.getByText('45 CHF').first()).toBeVisible();
     await expect(page.getByText('35 CHF').first()).toBeVisible();
     await page.locator('#preise').getByRole('button', { name: /angelo/i }).click();
-    await expect(page.getByText('190 CHF')).toBeVisible();
+    await expect(page.getByText('190 CHF').first()).toBeVisible();
     await expect(page.getByText('170 CHF')).toHaveCount(0);
   });
 
